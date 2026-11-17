@@ -1,0 +1,73 @@
+<div class="flex flex-row flex-wrap gap-3 md:gap-4 items-baseline">
+  @for (filter of filters(); track filter.id) {
+    <div class="self-baseline-last">
+      @switch (filter.type) {
+        @case ('date-range') {
+          <app-range-date
+            [showClean]="false"
+            [initial]="rangeValue(filter.id)"
+            (rangeChange)="setRange(filter.id, $event)"
+          />
+        }
+        @case ('search-selection') {
+          <app-search-select
+            [id]="filter.id"
+            [label]="label(filter)"
+            [options]="filter.options"
+            [text]="searchText()"
+            (searchChange)="setSearch(filter.id, $event)"
+          />
+        }
+        @case ('search') {
+          <!-- El texto se muestra dentro de app-search-select -->
+        }
+        @case ('multi') {
+          <app-selector
+            [id]="filter.id"
+            [label]="label(filter)"
+            [options]="filter.options"
+            [ngModel]="optionValue(filter.id)"
+            (ngModelChange)="selectOption(filter.id, $event)"
+          />
+        }
+        @case ('single') {
+          <app-selector
+            [id]="filter.id"
+            [label]="label(filter)"
+            [options]="filter.options"
+            [ngModel]="optionValue(filter.id)"
+            (ngModelChange)="selectOption(filter.id, $event)"
+          />
+        }
+        @case ('toggle') {
+          <app-toggle
+            class="block"
+            [id]="filter.id"
+            [label]="label(filter)"
+            [ngModel]="toggleValue(filter.id)"
+            (ngModelChange)="setToggle(filter.id, $event)"
+          />
+        }
+        @default {
+          <app-input
+            [id]="filter.id"
+            [label]="label(filter)"
+            [type]="filter.type"
+            [ngModel]="inputValue(filter.id)"
+            (ngModelChange)="setInput(filter.id, $event)"
+          />
+        }
+      }
+    </div>
+  }
+
+  @if (dirty()) {
+    <button
+      type="button"
+      class="btn btn-secondary btn-sm cursor-pointer hover:bg-surface-muted transition"
+      (click)="clear()"
+    >
+      Limpiar
+    </button>
+  }
+</div>

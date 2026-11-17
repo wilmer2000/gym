@@ -1,0 +1,16 @@
+<div class="flex flex-col gap-1">
+  @if (label()) {
+    <label [for]="id()" class="label mb-0">{{ label() }}</label>
+  }
+
+  <textarea
+    [id]="id()"
+    class="input"
+    [placeholder]="placeholder()"
+    [rows]="rows()"
+    [value]="value()"
+    [disabled]="disabled()"
+    (input)="setValue($event)"
+    (blur)="onTouched()"
+  ></textarea>
+</div>

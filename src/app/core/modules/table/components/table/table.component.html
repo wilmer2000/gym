@@ -1,0 +1,106 @@
+<div class="flex flex-col gap-2 w-full">
+  <div
+    class="card overflow-x-auto md:overflow-x-visible"
+    [class]="scrollable() ? 'overflow-y-auto max-h-[60vh]' : ''"
+  >
+    <table class="min-w-full w-full divide-y divide-border text-left text-sm relative">
+      <thead class="bg-surface-muted text-text-secondary tracking-wider">
+      <tr>
+        @if (selectable()) {
+          <th
+            class="sticky top-0 z-10 w-6 border-b border-border bg-surface-muted px-2 py-3 md:w-10 md:px-4"
+          >
+            <input
+              type="checkbox"
+              class="cursor-pointer"
+              [checked]="allPageSelected()"
+              [indeterminate]="somePageSelected()"
+              (change)="togglePage($event)"
+            />
+          </th>
+        }
+        @for (header of headers(); track header.column.key) {
+          <th [class]="header.class" [attr.aria-sort]="ariaSort(header.column)">
+            <button
+              type="button"
+              class="inline-flex items-center gap-1 cursor-pointer hover:text-primary"
+              (click)="toggleSort(header.column)"
+            >
+              {{ header.column.label }}
+              @if (sortKey() === header.column.key) {
+                <span aria-hidden="true">{{ sortDirection() === 'asc' ? '↑' : '↓' }}</span>
+              }
+            </button>
+          </th>
+        }
+        @if (actionsTemplate()) {
+          <th
+            class="sticky top-0 z-10 border-b border-border bg-surface-muted px-2 py-3 font-medium md:px-4 text-center"
+          >
+            Acciones
+          </th>
+        }
+      </tr>
+      </thead>
+      <tbody class="divide-y divide-border bg-surface text-text-secondary">
+        @for (row of view(); track row.key) {
+          <tr [class]="row.class">
+            @if (selectable()) {
+              <td class="w-6 px-2 py-2 md:w-10 md:px-4 md:py-4">
+                <input
+                  type="checkbox"
+                  class="cursor-pointer"
+                  [checked]="row.selected"
+                  (change)="toggle(row.key)"
+                />
+              </td>
+            }
+            @for (cell of row.cells; track cell.column.key) {
+              <td [class]="cell.class">
+                @if (cellTemplates()[cell.column.key]; as template) {
+                  <ng-container
+                    [ngTemplateOutlet]="template"
+                    [ngTemplateOutletContext]="{ $implicit: row.entity, id: row.id }"
+                  />
+                } @else if (cell.amount !== null) {
+                  {{ cell.amount | currency }}
+                } @else if (cell.date !== null) {
+                  {{ cell.date | date: 'dd/MM/yyyy' }}
+                } @else if (cell.column.pipe) {
+                  {{ cell.value | dynamic: cell.column.pipe }}
+                } @else {
+                  {{ cell.text }}
+                }
+              </td>
+            }
+            @if (actionsTemplate(); as template) {
+              <td class="px-2 py-2 text-right whitespace-nowrap md:px-6 md:py-4">
+                <ng-container
+                  [ngTemplateOutlet]="template"
+                  [ngTemplateOutletContext]="{ $implicit: row.entity, id: row.id }"
+                />
+              </td>
+            }
+          </tr>
+        } @empty {
+          <tr>
+            <td
+              [attr.colspan]="
+                columns().length + (selectable() ? 1 : 0) + (actionsTemplate() ? 1 : 0)
+              "
+              class="px-2 py-2 md:px-6 md:py-4 text-center text-text-muted"
+            >
+              Sin datos
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+  <div class="flex justify-between items-center">
+    @if (selectable()) {
+      <p class="px-1 text-sm text-text-muted">{{ selectedCount() }} seleccionadas</p>
+    }
+    <p class="px-1 text-sm text-text-muted">{{ rows().length }} de {{ total() }} coincidencias</p>
+  </div>
+</div>

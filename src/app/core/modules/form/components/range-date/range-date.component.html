@@ -1,0 +1,34 @@
+<div class="flex flex-col gap-3">
+  <div class="flex gap-3">
+    <app-input
+      id="range-date-from"
+      class="sm:w-44"
+      label="Desde"
+      type="date"
+      [max]="to()"
+      [invalid]="invalid()"
+      [ngModel]="from()"
+      (ngModelChange)="setValue('from', $event)"
+    />
+    <app-input
+      id="range-date-to"
+      class="sm:w-44"
+      label="Hasta"
+      type="date"
+      [min]="from()"
+      [invalid]="invalid()"
+      [ngModel]="to()"
+      (ngModelChange)="setValue('to', $event)"
+    />
+  </div>
+  @if (hasRange() && showClean()) {
+    <button type="button" class="btn btn-secondary btn-sm sm:mt-6" (click)="clear()">
+      Limpiar
+    </button>
+  }
+  @if (invalid()) {
+    <p class="text-sm text-red-600 sm:mt-7" role="alert">
+      La fecha final debe ser mayor o igual a la inicial.
+    </p>
+  }
+</div>

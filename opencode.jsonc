@@ -1,0 +1,124 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  // Usa el agente principal de OpenCode para sesiones nuevas.
+  "default_agent": "build",
+  "instructions": [
+    "AGENTS.md"
+  ],
+  // Permisos: lectura/búsqueda libre, comandos rutinarios permitidos,
+  // el resto pregunta y las acciones destructivas quedan bloqueadas.
+  "permissions": [
+    {
+      "action": "shell",
+      "resource": "*",
+      "effect": "ask"
+    },
+    {
+      "action": "shell",
+      "resource": "npm run build*",
+      "effect": "allow"
+    },
+    {
+      "action": "shell",
+      "resource": "npm run start*",
+      "effect": "allow"
+    },
+    {
+      "action": "shell",
+      "resource": "npm run watch*",
+      "effect": "allow"
+    },
+    {
+      "action": "shell",
+      "resource": "npx ng *",
+      "effect": "allow"
+    },
+    {
+      "action": "shell",
+      "resource": "git status *",
+      "effect": "allow"
+    },
+    {
+      "action": "shell",
+      "resource": "git diff *",
+      "effect": "allow"
+    },
+    {
+      "action": "shell",
+      "resource": "git log *",
+      "effect": "allow"
+    },
+    {
+      "action": "shell",
+      "resource": "git push *",
+      "effect": "deny"
+    },
+    {
+      "action": "shell",
+      "resource": "npm publish*",
+      "effect": "deny"
+    },
+    {
+      "action": "shell",
+      "resource": "rm -rf *",
+      "effect": "deny"
+    }
+  ],
+  // Formatea con el Prettier del proyecto (respeta .prettierrc) tras write/edit.
+  "formatter": true,
+  // LSP nativo: diagnósticos de TypeScript/ESLint sin herramientas MCP extra.
+  "lsp": true,
+  // Auditorías y planes de acción con el modelo caro; la implementación queda para el barato.
+  "plugins": [
+    {
+      "package": "@auron-labs/opencode-improve",
+      "options": {}
+    }
+  ],
+  // Evita que el watcher reaccione a artefactos de build.
+  "watcher": {
+    "ignore": [
+      "dist/**",
+      ".angular/**",
+      "coverage/**"
+    ]
+  },
+  // Mismo servidor que .vscode/mcp.json, disponible también en OpenCode.
+  "mcp": {
+    "servers": {
+      "angular-cli": {
+        "type": "local",
+        // Usa el @angular/cli local del proyecto (v21) en vez de descargar el último.
+        "command": [
+          "npx",
+          "@angular/cli",
+          "mcp"
+        ]
+      }
+    }
+  },
+  "commands": {
+    "build": {
+      "description": "Compilar el proyecto (ng build)",
+      "template": "Ejecuta `npm run build` y reporta solo el resultado."
+    },
+    "verify": {
+      "description": "Verificar tras cambios en src/** siguiendo AGENTS.md",
+      "template": "Tras cambios en src/**, ejecuta `npm run build` y reporta únicamente el resultado. No hagas commit ni push."
+    }
+  },
+  "agents": {
+    "reviewer": {
+      "description": "Revisar cambios sin editar archivos",
+      "mode": "subagent",
+      "system": "Eres un revisor estricto. Enfócate en corrección, consistencia con Angular/TypeScript, uso correcto de signals/inline templates/styles, y cumplimiento de AGENTS.md. No sugieras refactorizaciones cosméticas innecesarias.",
+      "permissions": [
+        {
+          "action": "edit",
+          "resource": "*",
+          "effect": "deny"
+        }
+      ]
+    }
+  }
+}

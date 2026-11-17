@@ -1,0 +1,23 @@
+<div class="flex flex-col gap-1">
+  @if (label()) {
+    <label [for]="id()" class="label mb-0">{{ label() }}</label>
+  }
+
+  <select
+    [id]="id()"
+    class="select"
+    [value]="value()"
+    [disabled]="disabled()"
+    (change)="setValue($event)"
+    (blur)="onTouched()"
+  >
+    @if (placeholder()) {
+      <option value="" [selected]="value() === ''">{{ placeholder() }}</option>
+    }
+    @for (opt of options(); track opt.id) {
+      <option [value]="opt.id" [selected]="opt.id === value()">
+        {{ opt.icon ? opt.icon + ' ' : '' }}{{ opt.label }}
+      </option>
+    }
+  </select>
+</div>
