@@ -8,7 +8,7 @@ import {
   OnDestroy,
   viewChild,
 } from '@angular/core';
-import { ChartData } from './chart-data.interface';
+import { ChartData } from './chart-data';
 
 type ChartType = 'bar' | 'line' | 'pie' | 'doughnut';
 type ValueFormat = 'currency' | 'percent' | 'number';

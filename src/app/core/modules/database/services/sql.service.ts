@@ -1,5 +1,7 @@
 import { Injectable, signal } from '@angular/core';
 import initSqlJs, { Database, SqlJsStatic } from 'sql.js';
+import { EXERCISES_SCHEMA } from '../../../../features/exercises';
+import { SEED_EXERCISES } from '../../../../features/exercises';
 
 const DB_NAME = 'GymAppDB';
 const STORE_NAME = 'sqlite_store';
@@ -154,6 +156,13 @@ export class SqlService {
 
   private createTables(): void {
     if (!this.db) return;
+
+    // sql.js does not persist pragmas, so foreign keys are enabled on every open.
+    this.db.run('PRAGMA foreign_keys = ON;');
+    // run() without params goes through sqlite3_exec, which runs every statement
+    // in the script; passing [] would prepare only the first one.
+    this.db.run(EXERCISES_SCHEMA);
+    this.db.run(SEED_EXERCISES);
   }
 
   private openIDB(): Promise<IDBDatabase> {

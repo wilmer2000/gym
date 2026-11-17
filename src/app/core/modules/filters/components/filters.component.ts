@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, computed, input, output, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { Option } from '../../form/interfaces/option.interface';
+import { Option } from '../../form/interfaces/option';
 import { DateRange, RangeDate } from '../../form/components/range-date/range-date.component';
 
 import { Selector } from '../../form/components/selector/selector.component';

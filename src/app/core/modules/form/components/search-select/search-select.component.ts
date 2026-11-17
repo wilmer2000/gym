@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, input, linkedSignal, output } from '@angular/core';
-import { Option } from '../../interfaces/option.interface';
+import { Option } from '../../interfaces/option';
 
 export interface SearchValue {
   id: string;

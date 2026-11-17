@@ -8,8 +8,7 @@ Angular app with data stored in the browser: SQLite (`sql.js`) persisted as a bi
 - Tailwind CSS v4 via `@tailwindcss/postcss` (utility classes without the `u-` prefix), theme tokens in `src/styles.css`.
 - `sql.js` as the in-browser SQLite engine; the `.wasm` is copied to `db/` at build time.
 - `chart.js` for charts.
-- `papaparse` to read the bank CSVs.
-- `rxjs` for CSV parsing and modal/service worker events.
+- `rxjs` for modal/service worker events.
 - Service worker (`ngsw-config.json`) in the production build (PWA).
 
 ## Features
@@ -34,7 +33,7 @@ src/app/
 │   │   ├── modal/         ModalService and base modal
 │   │   └── table/         Table, TablePager, Pager, dynamic pipe
 │   ├── repository/        RepositoryBase: CRUD and bulk save
-│   ├── services/          SqlService (sql.js + IndexedDB), AuthService, StorageService, CsvService
+│   ├── services/          SqlService (sql.js + IndexedDB), AuthService, StorageService
 │   └── utils/             date.util.ts
 ├── shared/
 │   └── components/        container, records-table

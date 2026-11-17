@@ -1,44 +1,12 @@
-import { computed, Injectable, signal, Type } from '@angular/core';
+import { computed, Injectable, signal } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
-
-export type ModalType = 'error' | 'warning' | 'success' | 'info';
-
-export type ModalAction = 'ok' | 'close' | 'back';
-
-export interface ModalButtons {
-  okButton?: boolean;
-  closeButton?: boolean;
-  backButton?: boolean;
-}
-
-export interface ModalConfig {
-  title?: string;
-  subtitle?: string;
-  type?: ModalType;
-  buttons?: ModalButtons;
-  /** Footer labels, so the same modal can say "Crear" or "Guardar". */
-  okLabel?: string;
-  closeLabel?: string;
-  /** Data passed as the `data` input of the dynamic component. */
-  data?: unknown;
-  /** Component rendered inside the modal body. */
-  component?: Type<unknown>;
-}
-
-export interface ModalState extends ModalConfig {
-  id: number;
-  title: string;
-  subtitle: string;
-  type: ModalType;
-  buttons: Required<ModalButtons>;
-  okLabel: string;
-  closeLabel: string;
-}
-
-export interface ModalEvent {
-  id: number;
-  action: ModalAction;
-}
+import {
+  ModalAction,
+  ModalButtons,
+  ModalConfig,
+  ModalEvent,
+  ModalState,
+} from '../interfaces/modal.interface';
 
 const DEFAULT_BUTTONS: Required<ModalButtons> = {
   okButton: true,

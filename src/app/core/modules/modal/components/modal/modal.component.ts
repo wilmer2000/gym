@@ -8,7 +8,8 @@ import {
   viewChild,
   ViewContainerRef,
 } from '@angular/core';
-import { ModalAction, ModalEvent, ModalService, ModalType } from '../../services/modal.service';
+import { ModalService } from '../../services/modal.service';
+import { ModalAction, ModalEvent, ModalType } from '../../interfaces/modal.interface';
 
 const TONES: Record<ModalType, { icon: string; title: string; iconClass: string }> = {
   error: { icon: '✕', title: 'text-red-600', iconClass: 'bg-red-100 text-red-600' },

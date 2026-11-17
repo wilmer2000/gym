@@ -7,6 +7,28 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
   template: `
     <nav class="flex w-full flex-col gap-2">
       <a
+        routerLink="/exercises"
+        routerLinkActive="bg-gray-800 text-white"
+        class="flex flex-row gap-3 items-center px-3 py-2 rounded-md text-sm font-medium text-gray-400 hover:bg-gray-800 hover:text-white transition"
+      >
+        <svg
+          class="w-5 h-5 shrink-0"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.5"
+          aria-hidden="true"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M6.75 7.5v9m10.5-9v9M4.5 9.75v4.5m15-4.5v4.5M6.75 12h10.5"
+          />
+        </svg>
+        Ejercicios
+      </a>
+
+      <a
         routerLink="/config"
         routerLinkActive="bg-gray-800 text-white"
         class="flex flex-row gap-3 items-center px-3 py-2 rounded-md text-sm font-medium text-gray-400 hover:bg-gray-800 hover:text-white transition"

@@ -18,6 +18,11 @@ export const routes: Routes = [
           import('./core/modules/config/components/config/config.component').then((m) => m.Config),
       },
       {
+        path: 'exercises',
+        loadChildren: () =>
+          import('./features/exercises/exercises.routes').then((m) => m.EXERCISES_ROUTES),
+      },
+      {
         path: '**',
         redirectTo: '',
         pathMatch: 'full',

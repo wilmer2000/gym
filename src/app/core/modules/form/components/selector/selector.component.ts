@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, forwardRef, input, signal } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { Option } from '../../interfaces/option.interface';
+import { Option } from '../../interfaces/option';
 
 @Component({
   selector: 'app-selector',
