@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@a
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Container } from '../../../../core/components/container/container.component';
 import { dateOnly, startOfDay } from '../../../../core/utils/date.util';
-import { CatalogExerciseRepository } from '../../../catalog/repositories/catalog-exercise.repository';
+import { ExerciseRepository } from '../../../exercises/repositories/exercise.repository';
 import { PlanExerciseRow, PlanInput, ScheduleMode } from '../../interfaces/plan';
 import { PlanDateRepository } from '../../repositories/plan-date.repository';
 import { PlanExerciseRepository } from '../../repositories/plan-exercise.repository';
@@ -30,14 +30,14 @@ export class PlanFormPage {
   private readonly planExercises = inject(PlanExerciseRepository);
   private readonly planWeekdays = inject(PlanWeekdayRepository);
   private readonly planDates = inject(PlanDateRepository);
-  private readonly catalog = inject(CatalogExerciseRepository);
+  private readonly exerciseRepo = inject(ExerciseRepository);
   private readonly route = inject(ActivatedRoute);
   private readonly router = inject(Router);
 
   readonly planId = Number(this.route.snapshot.paramMap.get('id') ?? 0);
-  readonly exercises = this.catalog.listAll();
+  readonly exercises = this.exerciseRepo.listAll();
 
-  private readonly catalogIds = new Set(this.exercises.map((exercise) => exercise.id));
+  private readonly exerciseIds = new Set(this.exercises.map((exercise) => exercise.id));
 
   readonly name = signal('');
   readonly description = signal('');
@@ -54,7 +54,7 @@ export class PlanFormPage {
     () =>
       this.name().trim().length > 0 &&
       this.rows().length > 0 &&
-      this.rows().every((row) => row.exerciseId !== '' && row.reps > 0) &&
+      this.rows().every((row) => row.exerciseId !== '' && row.reps > 0 && row.sets > 0) &&
       (this.mode() === 'weekly'
         ? this.startDate() !== '' &&
           (this.endDate() === '' || this.endDate() >= this.startDate()) &&
@@ -64,7 +64,7 @@ export class PlanFormPage {
 
   constructor() {
     if (!this.planId) {
-      this.rows.set([{ exerciseId: this.exercises[0]?.id ?? '', reps: 10 }]);
+      this.rows.set([{ exerciseId: this.exercises[0]?.id ?? '', reps: 10, sets: 3 }]);
 
       return;
     }
@@ -86,9 +86,11 @@ export class PlanFormPage {
     this.selectedDays.set(this.planWeekdays.listByPlan(plan.id).map((day) => day.dayOfWeek));
     this.dates.set(this.planDates.listByPlan(plan.id).map((date) => date.specificDate));
     this.rows.set(
-      this.planExercises
-        .listByPlan(plan.id)
-        .map((exercise) => ({ exerciseId: exercise.exerciseId, reps: exercise.reps })),
+      this.planExercises.listByPlan(plan.id).map((exercise) => ({
+        exerciseId: exercise.exerciseId,
+        reps: exercise.reps,
+        sets: exercise.sets,
+      })),
     );
   }
 
@@ -101,8 +103,8 @@ export class PlanFormPage {
       return;
     }
 
-    // catalog.exercises lives in another DB, so there is no foreign key to lean on.
-    if (this.rows().some((row) => !this.catalogIds.has(row.exerciseId))) {
+    // exercises live in another DB, so there is no foreign key to lean on.
+    if (this.rows().some((row) => !this.exerciseIds.has(row.exerciseId))) {
       this.error.set('El catálogo no contiene uno de los ejercicios elegidos.');
 
       return;
@@ -119,6 +121,7 @@ export class PlanFormPage {
       exercises: this.rows().map((row) => ({
         exerciseId: row.exerciseId,
         reps: Math.max(1, Math.floor(row.reps)),
+        sets: Math.max(1, Math.floor(row.sets)),
       })),
       weekdays: this.mode() === 'weekly' ? this.selectedDays() : [],
       dates: this.mode() === 'dates' ? this.dates() : [],

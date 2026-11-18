@@ -1,13 +1,13 @@
 import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { Container } from '../../../../core/components/container/container.component';
-import { CatalogExercise, EQUIPMENT_LABELS } from '../../interfaces/exercise';
-import { CatalogExerciseRepository } from '../../repositories/catalog-exercise.repository';
+import { Exercise, EQUIPMENT_LABELS } from '../../interfaces/exercise';
+import { ExerciseRepository } from '../../repositories/exercise.repository';
 
 @Component({
-  selector: 'app-catalog-detail',
+  selector: 'app-exercise-detail',
   imports: [Container, RouterLink],
-  templateUrl: './catalog-detail.component.html',
+  templateUrl: './exercise-detail.component.html',
   styles: `
     :host {
       display: block;
@@ -16,11 +16,11 @@ import { CatalogExerciseRepository } from '../../repositories/catalog-exercise.r
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CatalogDetailPage {
-  private readonly repository = inject(CatalogExerciseRepository);
+export class ExerciseDetailPage {
+  private readonly repository = inject(ExerciseRepository);
   private readonly route = inject(ActivatedRoute);
 
-  readonly exercise: CatalogExercise | null = this.repository.findById(
+  readonly exercise: Exercise | null = this.repository.findById(
     this.route.snapshot.paramMap.get('id') ?? '',
   );
 

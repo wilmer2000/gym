@@ -1,4 +1,4 @@
-export const CATALOG_SCHEMA = `
+export const EXERCISES_SCHEMA = `
 CREATE TABLE IF NOT EXISTS exercises (
   id           TEXT PRIMARY KEY,
   name         TEXT NOT NULL,
@@ -12,8 +12,8 @@ CREATE INDEX IF NOT EXISTS idx_exercises_muscle ON exercises(muscle_group);
 CREATE INDEX IF NOT EXISTS idx_exercises_name   ON exercises(name COLLATE NOCASE);
 `;
 
-// Fixed catalog: INSERT OR IGNORE keeps user data intact when the DB is reopened.
-export function catalogSeed(now: number = Date.now()): string {
+// Fixed exercises: INSERT OR IGNORE keeps user data intact when the DB is reopened.
+export function exercisesSeed(now: number = Date.now()): string {
   return `
 INSERT OR IGNORE INTO exercises (id, name, muscle_group, equipment, description, created_at) VALUES
   ('squat',         'Sentadilla',            'Cuádriceps', 'barbell',    'Barra sobre trapecio, bajar hasta paralelo.', ${now}),

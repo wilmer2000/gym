@@ -1,5 +1,5 @@
 import { computed, inject, Injectable, signal } from '@angular/core';
-import { CatalogSqlService } from '../../database/services/catalog-sql.service';
+import { ExerciseSqlService } from '../../database/services/exercise-sql.service';
 import { MainSqlService } from '../../database/services/main-sql.service';
 
 // Magic header of SQLite. The full signature is 16 bytes
@@ -16,7 +16,7 @@ const SQLITE_MAGIC_8 = new TextEncoder().encode('SQLite f');
 })
 export class ConfigService {
   private readonly main = inject(MainSqlService);
-  private readonly catalog = inject(CatalogSqlService);
+  private readonly exerciseDb = inject(ExerciseSqlService);
 
   // Fixed capacity that represents 100% of the usage bar.
   static readonly MAX_DB_BYTES = 20 * 1024 * 1024;
@@ -33,7 +33,7 @@ export class ConfigService {
   async refreshUsage() {
     const buffers = await Promise.all([
       this.main.getStoredBinary(),
-      this.catalog.getStoredBinary(),
+      this.exerciseDb.getStoredBinary(),
     ]);
 
     this._usedBytes.set(buffers.reduce((total, buffer) => total + (buffer?.byteLength ?? 0), 0));
@@ -48,7 +48,7 @@ export class ConfigService {
     return URL.createObjectURL(blob);
   }
 
-  // Only the user's DB is backed up: the exercise catalog is fixed and reseeds itself.
+  // Only the user's DB is backed up: the exercise list is fixed and reseeds itself.
   async importBackup(buffer: Uint8Array): Promise<void> {
     // Validation of the header comparing only the first 8 bytes.
     const header = buffer.subarray(0, SQLITE_MAGIC_8.length);
@@ -64,6 +64,6 @@ export class ConfigService {
   }
 
   async reset(): Promise<void> {
-    await Promise.all([this.main.resetDatabase(), this.catalog.resetDatabase()]);
+    await Promise.all([this.main.resetDatabase(), this.exerciseDb.resetDatabase()]);
   }
 }

@@ -17,6 +17,7 @@ export interface PlanExercise {
   planId: number;
   exerciseId: string;
   reps: number;
+  sets: number;
   sortOrder: number;
 }
 
@@ -35,6 +36,7 @@ export interface PlanDate {
 export interface PlanExerciseRow {
   exerciseId: string;
   reps: number;
+  sets: number;
 }
 
 // What the form hands to PlanRepository.savePlan() in one transaction.

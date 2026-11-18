@@ -6,7 +6,7 @@ import { filter } from 'rxjs';
 import { Container } from '../../../../core/components/container/container.component';
 import { Toggle } from '../../../../core/modules/form/components/toggle/toggle.component';
 import { ModalService } from '../../../../core/modules/modal/services/modal.service';
-import { CatalogExerciseRepository } from '../../../catalog/repositories/catalog-exercise.repository';
+import { ExerciseRepository } from '../../../exercises/repositories/exercise.repository';
 import { Plan } from '../../interfaces/plan';
 import { PlanDateRepository } from '../../repositories/plan-date.repository';
 import { PlanExerciseRepository } from '../../repositories/plan-exercise.repository';
@@ -31,7 +31,7 @@ export class PlanDetailPage {
   private readonly planExercises = inject(PlanExerciseRepository);
   private readonly planWeekdays = inject(PlanWeekdayRepository);
   private readonly planDates = inject(PlanDateRepository);
-  private readonly catalog = inject(CatalogExerciseRepository);
+  private readonly exerciseRepo = inject(ExerciseRepository);
   private readonly route = inject(ActivatedRoute);
   private readonly router = inject(Router);
   private readonly modal = inject(ModalService);
@@ -39,7 +39,7 @@ export class PlanDetailPage {
 
   readonly plan = signal<Plan | null>(null);
   readonly summary = signal('');
-  readonly exercises = signal<{ name: string; reps: number }[]>([]);
+  readonly exercises = signal<{ name: string; reps: number; sets: number }[]>([]);
 
   constructor() {
     this.load();
@@ -99,8 +99,9 @@ export class PlanDetailPage {
     );
     this.exercises.set(
       this.planExercises.listByPlan(plan.id).map((exercise) => ({
-        name: this.catalog.findById(exercise.exerciseId)?.name ?? exercise.exerciseId,
+        name: this.exerciseRepo.findById(exercise.exerciseId)?.name ?? exercise.exerciseId,
         reps: exercise.reps,
+        sets: exercise.sets,
       })),
     );
   }

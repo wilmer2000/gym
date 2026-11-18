@@ -8,13 +8,13 @@ import {
   Selections,
 } from '../../../../core/modules/filters/components/filters.component';
 import { Input } from '../../../../core/modules/form/components/input/input.component';
-import { CatalogExercise, EQUIPMENT_LABELS } from '../../interfaces/exercise';
-import { CatalogExerciseRepository } from '../../repositories/catalog-exercise.repository';
+import { Exercise, EQUIPMENT_LABELS } from '../../interfaces/exercise';
+import { ExerciseRepository } from '../../repositories/exercise.repository';
 
 @Component({
-  selector: 'app-catalog-list',
+  selector: 'app-exercise-list',
   imports: [Container, Filters, Input, RouterLink, FormsModule],
-  templateUrl: './catalog-list.component.html',
+  templateUrl: './exercise-list.component.html',
   styles: `
     :host {
       display: block;
@@ -23,8 +23,8 @@ import { CatalogExerciseRepository } from '../../repositories/catalog-exercise.r
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CatalogListPage {
-  private readonly repository = inject(CatalogExerciseRepository);
+export class ExerciseListPage {
+  private readonly repository = inject(ExerciseRepository);
 
   readonly search = signal('');
   readonly selections = signal<Selections>({});
@@ -47,7 +47,7 @@ export class CatalogListPage {
   );
   readonly hasFilters = computed(() => !!this.search().trim() || !!this.selection('muscle'));
 
-  equipment(exercise: CatalogExercise): string {
+  equipment(exercise: Exercise): string {
     return EQUIPMENT_LABELS[exercise.equipment];
   }
 

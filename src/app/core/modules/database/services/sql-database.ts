@@ -60,9 +60,14 @@ export abstract class SqlDatabase {
       db.run(this.seed);
     }
 
+    this.migrate(db);
+
     await this.writeBinary(db.export());
     this.isReady.set(true);
   }
+
+  // Features patch columns that already-persisted DBs are missing.
+  protected migrate(_db: Database): void {}
 
   persist(): Promise<void> {
     this.saveQueue = this.saveQueue.then(() => this.flush());
@@ -147,6 +152,8 @@ export abstract class SqlDatabase {
     if (this.seed) {
       db.run(this.seed);
     }
+
+    this.migrate(db);
 
     await this.writeBinary(db.export());
     this.isReady.set(true);

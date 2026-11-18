@@ -3,7 +3,7 @@ import { SqlDatabase } from '../services/sql-database';
 // CRUD base shared by every repository. Each repository declares only its schema:
 // table, defaultOrder, idColumn, toRow() and fromRow(); the SQL generation, the
 // bulk transaction and the persistence live here. The concrete repository
-// injects its own SqlDatabase (main or catalog).
+// injects its own SqlDatabase (main or exercises).
 export abstract class RepositoryBase<T> {
   protected abstract readonly sqlite: SqlDatabase;
   protected abstract toRow(entity: T): Record<string, unknown>;

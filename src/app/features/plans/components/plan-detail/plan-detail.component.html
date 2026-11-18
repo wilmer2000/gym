@@ -3,9 +3,7 @@
     <a routerLink="/plans" class="btn btn-secondary">Volver</a>
     @if (plan()) {
       <a [routerLink]="['/plans', plan()!.id, 'edit']" class="btn btn-primary">Editar</a>
-      <button type="button" class="btn btn-ghost text-danger" (click)="remove()">
-        Eliminar
-      </button>
+      <button type="button" class="btn btn-ghost text-danger" (click)="remove()">Eliminar</button>
     }
   </div>
 
@@ -39,7 +37,7 @@
               class="flex items-center justify-between gap-3 rounded-md bg-surface-muted px-3 py-2"
             >
               <span class="text-sm text-primary">{{ $index + 1 }}. {{ exercise.name }}</span>
-              <span class="text-sm text-text-muted">{{ exercise.reps }} reps</span>
+              <span class="text-sm text-text-muted">{{ exercise.sets }} × {{ exercise.reps }}</span>
             </li>
           }
         </ol>

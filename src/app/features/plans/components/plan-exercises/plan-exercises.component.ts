@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Input } from '../../../../core/modules/form/components/input/input.component';
-import { CatalogExercise } from '../../../catalog/interfaces/exercise';
+import { Exercise } from '../../../exercises/interfaces/exercise';
 import { PlanExerciseRow } from '../../interfaces/plan';
 
 @Component({
@@ -16,13 +16,16 @@ import { PlanExerciseRow } from '../../interfaces/plan';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PlanExercisesForm {
-  readonly exercises = input.required<CatalogExercise[]>();
+  readonly exercises = input.required<Exercise[]>();
   readonly rows = input.required<PlanExerciseRow[]>();
 
   readonly rowsChange = output<PlanExerciseRow[]>();
 
   addRow(): void {
-    this.rowsChange.emit([...this.rows(), { exerciseId: this.exercises()[0]?.id ?? '', reps: 10 }]);
+    this.rowsChange.emit([
+      ...this.rows(),
+      { exerciseId: this.exercises()[0]?.id ?? '', reps: 12, sets: 3 },
+    ]);
   }
 
   removeRow(index: number): void {
@@ -55,6 +58,16 @@ export class PlanExercisesForm {
     this.rowsChange.emit(
       this.rows().map((row, position) =>
         position === index ? { ...row, reps: Number.isFinite(reps) ? reps : 0 } : row,
+      ),
+    );
+  }
+
+  setSets(index: number, value: string): void {
+    const sets = Number(value);
+
+    this.rowsChange.emit(
+      this.rows().map((row, position) =>
+        position === index ? { ...row, sets: Number.isFinite(sets) ? sets : 0 } : row,
       ),
     );
   }

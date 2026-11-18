@@ -1,11 +1,11 @@
 import { inject } from '@angular/core';
-import { CatalogSqlService } from './services/catalog-sql.service';
+import { ExerciseSqlService } from './services/exercise-sql.service';
 import { MainSqlService } from './services/main-sql.service';
 
 export async function intiDatabase() {
   const main = inject(MainSqlService);
-  const catalog = inject(CatalogSqlService);
+  const exercises = inject(ExerciseSqlService);
 
   // The wasm module is a shared singleton, so both connections load in parallel.
-  await Promise.all([main.init(), catalog.init()]);
+  await Promise.all([main.init(), exercises.init()]);
 }

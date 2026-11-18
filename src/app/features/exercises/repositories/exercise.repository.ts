@@ -1,17 +1,17 @@
 import { inject, Injectable } from '@angular/core';
 import { RepositoryBase } from '../../../core/modules/database/repository/repository.base';
-import { CatalogSqlService } from '../../../core/modules/database/services/catalog-sql.service';
-import { CatalogExercise, Equipment } from '../interfaces/exercise';
+import { ExerciseSqlService } from '../../../core/modules/database/services/exercise-sql.service';
+import { Exercise, Equipment } from '../interfaces/exercise';
 
 @Injectable({ providedIn: 'root' })
-export class CatalogExerciseRepository extends RepositoryBase<CatalogExercise> {
-  protected override readonly sqlite = inject(CatalogSqlService);
+export class ExerciseRepository extends RepositoryBase<Exercise> {
+  protected override readonly sqlite = inject(ExerciseSqlService);
 
   protected override table = 'exercises';
   protected override idColumn = 'id';
   protected override defaultOrder = 'name COLLATE NOCASE ASC';
 
-  protected override toRow(entity: CatalogExercise): Record<string, unknown> {
+  protected override toRow(entity: Exercise): Record<string, unknown> {
     return {
       id: entity.id,
       name: entity.name,
@@ -22,7 +22,7 @@ export class CatalogExerciseRepository extends RepositoryBase<CatalogExercise> {
     };
   }
 
-  protected override fromRow(row: Record<string, any>): CatalogExercise {
+  protected override fromRow(row: Record<string, any>): Exercise {
     return {
       id: String(row['id']),
       name: String(row['name']),
@@ -33,11 +33,11 @@ export class CatalogExerciseRepository extends RepositoryBase<CatalogExercise> {
     };
   }
 
-  listAll(): CatalogExercise[] {
+  listAll(): Exercise[] {
     return this.findAll();
   }
 
-  search({ name, muscleGroup }: { name?: string; muscleGroup?: string } = {}): CatalogExercise[] {
+  search({ name, muscleGroup }: { name?: string; muscleGroup?: string } = {}): Exercise[] {
     const conditions: string[] = [];
     const params: unknown[] = [];
 

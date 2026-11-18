@@ -18,6 +18,7 @@ CREATE TABLE IF NOT EXISTS plan_exercises (
   plan_id     INTEGER NOT NULL,
   exercise_id TEXT    NOT NULL,
   reps        INTEGER NOT NULL CHECK (reps > 0),
+  sets        INTEGER NOT NULL DEFAULT 3 CHECK (sets > 0),
   sort_order  INTEGER NOT NULL DEFAULT 0,
   FOREIGN KEY (plan_id) REFERENCES plans(id) ON DELETE CASCADE
 );
@@ -39,4 +40,9 @@ CREATE TABLE IF NOT EXISTS plan_dates (
   FOREIGN KEY (plan_id) REFERENCES plans(id) ON DELETE CASCADE,
   UNIQUE (plan_id, specific_date)
 );
+`;
+
+// Added after the first release; existing gym_main DBs need the column too.
+export const PLAN_EXERCISES_SETS_MIGRATION = `
+ALTER TABLE plan_exercises ADD COLUMN sets INTEGER NOT NULL DEFAULT 3 CHECK (sets > 0);
 `;

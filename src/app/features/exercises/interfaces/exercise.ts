@@ -1,7 +1,7 @@
 export type Equipment =
   'barbell' | 'dumbbell' | 'machine' | 'cable' | 'bodyweight' | 'band' | 'other';
 
-export interface CatalogExercise {
+export interface Exercise {
   id: string;
   name: string;
   muscleGroup: string;

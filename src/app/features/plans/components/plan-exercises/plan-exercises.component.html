@@ -25,6 +25,18 @@
               </select>
             </div>
 
+            <div class="w-full sm:w-20">
+              <app-input
+                [id]="'plan-sets-' + $index"
+                [name]="'plan-sets-' + $index"
+                label="Sets"
+                type="number"
+                min="1"
+                [ngModel]="row.sets"
+                (ngModelChange)="setSets($index, $event)"
+              />
+            </div>
+
             <div class="w-full sm:w-24">
               <app-input
                 [id]="'plan-reps-' + $index"

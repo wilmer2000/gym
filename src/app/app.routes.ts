@@ -40,12 +40,12 @@ export const routes: Routes = [
       {
         path: 'exercises',
         loadComponent: () =>
-          import('./features/catalog/components/catalog-list/catalog-list.component').then((m) => m.CatalogListPage),
+          import('./features/exercises/components/exercise-list/exercise-list.component').then((m) => m.ExerciseListPage),
       },
       {
         path: 'exercises/:id',
         loadComponent: () =>
-          import('./features/catalog/components/catalog-detail/catalog-detail.component').then((m) => m.CatalogDetailPage),
+          import('./features/exercises/components/exercise-detail/exercise-detail.component').then((m) => m.ExerciseDetailPage),
       },
       {
         path: 'config',

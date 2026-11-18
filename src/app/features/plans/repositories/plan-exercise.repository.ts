@@ -17,6 +17,7 @@ export class PlanExerciseRepository extends RepositoryBase<PlanExercise> {
       plan_id: entity.planId,
       exercise_id: entity.exerciseId,
       reps: entity.reps,
+      sets: entity.sets,
       sort_order: entity.sortOrder,
     };
   }
@@ -27,6 +28,7 @@ export class PlanExerciseRepository extends RepositoryBase<PlanExercise> {
       planId: Number(row['plan_id']),
       exerciseId: String(row['exercise_id']),
       reps: Number(row['reps']),
+      sets: Number(row['sets']),
       sortOrder: Number(row['sort_order']),
     };
   }
@@ -39,14 +41,14 @@ export class PlanExerciseRepository extends RepositoryBase<PlanExercise> {
   }
 
   // Replaces the whole ordered list; the array index is the new sort_order.
-  replaceAll(planId: number, items: { exerciseId: string; reps: number }[]): void {
+  replaceAll(planId: number, items: { exerciseId: string; reps: number; sets: number }[]): void {
     this.sqlite.transaction(() => {
       this.sqlite.run('DELETE FROM plan_exercises WHERE plan_id = ?;', [planId]);
 
       items.forEach((item, index) => {
         this.sqlite.run(
-          'INSERT INTO plan_exercises (plan_id, exercise_id, reps, sort_order) VALUES (?, ?, ?, ?);',
-          [planId, item.exerciseId, item.reps, index],
+          'INSERT INTO plan_exercises (plan_id, exercise_id, reps, sets, sort_order) VALUES (?, ?, ?, ?, ?);',
+          [planId, item.exerciseId, item.reps, item.sets, index],
         );
       });
     });
