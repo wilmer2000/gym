@@ -1,12 +1,11 @@
-import { inject } from '@angular/core';
-import { SqlService } from '../services/sql.service';
+import { SqlDatabase } from '../services/sql-database';
 
 // CRUD base shared by every repository. Each repository declares only its schema:
 // table, defaultOrder, idColumn, toRow() and fromRow(); the SQL generation, the
-// bulk transaction and the persistence live here. The inject() call below is
-// resolved by Angular for the decorated repository that extends this base.
+// bulk transaction and the persistence live here. The concrete repository
+// injects its own SqlDatabase (main or catalog).
 export abstract class RepositoryBase<T> {
-  protected readonly sqlite = inject(SqlService);
+  protected abstract readonly sqlite: SqlDatabase;
   protected abstract toRow(entity: T): Record<string, unknown>;
   protected abstract fromRow(row: Record<string, any>): T;
 
@@ -48,7 +47,7 @@ export abstract class RepositoryBase<T> {
 
   count(criteria: Partial<T> = {}): number {
     const { clause, params } = this.where(criteria);
-    const [row] = this.sqlite.select(
+    const [row] = this.sqlite.query(
       `SELECT COUNT(*) AS total FROM ${this.table}${this.filter(clause)}`,
       params,
     );
@@ -199,7 +198,7 @@ export abstract class RepositoryBase<T> {
   }
 
   private selectEntities(sql: string, params: any[] = []) {
-    return this.sqlite.select(sql, params).map((row) => this.fromRow(row));
+    return this.sqlite.query(sql, params).map((row) => this.fromRow(row));
   }
 
   private insertStatement(row: Record<string, unknown>) {

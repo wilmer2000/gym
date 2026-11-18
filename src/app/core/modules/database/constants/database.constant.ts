@@ -1,1 +1,1 @@
-export const DATABASE_FILENAME = 'gym-backup.sqlite';
+export const DATABASE_FILENAME = 'gym_main.sqlite';

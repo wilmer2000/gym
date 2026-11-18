@@ -1,5 +1,6 @@
 import { computed, inject, Injectable, signal } from '@angular/core';
-import { SqlService } from '../../database/services/sql.service';
+import { CatalogSqlService } from '../../database/services/catalog-sql.service';
+import { MainSqlService } from '../../database/services/main-sql.service';
 
 // Magic header of SQLite. The full signature is 16 bytes
 // ("SQLite format 3\0"), but comparing only the bytes of the first 8
@@ -8,13 +9,14 @@ import { SqlService } from '../../database/services/sql.service';
 const SQLITE_MAGIC_8 = new TextEncoder().encode('SQLite f');
 
 // All database-related logic lives here: usage for the UI bar, and backup
-// export/import, calling SqlService directly (root injectable, as
-// repository.base.ts does).
+// export/import, calling the two SqlDatabase instances directly (root
+// injectables, as repository.base.ts does).
 @Injectable({
   providedIn: 'root',
 })
 export class ConfigService {
-  protected readonly sqlite = inject(SqlService);
+  private readonly main = inject(MainSqlService);
+  private readonly catalog = inject(CatalogSqlService);
 
   // Fixed capacity that represents 100% of the usage bar.
   static readonly MAX_DB_BYTES = 20 * 1024 * 1024;
@@ -27,20 +29,26 @@ export class ConfigService {
     Math.min(100, (this._usedBytes() / ConfigService.MAX_DB_BYTES) * 100),
   );
 
-  // Size of the serialized DB in bytes, straight from the persisted buffer.
+  // Size of both serialized DBs in bytes, straight from the persisted buffers.
   async refreshUsage() {
-    const buffer = await this.sqlite.getStoredBinary();
-    this._usedBytes.set(buffer ? buffer.byteLength : 0);
+    const buffers = await Promise.all([
+      this.main.getStoredBinary(),
+      this.catalog.getStoredBinary(),
+    ]);
+
+    this._usedBytes.set(buffers.reduce((total, buffer) => total + (buffer?.byteLength ?? 0), 0));
   }
 
   // We return an Object URL (not a Blob URL) so the component can revoke it
   // after the download, avoiding leaking the backup in memory.
-  async createBackupUrl(): Promise<string> {
-    const buffer = this.sqlite.getBinary();
+  createBackupUrl(): string {
+    const buffer = this.main.getBinary();
     const blob = new Blob([buffer as unknown as BlobPart], { type: 'application/xsqlite dbsql' });
+
     return URL.createObjectURL(blob);
   }
 
+  // Only the user's DB is backed up: the exercise catalog is fixed and reseeds itself.
   async importBackup(buffer: Uint8Array): Promise<void> {
     // Validation of the header comparing only the first 8 bytes.
     const header = buffer.subarray(0, SQLITE_MAGIC_8.length);
@@ -51,7 +59,11 @@ export class ConfigService {
     ) {
       throw new Error('The file is not a valid SQLite database');
     }
-    await this.sqlite.load(buffer);
+    await this.main.load(buffer);
     await this.refreshUsage();
+  }
+
+  async reset(): Promise<void> {
+    await Promise.all([this.main.resetDatabase(), this.catalog.resetDatabase()]);
   }
 }

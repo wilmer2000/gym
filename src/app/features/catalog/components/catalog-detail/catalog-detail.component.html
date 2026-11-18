@@ -1,0 +1,31 @@
+<app-container [title]="exercise?.name ?? 'Ejercicio'">
+  <div header>
+    <a routerLink="/exercises" class="btn btn-secondary">Volver</a>
+  </div>
+
+  @if (exercise; as item) {
+    <section class="card">
+      <div class="card-body flex flex-col gap-4">
+        <dl class="grid gap-4 sm:grid-cols-2">
+          <div>
+            <dt class="text-xs uppercase text-text-muted">Grupo muscular</dt>
+            <dd class="text-sm text-primary">{{ item.muscleGroup }}</dd>
+          </div>
+          <div>
+            <dt class="text-xs uppercase text-text-muted">Equipo</dt>
+            <dd class="text-sm text-primary">{{ equipment() }}</dd>
+          </div>
+        </dl>
+
+        @if (item.description) {
+          <p class="text-sm text-text-secondary">{{ item.description }}</p>
+        }
+      </div>
+    </section>
+  } @else {
+    <div class="card card-body flex flex-col items-start gap-3">
+      <p class="text-sm text-text-secondary">No se encontró el ejercicio.</p>
+      <a routerLink="/exercises" class="btn btn-secondary">Volver al catálogo</a>
+    </div>
+  }
+</app-container>

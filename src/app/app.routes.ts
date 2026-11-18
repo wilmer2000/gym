@@ -13,14 +13,44 @@ export const routes: Routes = [
     loadComponent: () => import('./core/components/layout/base/base.component').then((m) => m.Base),
     children: [
       {
-        path: 'config',
+        path: '',
+        pathMatch: 'full',
+        redirectTo: 'plans',
+      },
+      {
+        path: 'plans',
         loadComponent: () =>
-          import('./core/modules/config/components/config/config.component').then((m) => m.Config),
+          import('./features/plans/components/plan-list/plan-list.component').then((m) => m.PlanListPage),
+      },
+      {
+        path: 'plans/new',
+        loadComponent: () =>
+          import('./features/plans/components/plan-form/plan-form.component').then((m) => m.PlanFormPage),
+      },
+      {
+        path: 'plans/:id/edit',
+        loadComponent: () =>
+          import('./features/plans/components/plan-form/plan-form.component').then((m) => m.PlanFormPage),
+      },
+      {
+        path: 'plans/:id',
+        loadComponent: () =>
+          import('./features/plans/components/plan-detail/plan-detail.component').then((m) => m.PlanDetailPage),
       },
       {
         path: 'exercises',
-        loadChildren: () =>
-          import('./features/exercises/exercises.routes').then((m) => m.EXERCISES_ROUTES),
+        loadComponent: () =>
+          import('./features/catalog/components/catalog-list/catalog-list.component').then((m) => m.CatalogListPage),
+      },
+      {
+        path: 'exercises/:id',
+        loadComponent: () =>
+          import('./features/catalog/components/catalog-detail/catalog-detail.component').then((m) => m.CatalogDetailPage),
+      },
+      {
+        path: 'config',
+        loadComponent: () =>
+          import('./core/modules/config/components/config/config.component').then((m) => m.Config),
       },
       {
         path: '**',

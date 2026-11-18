@@ -1,0 +1,54 @@
+<app-container [title]="plan()?.name ?? 'Plan'">
+  <div header class="flex gap-2">
+    <a routerLink="/plans" class="btn btn-secondary">Volver</a>
+    @if (plan()) {
+      <a [routerLink]="['/plans', plan()!.id, 'edit']" class="btn btn-primary">Editar</a>
+      <button type="button" class="btn btn-ghost text-danger" (click)="remove()">
+        Eliminar
+      </button>
+    }
+  </div>
+
+  @if (plan(); as item) {
+    <section class="card">
+      <div class="card-body flex flex-col gap-4">
+        <div class="flex flex-wrap items-center justify-between gap-3">
+          <p class="text-sm text-text-secondary">{{ summary() }}</p>
+
+          <app-toggle
+            id="plan-active"
+            label="Activo"
+            [ngModel]="item.active"
+            (ngModelChange)="toggleActive($event)"
+          />
+        </div>
+
+        @if (item.description) {
+          <p class="text-sm text-text-secondary">{{ item.description }}</p>
+        }
+      </div>
+    </section>
+
+    <section class="card">
+      <div class="card-body flex flex-col gap-3">
+        <h2 class="text-sm font-semibold text-primary">Ejercicios</h2>
+
+        <ol class="flex flex-col gap-2">
+          @for (exercise of exercises(); track $index) {
+            <li
+              class="flex items-center justify-between gap-3 rounded-md bg-surface-muted px-3 py-2"
+            >
+              <span class="text-sm text-primary">{{ $index + 1 }}. {{ exercise.name }}</span>
+              <span class="text-sm text-text-muted">{{ exercise.reps }} reps</span>
+            </li>
+          }
+        </ol>
+      </div>
+    </section>
+  } @else {
+    <div class="card card-body flex flex-col items-start gap-3">
+      <p class="text-sm text-text-secondary">No se encontró el plan.</p>
+      <a routerLink="/plans" class="btn btn-secondary">Volver al listado</a>
+    </div>
+  }
+</app-container>

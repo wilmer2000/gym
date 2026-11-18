@@ -59,6 +59,20 @@ export function dateOnly(value: unknown): string {
   return `${date.getFullYear()}-${month}-${day}`;
 }
 
+// Local start of day in epoch ms. yyyy-mm-dd is read as a local day: new Date()
+// would parse it as UTC and shift the day in negative timezones.
+export function startOfDay(value: unknown): number | null {
+  const iso = typeof value === 'string' ? /^(\d{4})-(\d{2})-(\d{2})$/.exec(value.trim()) : null;
+
+  if (iso) {
+    return new Date(Number(iso[1]), Number(iso[2]) - 1, Number(iso[3])).getTime();
+  }
+
+  const date = parseDate(value);
+
+  return date ? new Date(date.getFullYear(), date.getMonth(), date.getDate()).getTime() : null;
+}
+
 // Local calendar day as dd/MM/yyyy, the text the transaction form expects.
 export function dateInput(value: unknown): string {
   const date = parseDate(value);

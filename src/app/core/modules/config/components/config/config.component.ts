@@ -6,7 +6,6 @@ import { ConfigService } from '../../services/config.service';
 import { ChangePin } from '../../../login/components/change-pin/change-pin.component';
 import { Container } from '../../../../components/container/container.component';
 import { ModalService } from '../../../modal/services/modal.service';
-import { SqlService } from '../../../database/services/sql.service';
 import { DATABASE_FILENAME } from '../../../database/constants/database.constant';
 
 @Component({
@@ -24,8 +23,9 @@ import { DATABASE_FILENAME } from '../../../database/constants/database.constant
 export class Config {
   private readonly config = inject(ConfigService);
   private readonly modal = inject(ModalService);
-  private readonly sqlite = inject(SqlService);
   private readonly destroyRef = inject(DestroyRef);
+
+  protected readonly filename = DATABASE_FILENAME;
 
   constructor() {
     void this.config.refreshUsage();
@@ -75,8 +75,8 @@ export class Config {
         takeUntilDestroyed(this.destroyRef),
       )
       .subscribe(() => {
-        this.sqlite.resetDatabase().then(
-          // initLoadData() only runs at startup, so reload to drop stale signals.
+        this.config.reset().then(
+          // The databases are only read at startup, so reload to drop stale data.
           () => location.reload(),
           (error: unknown) => {
             console.error(`Eliminar cuenta failed: ${String(error)}`);
@@ -86,21 +86,15 @@ export class Config {
   }
 
   downloadBackup(): void {
-    this.config.createBackupUrl().then(
-      (url) => {
-        const anchor = document.createElement('a');
+    const url = this.config.createBackupUrl();
+    const anchor = document.createElement('a');
 
-        anchor.href = url;
-        anchor.download = DATABASE_FILENAME;
+    anchor.href = url;
+    anchor.download = DATABASE_FILENAME;
 
-        anchor.click();
+    anchor.click();
 
-        URL.revokeObjectURL(url);
-      },
-      (error: unknown) => {
-        console.error(`Descargar copia failed: ${String(error)}`);
-      },
-    );
+    URL.revokeObjectURL(url);
   }
 
   async importBackup(event: Event): Promise<void> {
