@@ -20,7 +20,9 @@
               >
                 <option value="">Elegí un ejercicio</option>
                 @for (exercise of exercises(); track exercise.id) {
-                  <option [value]="exercise.id">{{ exercise.name }}</option>
+                  <option [value]="exercise.id">
+                    {{ exercise.name }} · {{ muscle(exercise) }}
+                  </option>
                 }
               </select>
             </div>

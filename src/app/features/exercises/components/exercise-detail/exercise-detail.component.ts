@@ -1,7 +1,13 @@
-import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { Container } from '../../../../core/components/container/container.component';
-import { Exercise, EQUIPMENT_LABELS } from '../../interfaces/exercise';
+import {
+  EquipmentTranslations,
+  ExerciseTypeTranslations,
+  MuscleTranslations,
+  exerciseImage,
+} from '../../constants/exercises.constant';
+import { Exercise } from '../../interfaces/exercise';
 import { ExerciseRepository } from '../../repositories/exercise.repository';
 
 @Component({
@@ -24,7 +30,19 @@ export class ExerciseDetailPage {
     this.route.snapshot.paramMap.get('id') ?? '',
   );
 
-  protected readonly equipment = computed(() =>
-    this.exercise ? EQUIPMENT_LABELS[this.exercise.equipment] : '',
-  );
+  type(exercise: Exercise): string {
+    return ExerciseTypeTranslations[exercise.exerciseType] ?? exercise.exerciseType;
+  }
+
+  muscle(muscle: string): string {
+    return MuscleTranslations[muscle as keyof typeof MuscleTranslations] ?? muscle;
+  }
+
+  equipment(exercise: Exercise): string {
+    return EquipmentTranslations[exercise.equipment] ?? exercise.equipment;
+  }
+
+  image(exercise: Exercise): string {
+    return exerciseImage(exercise.id);
+  }
 }

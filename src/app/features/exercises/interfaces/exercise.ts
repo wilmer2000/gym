@@ -1,21 +1,30 @@
 export type Equipment =
-  'barbell' | 'dumbbell' | 'machine' | 'cable' | 'bodyweight' | 'band' | 'other';
+  'Barbell' | 'Dumbbell' | 'Machine' | 'Cable' | 'Bodyweight' | 'Kettlebell' | 'Band' | 'Other';
+
+export type ExerciseType =
+  'weight_reps' | 'bodyweight_reps' | 'duration' | 'distance_duration' | 'assisted_bodyweight';
+
+export type Muscle =
+  | 'Back'
+  | 'Chest'
+  | 'Shoulders'
+  | 'Biceps'
+  | 'Triceps'
+  | 'Core'
+  | 'Quadriceps'
+  | 'Hamstrings'
+  | 'Glutes'
+  | 'Calves'
+  | 'Forearms'
+  | 'Hip Flexors';
 
 export interface Exercise {
   id: string;
   name: string;
-  muscleGroup: string;
+  exerciseType: ExerciseType;
   equipment: Equipment;
+  primaryMuscle: Muscle;
+  secondaryMuscles: Muscle[];
   description: string | null;
   createdAt: number;
 }
-
-export const EQUIPMENT_LABELS: Record<Equipment, string> = {
-  barbell: 'Barra',
-  dumbbell: 'Mancuernas',
-  machine: 'Máquina',
-  cable: 'Polea',
-  bodyweight: 'Peso corporal',
-  band: 'Banda elástica',
-  other: 'Otro',
-};

@@ -65,6 +65,11 @@
                 "input": "public"
               },
               {
+                "glob": "{pull-up,lat-pulldown,seated-row,machine-row,straight-arm-pulldown,t-bar-row,dumbbell-bench-press,incline-dumbbell-press,pec-deck,cable-fly,dip,lateral-raise,rear-delt-fly,front-raise,machine-shoulder-press,face-pull,incline-dumbbell-curl,concentration-curl,cable-curl,preacher-curl,rope-hammer-curl,tricep-pushdown,overhead-tricep-extension,skull-crusher,tricep-kickback,bench-dip,crunch,weighted-russian-twist,hanging-knee-raise,plank,cable-crunch,leg-press,hack-squat,leg-extension,leg-curl,smith-machine-squat,calf-raise,hip-thrust,romanian-deadlift,walking-lunge,hip-abduction-machine}/frame-*.png",
+                "input": "node_modules/@bryllim/workout-guide/assets",
+                "output": "assets/"
+              },
+              {
                 "glob": "*.wasm",
                 "input": "node_modules/sql.js/dist/",
                 "output": "db/"

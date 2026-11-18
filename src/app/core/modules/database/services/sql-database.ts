@@ -56,11 +56,12 @@ export abstract class SqlDatabase {
     // in the script; passing [] would prepare only the first one.
     db.run(this.schema);
 
+    // Migrations run before the seed so a reshaped table exists before it is filled.
+    this.migrate(db);
+
     if (this.seed) {
       db.run(this.seed);
     }
-
-    this.migrate(db);
 
     await this.writeBinary(db.export());
     this.isReady.set(true);
@@ -149,11 +150,11 @@ export abstract class SqlDatabase {
     db.run('PRAGMA foreign_keys = ON;');
     db.run(this.schema);
 
+    this.migrate(db);
+
     if (this.seed) {
       db.run(this.seed);
     }
-
-    this.migrate(db);
 
     await this.writeBinary(db.export());
     this.isReady.set(true);

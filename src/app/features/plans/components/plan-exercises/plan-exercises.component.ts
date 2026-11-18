@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Input } from '../../../../core/modules/form/components/input/input.component';
+import { MuscleTranslations } from '../../../exercises/constants/exercises.constant';
 import { Exercise } from '../../../exercises/interfaces/exercise';
 import { PlanExerciseRow } from '../../interfaces/plan';
 
@@ -20,6 +21,10 @@ export class PlanExercisesForm {
   readonly rows = input.required<PlanExerciseRow[]>();
 
   readonly rowsChange = output<PlanExerciseRow[]>();
+
+  muscle(exercise: Exercise): string {
+    return MuscleTranslations[exercise.primaryMuscle] ?? exercise.primaryMuscle;
+  }
 
   addRow(): void {
     this.rowsChange.emit([

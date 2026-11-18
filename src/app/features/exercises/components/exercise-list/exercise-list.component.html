@@ -10,19 +10,37 @@
 
   <app-filters [filters]="filters" (selectionChange)="selections.set($event)" />
 
-  @if (exercises().length) {
-    <div class="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
-      @for (exercise of exercises(); track exercise.id) {
-        <a
-          [routerLink]="['/exercises', exercise.id]"
-          class="card card-hover flex flex-col gap-2 p-4 text-left"
-        >
-          <h2 class="text-base font-semibold text-primary">{{ exercise.name }}</h2>
-          <p class="text-sm text-text-secondary">{{ exercise.muscleGroup }}</p>
-          <p class="mt-auto text-xs text-text-muted">{{ equipment(exercise) }}</p>
-        </a>
-      }
-    </div>
+  @if (groups().length) {
+    @for (group of groups(); track group.muscle) {
+      <section class="flex flex-col gap-3">
+        <h2 class="text-xs font-semibold uppercase tracking-wide text-text-muted">
+          {{ group.label }}
+        </h2>
+
+        <div class="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
+          @for (exercise of group.exercises; track exercise.id) {
+            <a
+              [routerLink]="['/exercises', exercise.id]"
+              class="card card-hover flex items-center gap-3 p-4 text-left"
+            >
+              <span class="h-30 w-30 shrink-0 bg-gray-500">
+                <img
+                  [src]="image(exercise)"
+                  [alt]="exercise.name"
+                  loading="lazy"
+                  class="block"
+                />
+              </span>
+              <div class="flex flex-col gap-1">
+                <h3 class="text-base font-semibold text-primary">{{ exercise.name }}</h3>
+                <p class="text-sm text-text-secondary">{{ type(exercise) }}</p>
+                <p class="mt-auto text-xs text-text-muted">{{ equipment(exercise) }}</p>
+              </div>
+            </a>
+          }
+        </div>
+      </section>
+    }
   } @else {
     <div class="card px-6 py-12 text-center">
       <p class="text-sm text-text-secondary">
@@ -34,4 +52,10 @@
       </p>
     </div>
   }
+
+  <p class="text-center text-xs text-text-muted">
+    Ilustraciones: Bryl Lim —
+    <a href="https://bryllim.com" target="_blank" rel="noopener">bryllim.com</a>
+    (CC BY-SA 4.0)
+  </p>
 </app-container>

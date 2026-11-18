@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { RepositoryBase } from '../../../core/modules/database/repository/repository.base';
 import { ExerciseSqlService } from '../../../core/modules/database/services/exercise-sql.service';
-import { Exercise, Equipment } from '../interfaces/exercise';
+import { Exercise, Equipment, ExerciseType, Muscle } from '../interfaces/exercise';
 
 @Injectable({ providedIn: 'root' })
 export class ExerciseRepository extends RepositoryBase<Exercise> {
@@ -15,8 +15,10 @@ export class ExerciseRepository extends RepositoryBase<Exercise> {
     return {
       id: entity.id,
       name: entity.name,
-      muscle_group: entity.muscleGroup,
+      exercise_type: entity.exerciseType,
       equipment: entity.equipment,
+      primary_muscle: entity.primaryMuscle,
+      secondary_muscles: JSON.stringify(entity.secondaryMuscles ?? []),
       description: entity.description,
       created_at: entity.createdAt,
     };
@@ -26,8 +28,10 @@ export class ExerciseRepository extends RepositoryBase<Exercise> {
     return {
       id: String(row['id']),
       name: String(row['name']),
-      muscleGroup: String(row['muscle_group']),
+      exerciseType: row['exercise_type'] as ExerciseType,
       equipment: row['equipment'] as Equipment,
+      primaryMuscle: row['primary_muscle'] as Muscle,
+      secondaryMuscles: this.secondaryMuscles(row['secondary_muscles']),
       description: row['description'] ?? null,
       createdAt: Number(row['created_at']),
     };
@@ -37,7 +41,7 @@ export class ExerciseRepository extends RepositoryBase<Exercise> {
     return this.findAll();
   }
 
-  search({ name, muscleGroup }: { name?: string; muscleGroup?: string } = {}): Exercise[] {
+  search({ name, primaryMuscle }: { name?: string; primaryMuscle?: string } = {}): Exercise[] {
     const conditions: string[] = [];
     const params: unknown[] = [];
 
@@ -46,9 +50,9 @@ export class ExerciseRepository extends RepositoryBase<Exercise> {
       params.push(`%${name.trim()}%`);
     }
 
-    if (muscleGroup) {
-      conditions.push('muscle_group = ?');
-      params.push(muscleGroup);
+    if (primaryMuscle) {
+      conditions.push('primary_muscle = ?');
+      params.push(primaryMuscle);
     }
 
     const where = conditions.length ? ` WHERE ${conditions.join(' AND ')}` : '';
@@ -57,5 +61,15 @@ export class ExerciseRepository extends RepositoryBase<Exercise> {
       `SELECT * FROM ${this.table}${where} ORDER BY ${this.defaultOrder}`,
       params,
     );
+  }
+
+  private secondaryMuscles(value: unknown): Muscle[] {
+    try {
+      const parsed = JSON.parse(String(value ?? '[]'));
+
+      return Array.isArray(parsed) ? (parsed as Muscle[]) : [];
+    } catch {
+      return [];
+    }
   }
 }
