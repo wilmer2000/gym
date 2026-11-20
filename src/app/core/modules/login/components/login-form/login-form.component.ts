@@ -16,14 +16,14 @@ const FIELDS = ['d1', 'd2', 'd3', 'd4', 'd5', 'd6'] as const;
   selector: 'app-login-form',
   imports: [ReactiveFormsModule],
   template: `
-    <h1 class="text-lg font-semibold text-text-primary">{{ label() }}</h1>
+    <h1>{{ label() }}</h1>
 
     @if (description()) {
-      <p class="label-helper">{{ description() }}</p>
+      <p>{{ description() }}</p>
     }
 
     <form [formGroup]="form">
-      <div class="my-6 flex justify-between gap-2">
+      <div>
         @for (field of fields; track field; let i = $index) {
           <input
             #pinInput
@@ -32,7 +32,6 @@ const FIELDS = ['d1', 'd2', 'd3', 'd4', 'd5', 'd6'] as const;
             inputmode="numeric"
             maxlength="1"
             autocomplete="off"
-            class="input w-11 text-center text-lg"
             [attr.aria-label]="'Dígito ' + (i + 1)"
             (input)="onInput(i, $event)"
             (keydown.backspace)="onBackspace(i, $event)"
@@ -42,7 +41,7 @@ const FIELDS = ['d1', 'd2', 'd3', 'd4', 'd5', 'd6'] as const;
     </form>
 
     @if (error()) {
-      <p class="mb-3 text-sm text-danger" role="alert">{{ error() }}</p>
+      <p role="alert">{{ error() }}</p>
     }
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,

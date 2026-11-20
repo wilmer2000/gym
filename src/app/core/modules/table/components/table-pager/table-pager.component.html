@@ -1,12 +1,11 @@
-<div class="flex flex-col gap-4 w-full">
-  <div class="flex flex-row flex-wrap items-center justify-end gap-2 md:flex-nowrap">
+<div>
+  <div>
     <ng-content />
     @if (editable()) {
       <button
         type="button"
         [disabled]="!canEdit()"
         [attr.aria-disabled]="!canEdit()"
-        class="btn btn-primary cursor-pointer"
         (click)="openEdit()"
       >
         Editar {{ selectedKeys().length }}
@@ -17,7 +16,6 @@
         type="button"
         [disabled]="!canEdit()"
         [attr.aria-disabled]="!canEdit()"
-        class="btn btn-secondary text-red-600 cursor-pointer"
         (click)="openRemove()"
       >
         Eliminar {{ selectedKeys().length }}

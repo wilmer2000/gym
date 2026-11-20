@@ -1,6 +1,6 @@
-<section class="card">
-  <div class="card-body flex flex-col gap-3">
-    <h2 class="text-sm font-semibold text-primary">Calendario</h2>
+<section>
+  <div>
+    <h2>Calendario</h2>
 
     <app-selector
       id="plan-mode"
@@ -12,7 +12,7 @@
     />
 
     @if (mode() === 'weekly') {
-      <div class="grid gap-3 sm:grid-cols-2">
+      <div>
         <app-input
           id="plan-start"
           name="plan-start"
@@ -34,18 +34,15 @@
       </div>
 
       @if (endDate() && startDate() && endDate() < startDate()) {
-        <p class="text-xs text-danger">La fecha final no puede ser anterior al inicio.</p>
+        <p>La fecha final no puede ser anterior al inicio.</p>
       }
 
-      <div class="flex flex-col gap-1">
-        <span class="label mb-0">Días</span>
-        <div class="flex flex-wrap gap-2">
+      <div>
+        <span>Días</span>
+        <div>
           @for (day of weekdays; track day.value) {
             <button
               type="button"
-              class="btn btn-sm"
-              [class.btn-primary]="selectedDays().includes(day.value)"
-              [class.btn-secondary]="!selectedDays().includes(day.value)"
               [attr.aria-pressed]="selectedDays().includes(day.value)"
               (click)="toggleDay(day.value)"
             >
@@ -54,12 +51,12 @@
           }
         </div>
         @if (selectedDays().length === 0) {
-          <p class="text-xs text-text-muted">Elegí al menos un día.</p>
+          <p>Elegí al menos un día.</p>
         }
       </div>
     } @else {
-      <div class="flex items-end gap-2">
-        <div class="flex-1">
+      <div>
+        <div>
           <app-input
             id="plan-date"
             name="plan-date"
@@ -69,27 +66,20 @@
             (ngModelChange)="newDate.set($event)"
           />
         </div>
-        <button type="button" class="btn btn-secondary" (click)="addDate()">Agregar</button>
+        <button type="button" (click)="addDate()">Agregar</button>
       </div>
 
       @if (dates().length) {
-        <div class="flex flex-wrap gap-2">
+        <div>
           @for (date of dates(); track date) {
-            <span class="badge-accent gap-2">
+            <span>
               {{ dateLabel(date) }}
-              <button
-                type="button"
-                class="cursor-pointer"
-                aria-label="Quitar fecha"
-                (click)="removeDate(date)"
-              >
-                ×
-              </button>
+              <button type="button" aria-label="Quitar fecha" (click)="removeDate(date)">×</button>
             </span>
           }
         </div>
       } @else {
-        <p class="text-xs text-text-muted">Agregá al menos una fecha.</p>
+        <p>Agregá al menos una fecha.</p>
       }
     }
   </div>

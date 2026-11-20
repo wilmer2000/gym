@@ -1,53 +1,34 @@
 @if (modal(); as state) {
-  <div
-    class="fixed inset-0 z-50 flex items-center justify-center bg-gray-950/50 p-2 md:p-4"
-    (click)="trigger('close')"
-  >
-    <div
-      class="flex flex-col gap-4 w-full max-w-lg max-h-[calc(100dvh-2rem)] md:max-h-[calc(100dvh-4rem)] overflow-y-auto p-4 md:p-6 bg-surface rounded-2xl shadow-2xl"
-      (click)="$event.stopPropagation()"
-    >
-      <header class="flex flex-row gap-3 items-start">
-        <span
-          class="flex w-9 h-9 shrink-0 justify-center items-center rounded-full text-lg font-bold"
-          [class]="tone().iconClass"
-        >
+  <div (click)="trigger('close')">
+    <div (click)="$event.stopPropagation()">
+      <header>
+        <span>
           {{ tone().icon }}
         </span>
-        <div class="flex flex-col gap-1">
-          <h2 class="text-lg font-semibold" [class]="tone().title">{{ state.title }}</h2>
+        <div>
+          <h2>{{ state.title }}</h2>
           @if (state.subtitle) {
-            <p class="text-sm text-text-muted">{{ state.subtitle }}</p>
+            <p>{{ state.subtitle }}</p>
           }
         </div>
       </header>
 
-      <div class="flex flex-col gap-4">
+      <div>
         <ng-content />
         <ng-container #host />
       </div>
 
-      <footer class="flex flex-row justify-end gap-2">
+      <footer>
         @if (state.buttons.backButton) {
-          <button
-            type="button"
-            class="btn btn-secondary cursor-pointer"
-            (click)="trigger('back')"
-          >
-            Volver
-          </button>
+          <button type="button" (click)="trigger('back')">Volver</button>
         }
         @if (state.buttons.closeButton) {
-          <button
-            type="button"
-            class="btn btn-secondary cursor-pointer"
-            (click)="trigger('close')"
-          >
+          <button type="button" (click)="trigger('close')">
             {{ state.closeLabel }}
           </button>
         }
         @if (state.buttons.okButton) {
-          <button type="button" class="btn btn-primary cursor-pointer" (click)="trigger('ok')">
+          <button type="button" (click)="trigger('ok')">
             {{ state.okLabel }}
           </button>
         }

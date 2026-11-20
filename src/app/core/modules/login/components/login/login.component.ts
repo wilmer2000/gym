@@ -7,22 +7,15 @@ import { LoginForm } from '../login-form/login-form.component';
   selector: 'app-login',
   imports: [LoginForm],
   template: `
-    <div class="fixed inset-0 z-50 flex items-center justify-center bg-surface-muted p-4">
-      <div class="card w-full max-w-sm p-6" (keydown.enter)="submit()">
+    <div>
+      <div (keydown.enter)="submit()">
         <app-login-form
           description="La primera vez que lo ingreses quedará guardado en este dispositivo."
           [error]="error()"
           (valueChange)="pin.set($event)"
         />
 
-        <button
-          type="button"
-          class="btn-primary mt-3 w-full"
-          [disabled]="pin().length !== 6"
-          (click)="submit()"
-        >
-          Ingresar
-        </button>
+        <button type="button" [disabled]="pin().length !== 6" (click)="submit()">Ingresar</button>
       </div>
     </div>
   `,

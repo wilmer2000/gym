@@ -1,19 +1,16 @@
-<section class="card">
-  <div class="card-body flex flex-col gap-3">
-    <div class="flex items-center justify-between gap-2">
-      <h2 class="text-sm font-semibold text-primary">Ejercicios</h2>
-      <button type="button" class="btn btn-secondary btn-sm" (click)="addRow()">
-        Agregar ejercicio
-      </button>
+<section>
+  <div>
+    <div>
+      <h2>Ejercicios</h2>
+      <button type="button" (click)="addRow()">Agregar ejercicio</button>
     </div>
 
     @if (rows().length) {
-      <div class="flex flex-col gap-3">
+      <div>
         @for (row of rows(); track $index) {
-          <div class="flex flex-col gap-2 sm:flex-row sm:items-end">
-            <div class="flex-1">
+          <div>
+            <div>
               <select
-                class="select"
                 [value]="row.exerciseId"
                 [attr.aria-label]="'Ejercicio ' + ($index + 1)"
                 (change)="setExercise($index, $event)"
@@ -27,7 +24,7 @@
               </select>
             </div>
 
-            <div class="w-full sm:w-20">
+            <div>
               <app-input
                 [id]="'plan-sets-' + $index"
                 [name]="'plan-sets-' + $index"
@@ -39,7 +36,7 @@
               />
             </div>
 
-            <div class="w-full sm:w-24">
+            <div>
               <app-input
                 [id]="'plan-reps-' + $index"
                 [name]="'plan-reps-' + $index"
@@ -51,39 +48,25 @@
               />
             </div>
 
-            <div class="flex gap-1">
+            <div>
               <button
                 type="button"
-                class="btn btn-ghost btn-sm"
                 [disabled]="$first"
                 aria-label="Subir"
                 (click)="move($index, -1)"
               >
                 ↑
               </button>
-              <button
-                type="button"
-                class="btn btn-ghost btn-sm"
-                [disabled]="$last"
-                aria-label="Bajar"
-                (click)="move($index, 1)"
-              >
+              <button type="button" [disabled]="$last" aria-label="Bajar" (click)="move($index, 1)">
                 ↓
               </button>
-              <button
-                type="button"
-                class="btn btn-ghost btn-sm text-danger"
-                aria-label="Quitar"
-                (click)="removeRow($index)"
-              >
-                ×
-              </button>
+              <button type="button" aria-label="Quitar" (click)="removeRow($index)">×</button>
             </div>
           </div>
         }
       </div>
     } @else {
-      <p class="text-xs text-text-muted">Agregá al menos un ejercicio.</p>
+      <p>Agregá al menos un ejercicio.</p>
     }
   </div>
 </section>

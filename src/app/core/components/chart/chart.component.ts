@@ -31,7 +31,7 @@ const NUMBER = new Intl.NumberFormat('en-US');
 
 @Component({
   selector: 'app-chart',
-  template: ` <canvas #canvas aria-label="{{ title() }}" class="w-full h-64 sm:h-72"></canvas> `,
+  template: ` <canvas #canvas aria-label="{{ title() }}"></canvas> `,
   styles: `
     :host {
       display: block;

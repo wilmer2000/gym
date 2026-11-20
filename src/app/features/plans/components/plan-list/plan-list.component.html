@@ -1,6 +1,6 @@
 <app-container title="Planes" subtitle="Rutinas de entrenamiento">
-  <div header class="flex flex-col gap-3 sm:flex-row sm:items-end">
-    <div class="w-full sm:w-64">
+  <div header>
+    <div>
       <app-input
         id="plan-search"
         placeholder="Buscar por nombre"
@@ -16,60 +16,41 @@
       (ngModelChange)="onlyActive.set($event)"
     />
 
-    <a routerLink="/plans/new" class="btn btn-primary">Nuevo plan</a>
+    <a routerLink="/plans/new">Nuevo plan</a>
   </div>
 
   @if (rows().length) {
-    <div class="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
+    <div>
       @for (row of rows(); track row.plan.id) {
-        <div class="card flex flex-col gap-2 p-4">
-          <div class="flex items-start justify-between gap-2">
-            <a
-              [routerLink]="['/plans', row.plan.id]"
-              class="text-base font-semibold text-primary hover:underline"
-            >
+        <div>
+          <div>
+            <a [routerLink]="['/plans', row.plan.id]">
               {{ row.plan.name }}
             </a>
 
-            <button
-              type="button"
-              class="cursor-pointer"
-              [class.badge-success]="row.plan.active"
-              [class.badge-warning]="!row.plan.active"
-              (click)="toggleActive(row.plan)"
-            >
+            <button type="button" (click)="toggleActive(row.plan)">
               {{ row.plan.active ? 'Activo' : 'Inactivo' }}
             </button>
           </div>
 
           @if (row.plan.description) {
-            <p class="text-sm text-text-secondary">{{ row.plan.description }}</p>
+            <p>{{ row.plan.description }}</p>
           }
 
-          <p class="text-xs text-text-muted">
-            {{ row.summary }} · {{ row.exercises }} ejercicio{{
-              row.exercises === 1 ? '' : 's'
-            }}
+          <p>
+            {{ row.summary }} · {{ row.exercises }} ejercicio{{ row.exercises === 1 ? '' : 's' }}
           </p>
 
-          <div class="mt-auto flex gap-2 pt-2">
-            <a [routerLink]="['/plans', row.plan.id, 'edit']" class="btn btn-secondary btn-sm">
-              Editar
-            </a>
-            <button
-              type="button"
-              class="btn btn-ghost btn-sm text-danger"
-              (click)="remove(row.plan)"
-            >
-              Eliminar
-            </button>
+          <div>
+            <a [routerLink]="['/plans', row.plan.id, 'edit']"> Editar </a>
+            <button type="button" (click)="remove(row.plan)">Eliminar</button>
           </div>
         </div>
       }
     </div>
   } @else {
-    <div class="card px-6 py-12 text-center">
-      <p class="text-sm text-text-secondary">
+    <div>
+      <p>
         {{
           search() || onlyActive()
             ? 'No hay planes que coincidan con la búsqueda.'

@@ -1,6 +1,6 @@
-<div class="flex flex-row flex-wrap gap-3 md:gap-4 items-baseline">
+<div>
   @for (filter of filters(); track filter.id) {
-    <div class="self-baseline-last">
+    <div>
       @switch (filter.type) {
         @case ('date-range') {
           <app-range-date
@@ -41,7 +41,6 @@
         }
         @case ('toggle') {
           <app-toggle
-            class="block"
             [id]="filter.id"
             [label]="label(filter)"
             [ngModel]="toggleValue(filter.id)"
@@ -62,12 +61,6 @@
   }
 
   @if (dirty()) {
-    <button
-      type="button"
-      class="btn btn-secondary btn-sm cursor-pointer hover:bg-surface-muted transition"
-      (click)="clear()"
-    >
-      Limpiar
-    </button>
+    <button type="button" (click)="clear()">Limpiar</button>
   }
 </div>

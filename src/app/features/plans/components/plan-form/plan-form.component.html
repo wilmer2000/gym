@@ -1,14 +1,14 @@
 <app-container [title]="planId ? 'Editar plan' : 'Nuevo plan'">
-  <div header class="flex gap-2">
-    <a routerLink="/plans" class="btn btn-secondary">Cancelar</a>
-    <button type="submit" form="plan-form" class="btn btn-primary">Guardar</button>
+  <div header>
+    <a routerLink="/plans">Cancelar</a>
+    <button type="submit" form="plan-form">Guardar</button>
   </div>
 
   @if (error()) {
-    <p class="card border-danger px-4 py-3 text-sm text-danger">{{ error() }}</p>
+    <p>{{ error() }}</p>
   }
 
-  <form id="plan-form" class="flex flex-col gap-4" (ngSubmit)="save()">
+  <form id="plan-form" (ngSubmit)="save()">
     <app-plan-data-form
       [name]="name()"
       [description]="description()"

@@ -1,42 +1,21 @@
-<nav class="flex flex-row flex-wrap gap-1 items-center justify-center">
-  <button
-    type="button"
-    class="btn btn-ghost btn-sm mr-1 px-2"
-    [class]="current() === 0 ? 'text-gray-300 cursor-not-allowed' : 'cursor-pointer'"
-    [disabled]="current() === 0"
-    (click)="go(current() - 1)"
-  >
-    <span class="mr-1">&larr;</span> Anterior
+<nav>
+  <button type="button" [disabled]="current() === 0" (click)="go(current() - 1)">
+    <span>&larr;</span> Anterior
   </button>
 
   @for (page of visiblePages(); track page) {
-    <button
-      type="button"
-      class="btn btn-ghost btn-sm w-9 px-0"
-      [class]="
-        page === current()
-          ? 'bg-primary-600 text-white hover:bg-primary-700 hover:text-white'
-          : 'cursor-pointer'
-      "
-      (click)="go(page)"
-    >
+    <button type="button" (click)="go(page)">
       {{ page + 1 }}
     </button>
   }
 
-  <button
-    type="button"
-    class="btn btn-ghost btn-sm mr-1 px-2"
-    [class]="current() === pages() - 1 ? 'text-gray-300 cursor-not-allowed' : 'cursor-pointer'"
-    [disabled]="current() === pages() - 1"
-    (click)="go(current() + 1)"
-  >
-    Siguiente <span class="ml-1">&rarr;</span>
+  <button type="button" [disabled]="current() === pages() - 1" (click)="go(current() + 1)">
+    Siguiente <span>&rarr;</span>
   </button>
 
-  <label class="label mb-0 flex flex-row items-center gap-2 text-text-secondary">
+  <label>
     <span>Filas</span>
-    <select class="select h-9 w-auto cursor-pointer" [value]="size()" (change)="changeSize($event)">
+    <select [value]="size()" (change)="changeSize($event)">
       @for (option of sizes(); track option) {
         <option [value]="option" [selected]="option === size()">{{ option }}</option>
       }

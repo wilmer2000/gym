@@ -4,12 +4,12 @@ import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 @Component({
   selector: 'app-container',
   template: `
-    <section class="flex flex-col h-full gap-4 w-full">
-      <header class="flex flex-col justify-between gap-3 lg:flex-row">
-        <div class="flex flex-col gap-1">
-          <h1 class="text-xl font-semibold text-primary">{{ title() }}</h1>
+    <section>
+      <header>
+        <div>
+          <h1>{{ title() }}</h1>
           @if (subtitle()) {
-            <p class="text-sm text-text-muted">{{ subtitle() }}</p>
+            <p>{{ subtitle() }}</p>
           }
         </div>
         <ng-content select="[header]" />

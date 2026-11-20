@@ -1,15 +1,10 @@
-<div class="flex flex-col gap-1">
+<div>
   @if (label()) {
-    <label [for]="id()" class="label mb-0">{{ label() }}</label>
+    <label [for]="id()">{{ label() }}</label>
   }
 
-  <div class="flex gap-2">
-    <select
-      class="select w-auto cursor-pointer"
-      aria-label="Buscar en"
-      [value]="selected()"
-      (change)="setOption($event)"
-    >
+  <div>
+    <select aria-label="Buscar en" [value]="selected()" (change)="setOption($event)">
       @for (opt of options(); track opt.id) {
         <option [value]="opt.id">{{ opt.icon ? opt.icon + ' ' : '' }}{{ opt.label }}</option>
       }
@@ -18,7 +13,6 @@
     <input
       [id]="id()"
       type="search"
-      class="input"
       [placeholder]="placeholder()"
       [value]="query()"
       (input)="search($event)"

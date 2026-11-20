@@ -1,94 +1,70 @@
 <app-container title="Configuración">
-  <div class="flex flex-col gap-4">
-    <div class="card p-3 md:p-6">
-      <h3 class="text-md font-semibold text-primary mb-6">Base de datos</h3>
+  <div>
+    <div>
+      <h3>Base de datos</h3>
 
-      <div class="flex flex-col gap-2 md:flex-row md:items-center md:gap-4">
+      <div>
         <div
-          class="h-2 w-full overflow-hidden rounded-full bg-surface-muted md:flex-1"
           role="progressbar"
           aria-label="Uso de la base de datos"
           aria-valuemin="0"
           aria-valuemax="100"
           [attr.aria-valuenow]="dbUsage().percent"
         >
-          <div class="h-2 rounded-full bg-accent-500" [style.width]="usageBar()"></div>
+          <div [style.width]="usageBar()"></div>
         </div>
 
-        <span class="text-xs font-medium text-text-muted">
+        <span>
           {{ usedBytesMessage() }}
         </span>
       </div>
     </div>
-    <div class="card p-3 md:p-6">
-      <h3 class="text-md font-semibold text-primary mb-6">Copia de seguridad y recuperación</h3>
+    <div>
+      <h3>Copia de seguridad y recuperación</h3>
 
-      <div class="flex flex-col gap-8">
-        <div class="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-          <p class="text-sm text-text-muted md:max-w-md">
+      <div>
+        <div>
+          <p>
             Crea una copia de seguridad de los planes ({{ filename }}) y guardala en un lugar
             seguro.
           </p>
 
-          <button
-            class="btn btn-primary cursor-pointer p-2 px-4 text-sm font-medium"
-            (click)="downloadBackup()"
-          >
-            Descargar copia
-          </button>
+          <button (click)="downloadBackup()">Descargar copia</button>
         </div>
 
-        <div class="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-          <p class="text-sm text-text-muted md:max-w-md">
-            Sube una copia de seguridad de los planes para recuperarla.
-          </p>
+        <div>
+          <p>Sube una copia de seguridad de los planes para recuperarla.</p>
 
-          <label class="btn btn-primary cursor-pointer p-2 px-4 text-sm font-medium">
+          <label>
             <span>Subir copia de seguridad</span>
-            <input
-              type="file"
-              class="hidden"
-              accept=".db,.sqlite,.sqlite3"
-              (change)="importBackup($event)"
-            />
+            <input type="file" accept=".db,.sqlite,.sqlite3" (change)="importBackup($event)" />
           </label>
         </div>
       </div>
     </div>
-    <div class="card p-3 md:p-6">
-      <h3 class="text-md font-semibold text-text-primary mb-6">Seguridad</h3>
+    <div>
+      <h3>Seguridad</h3>
 
-      <div class="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-        <p class="text-sm text-text-muted md:max-w-md">
+      <div>
+        <p>
           El PIN bloquea la app cada vez que la abrís. Para cambiarlo se valida primero el PIN
           actual.
         </p>
 
-        <button
-          type="button"
-          class="btn btn-secondary cursor-pointer p-2 px-4 text-sm font-medium"
-          (click)="openChangePin()"
-        >
-          Cambiar PIN
-        </button>
+        <button type="button" (click)="openChangePin()">Cambiar PIN</button>
       </div>
     </div>
-    <div class="card p-3 md:p-6">
-      <h3 class="text-md font-semibold text-primary mb-6">Eliminar cuenta</h3>
+    <div>
+      <h3>Eliminar cuenta</h3>
 
-      <div class="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-        <p class="text-sm text-text-muted md:max-w-md">
+      <div>
+        <p>
           Se eliminarán todos los planes y el catálogo vuelve a su estado inicial. Esta acción es
           permanente y no hay forma de recuperar la información. Descargá una copia de seguridad
           antes de continuar para evitar la pérdida total de los datos.
         </p>
 
-        <button
-          class="btn btn-secondary text-red-600 cursor-pointer p-2 px-4 text-sm font-medium md:self-baseline-last"
-          (click)="confirmDelete()"
-        >
-          Eliminar cuenta
-        </button>
+        <button (click)="confirmDelete()">Eliminar cuenta</button>
       </div>
     </div>
   </div>

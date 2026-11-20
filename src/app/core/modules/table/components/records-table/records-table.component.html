@@ -1,5 +1,5 @@
 <app-container [title]="title()">
-  <div class="card flex flex-col gap-4 p-3 md:p-6">
+  <div>
     <app-filters [filters]="filters()" (selectionChange)="setSelection($event)" />
     <app-table-pager
       [columns]="columns()"

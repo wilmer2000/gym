@@ -1,19 +1,16 @@
-<div class="flex flex-col gap-1">
-  <label [for]="id()" class="flex cursor-pointer items-center gap-2">
+<div>
+  <label [for]="id()">
     <input
       [id]="id()"
       type="checkbox"
-      class="peer sr-only"
       [checked]="value()"
       [disabled]="disabled()"
       (change)="setValue($event)"
       (blur)="onTouched()"
     />
-    <span
-      class="relative h-5 w-9 shrink-0 rounded-full bg-border transition-colors after:absolute after:top-0.5 after:left-0.5 after:h-4 after:w-4 after:rounded-full after:bg-surface after:shadow-xs after:transition-transform peer-checked:bg-accent-500 peer-checked:after:translate-x-4 peer-focus-visible:ring-2 peer-focus-visible:ring-accent-300 peer-disabled:opacity-60"
-    ></span>
+    <span></span>
     @if (label()) {
-      <span class="text-sm text-text-primary">{{ label() }}</span>
+      <span>{{ label() }}</span>
     }
   </label>
 </div>
