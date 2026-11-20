@@ -1,5 +1,10 @@
 import { Routes } from '@angular/router';
+import { configRoutes } from './core/modules/config/config.route';
 import { canAccess } from './core/modules/login/guards/can-access.guard';
+import { dashboardRoutes } from './features/dashboard/dashboard.route';
+import { exercisesRoutes } from './features/exercises/exercises.route';
+import { plansRoutes } from './features/plans/plans.route';
+import { profileRoutes } from './features/profile/profile.route';
 
 export const routes: Routes = [
   {
@@ -15,43 +20,13 @@ export const routes: Routes = [
       {
         path: '',
         pathMatch: 'full',
-        redirectTo: 'plans',
+        redirectTo: 'dashboard',
       },
-      {
-        path: 'plans',
-        loadComponent: () =>
-          import('./features/plans/components/plan-list/plan-list.component').then((m) => m.PlanListPage),
-      },
-      {
-        path: 'plans/new',
-        loadComponent: () =>
-          import('./features/plans/components/plan-form/plan-form.component').then((m) => m.PlanFormPage),
-      },
-      {
-        path: 'plans/:id/edit',
-        loadComponent: () =>
-          import('./features/plans/components/plan-form/plan-form.component').then((m) => m.PlanFormPage),
-      },
-      {
-        path: 'plans/:id',
-        loadComponent: () =>
-          import('./features/plans/components/plan-detail/plan-detail.component').then((m) => m.PlanDetailPage),
-      },
-      {
-        path: 'exercises',
-        loadComponent: () =>
-          import('./features/exercises/components/exercise-list/exercise-list.component').then((m) => m.ExerciseListPage),
-      },
-      {
-        path: 'exercises/:id',
-        loadComponent: () =>
-          import('./features/exercises/components/exercise-detail/exercise-detail.component').then((m) => m.ExerciseDetailPage),
-      },
-      {
-        path: 'config',
-        loadComponent: () =>
-          import('./core/modules/config/components/config/config.component').then((m) => m.Config),
-      },
+      ...dashboardRoutes,
+      ...plansRoutes,
+      ...exercisesRoutes,
+      ...profileRoutes,
+      ...configRoutes,
       {
         path: '**',
         redirectTo: '',
