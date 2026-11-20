@@ -6,19 +6,7 @@ import { LoginForm } from '../login-form/login-form.component';
 @Component({
   selector: 'app-login',
   imports: [LoginForm],
-  template: `
-    <div>
-      <div (keydown.enter)="submit()">
-        <app-login-form
-          description="La primera vez que lo ingreses quedará guardado en este dispositivo."
-          [error]="error()"
-          (valueChange)="pin.set($event)"
-        />
-
-        <button type="button" [disabled]="pin().length !== 6" (click)="submit()">Ingresar</button>
-      </div>
-    </div>
-  `,
+  templateUrl: './login.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Login {

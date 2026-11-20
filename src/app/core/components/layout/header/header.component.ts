@@ -1,10 +1,10 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { Avatar } from '../../avatar/avatar.component';
+import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 
 @Component({
   selector: 'app-header',
-  imports: [Avatar],
-  template: ` <div class="flex w-full"><app-avatar /></div> `,
+  template: ` <div class="flex w-full h-12">
+    {{ title() }}
+  </div> `,
   styles: `
     :host {
       display: block;
@@ -13,4 +13,6 @@ import { Avatar } from '../../avatar/avatar.component';
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class Header {}
+export class Header {
+  title = signal<string>('app-header');
+}

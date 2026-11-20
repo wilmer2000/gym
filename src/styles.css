@@ -1,46 +1,64 @@
 @import 'tailwindcss';
 
 @theme {
-    --font-sans: 'Outfit', ui-sans-serif, system-ui, -apple-system, sans-serif;
-    --font-display: 'Outfit', ui-sans-serif, sans-serif;
-    --font-mono: 'JetBrains Mono', ui-monospace, monospace;
-    --color-primary: var(--color-lime-500);
-    --color-app: var(--color-zinc-800);
+  --font-sans: 'Outfit', ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-display: 'Outfit', ui-sans-serif, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+  --color-primary: var(--color-lime-500);
+  --color-app: var(--color-zinc-800);
 }
 
 @layer base {
-    html {
-        -webkit-font-smoothing: antialiased;
-        -moz-osx-font-smoothing: grayscale;
-        font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
-        font-optical-sizing: auto;
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+    font-optical-sizing: auto;
 
-        @apply bg-(--color-app) text-gray-100;
-    }
+    @apply bg-(--color-app) text-gray-200 font-light;
+  }
 
-    body {
-        @apply bg-(--color-app) text-gray-100 antialiased;
-        min-height: 100%;
-        margin: 0;
-    }
+  body {
+    @apply bg-(--color-app) text-gray-200 antialiased;
+    min-height: 100%;
+    margin: 0;
+  }
 
-    h1,
-    h2,
-    h3 {
-        font-family: var(--font-display), serif;
-        letter-spacing: -0.02em;
-    }
-
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-display), serif;
+    @apply font-medium;
+  }
 }
 
 @utility glass {
-    @apply bg-gray-700/30 backdrop-blur-md border border-white/10 rounded-2xl shadow-lg;
+  @apply bg-gray-700/30 backdrop-blur-md border border-gray-700 rounded-2xl shadow-lg;
+}
+@utility card {
+  @apply glass;
+
+  .card-body {
+    @apply p-4;
+  }
 }
 /*@utility btn {*/
 /*}*/
 
-/*@utility input {*/
-/*}*/
+@utility input {
+  @apply w-full rounded-md px-2 py-3 text-sm;
+  @apply placeholder:text-neutral-400;
+  @apply transition-all duration-150;
+  @apply focus:outline-none;
+  @apply disabled:cursor-not-allowed disabled:opacity-60;
+  @apply bg-gray-600 border border-gray-600 rounded-xl;
+
+  /*color: var(--color-text-primary);*/
+  /*background-color: var(--color-surface);*/
+  /*border: 1px solid var(--color-border);*/
+  /*box-shadow: inset 0 1px 2px 0 rgb(0 0 0 / 0.03);*/
+  /*transition-timing-function: var(--ease-premium);*/
+}
 
 /*@layer components {*/
 /*    .btn {*/

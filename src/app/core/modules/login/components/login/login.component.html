@@ -1,0 +1,13 @@
+<div class="flex flex-col-reverse relative min-h-screen p-6">
+  <div class="card">
+    <div (keydown.enter)="submit()" class="card-body">
+      <app-login-form
+        description="La primera vez que lo ingreses quedará guardado en este dispositivo."
+        [error]="error()"
+        (valueChange)="pin.set($event)"
+      />
+
+      <button type="button" [disabled]="pin().length !== 6" (click)="submit()">Ingresar</button>
+    </div>
+  </div>
+</div>

@@ -23,7 +23,7 @@ const FIELDS = ['d1', 'd2', 'd3', 'd4', 'd5', 'd6'] as const;
     }
 
     <form [formGroup]="form">
-      <div>
+      <div class="my-6 flex justify-between gap-2">
         @for (field of fields; track field; let i = $index) {
           <input
             #pinInput
@@ -32,6 +32,7 @@ const FIELDS = ['d1', 'd2', 'd3', 'd4', 'd5', 'd6'] as const;
             inputmode="numeric"
             maxlength="1"
             autocomplete="off"
+            class="input w-10 text-center text-lg"
             [attr.aria-label]="'Dígito ' + (i + 1)"
             (input)="onInput(i, $event)"
             (keydown.backspace)="onBackspace(i, $event)"
