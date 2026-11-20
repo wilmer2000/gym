@@ -4,16 +4,18 @@ import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 @Component({
   selector: 'app-container',
   template: `
-    <section>
-      <header>
-        <div>
-          <h1>{{ title() }}</h1>
-          @if (subtitle()) {
-            <p>{{ subtitle() }}</p>
-          }
-        </div>
+    <section class="flex flex-col w-full">
+      <div>
+        @if (title() || subtitle()) {
+          <div class="flex flex-col">
+            <h1 class="font-medium text-3xl">{{ title() }}</h1>
+            @if (subtitle()) {
+              <p class="text-lg">{{ subtitle() }}</p>
+            } 
+          </div>
+        }
         <ng-content select="[header]" />
-      </header>
+      </div>
 
       <ng-content />
     </section>
@@ -27,6 +29,6 @@ import { ChangeDetectionStrategy, Component, input } from '@angular/core';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Container {
-  title = input.required<string>();
+  title = input<string>();
   subtitle = input<string>();
 }

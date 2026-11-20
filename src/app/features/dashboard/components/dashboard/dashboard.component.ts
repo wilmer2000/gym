@@ -1,8 +1,9 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { Container } from '../../../../core/components/container/container.component';
 
 @Component({
   selector: 'app-dashboard',
-  template: '',
+  templateUrl: './dashboard.component.html',
   styles: `
     :host {
       display: block;
@@ -10,5 +11,6 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
     }
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [Container],
 })
 export class DashboardPage {}

@@ -1,11 +1,10 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { Header } from '../header/header.component';
 import { Menu } from '../menu/menu.component';
 
 @Component({
   selector: 'app-base',
-  imports: [RouterOutlet, Header, Menu],
+  imports: [RouterOutlet, Menu],
   templateUrl: './base.component.html',
   styles: `
     :host {

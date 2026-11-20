@@ -10,16 +10,14 @@
 
 @layer base {
   html {
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
     font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
     font-optical-sizing: auto;
 
-    @apply bg-(--color-app) text-gray-200 font-light;
+    @apply bg-(--color-app) text-gray-200 font-light antialiased;
   }
 
   body {
-    @apply bg-(--color-app) text-gray-200 antialiased;
+    @apply bg-(--color-app) text-gray-200 font-light antialiased;
     min-height: 100%;
     margin: 0;
   }
@@ -33,10 +31,10 @@
 }
 
 @utility glass {
-  @apply bg-gray-700/30 backdrop-blur-md border border-gray-700 rounded-2xl shadow-lg;
+  @apply bg-gray-700/30 backdrop-blur-md border border-gray-700 shadow-lg;
 }
 @utility card {
-  @apply glass;
+  @apply glass rounded-2xl;
 
   .card-body {
     @apply p-4;
