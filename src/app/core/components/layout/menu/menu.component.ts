@@ -1,16 +1,18 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
+import { NgIcon } from '@ng-icons/core';
+import { MENU_ITEMS } from '../../../constants/menu.constant';
+
+export interface NavItem {
+  label: string;
+  route: string;
+  icon: string;
+}
 
 @Component({
   selector: 'app-menu',
-  imports: [RouterLink, RouterLinkActive],
-  template: `
-    <nav>
-      <a [routerLink]="'/plans'" [routerLinkActive]="'text-blue-500'">Planes</a>
-      <a [routerLink]="'/exercises'" [routerLinkActive]="'text-blue-500'">Ejercicios</a>
-      <a [routerLink]="'/config'" [routerLinkActive]="'text-blue-500'">Configuración</a>
-    </nav>
-  `,
+  imports: [RouterLink, RouterLinkActive, NgIcon],
+  templateUrl: './menu.component.html',
   styles: `
     :host {
       display: block;
@@ -18,4 +20,6 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class Menu {}
+export class Menu {
+  navItems = signal<NavItem[]>(MENU_ITEMS);
+}
