@@ -1,29 +1,38 @@
 @if (modal(); as state) {
-  <div (click)="trigger('close')">
-    <div (click)="$event.stopPropagation()">
-      <header>
-        <span>
+  <div
+    class="fixed inset-0 z-40 flex items-center justify-center bg-black/60 p-4 backdrop-blur-sm"
+    (click)="trigger('close')"
+  >
+    <div class="card w-full max-w-md" (click)="$event.stopPropagation()">
+      <header class="flex items-start gap-3 p-4">
+        <span
+          class="flex size-10 shrink-0 items-center justify-center rounded-full text-lg font-medium {{
+            tone().iconClass
+          }}"
+        >
           {{ tone().icon }}
         </span>
-        <div>
-          <h2>{{ state.title }}</h2>
+        <div class="min-w-0">
+          <h2 class="{{ tone().title }}">{{ state.title }}</h2>
           @if (state.subtitle) {
-            <p>{{ state.subtitle }}</p>
+            <p class="mt-1 text-sm text-gray-400">{{ state.subtitle }}</p>
           }
         </div>
       </header>
 
-      <div>
+      <div class="px-4 pb-4">
         <ng-content />
         <ng-container #host />
       </div>
 
-      <footer>
+      <footer class="flex gap-2 px-4 pb-4">
         @if (state.buttons.backButton) {
-          <button type="button" (click)="trigger('back')">Volver</button>
+          <button type="button" class="bg-gray-600 text-gray-100" (click)="trigger('back')">
+            Volver
+          </button>
         }
         @if (state.buttons.closeButton) {
-          <button type="button" (click)="trigger('close')">
+          <button type="button" class="bg-gray-600 text-gray-100" (click)="trigger('close')">
             {{ state.closeLabel }}
           </button>
         }

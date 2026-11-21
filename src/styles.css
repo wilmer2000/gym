@@ -5,9 +5,8 @@
   --font-display: 'Outfit', ui-sans-serif, sans-serif;
   --font-mono: 'JetBrains Mono', ui-monospace, monospace;
   --color-primary: var(--color-lime-500);
-  --color-app: var(--color-zinc-800);
+  --color-app: var(--color-zinc-900);
 }
-
 @layer base {
   html {
     font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
@@ -28,97 +27,41 @@
     font-family: var(--font-display), serif;
     @apply font-medium;
   }
-}
 
+  h1 { @apply text-2xl; }
+  h2 { @apply text-xl; }
+  h3 { @apply text-lg; }
+}
 @utility glass {
-  @apply bg-gray-700/30 backdrop-blur-md border border-gray-700 shadow-lg;
+  @apply bg-gray-700/30 backdrop-blur-md border border-gray-800 shadow-lg;
 }
 @utility card {
-  @apply glass rounded-2xl;
+  @apply glass rounded-4xl;
 
   .card-body {
     @apply p-4;
   }
 }
-/*@utility btn {*/
-/*}*/
 
-@utility input {
-  @apply w-full rounded-md px-2 py-3 text-sm;
+input,
+textarea,
+select {
+  @apply w-full rounded-2xl px-4 py-3 text-sm text-gray-100;
   @apply placeholder:text-neutral-400;
   @apply transition-all duration-150;
   @apply focus:outline-none;
   @apply disabled:cursor-not-allowed disabled:opacity-60;
-  @apply bg-gray-600 border border-gray-600 rounded-xl;
+  @apply bg-gray-600 border border-gray-600 rounded-2xl;
 
-  /*color: var(--color-text-primary);*/
-  /*background-color: var(--color-surface);*/
-  /*border: 1px solid var(--color-border);*/
-  /*box-shadow: inset 0 1px 2px 0 rgb(0 0 0 / 0.03);*/
-  /*transition-timing-function: var(--ease-premium);*/
+  &::placeholder {
+    @apply text-gray-100/60 text-base;
+  }
 }
 
-/*@layer components {*/
-/*    .btn {*/
-/*    }*/
+textarea {
+  @apply resize-y;
+}
 
-/*    .btn-primary {*/
-/*    }*/
-
-/*    .btn-primary:hover {*/
-/*    }*/
-
-/*    .btn-primary:active {*/
-/*    }*/
-
-/*    .btn-primary:focus-visible {*/
-/*    }*/
-
-/*    .btn-secondary {*/
-/*    }*/
-
-/*    .btn-secondary:hover {*/
-/*    }*/
-
-/*    .btn-secondary:focus-visible {*/
-/*    }*/
-
-/*    .btn-ghost {*/
-/*    }*/
-
-/*    .btn-ghost:hover {*/
-/*    }*/
-
-/*    .btn-ghost:focus-visible {*/
-/*    }*/
-
-/*    .btn-sm {*/
-/*    }*/
-
-/*    .btn-lg {*/
-/*    }*/
-
-/*    .input:hover {*/
-/*    }*/
-
-/*    .input:focus {*/
-/*    }*/
-
-/*    .input-error {*/
-/*    }*/
-
-/*    .input-error:focus {*/
-/*    }*/
-
-/*    .select {*/
-/*    }*/
-
-/*    .label {*/
-/*    }*/
-
-/*    .label-helper {*/
-/*    }*/
-
-/*    .card {*/
-/*    }*/
-/*}*/
+button {
+  @apply w-full px-4 py-3 leading-tight bg-primary rounded-2xl text-zinc-900;
+}

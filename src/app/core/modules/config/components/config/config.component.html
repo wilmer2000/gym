@@ -1,71 +1,7 @@
 <app-container title="Configuración">
-  <div>
-    <div>
-      <h3>Base de datos</h3>
-
-      <div>
-        <div
-          role="progressbar"
-          aria-label="Uso de la base de datos"
-          aria-valuemin="0"
-          aria-valuemax="100"
-          [attr.aria-valuenow]="dbUsage().percent"
-        >
-          <div [style.width]="usageBar()"></div>
-        </div>
-
-        <span>
-          {{ usedBytesMessage() }}
-        </span>
-      </div>
-    </div>
-    <div>
-      <h3>Copia de seguridad y recuperación</h3>
-
-      <div>
-        <div>
-          <p>
-            Crea una copia de seguridad de los planes ({{ filename }}) y guardala en un lugar
-            seguro.
-          </p>
-
-          <button (click)="downloadBackup()">Descargar copia</button>
-        </div>
-
-        <div>
-          <p>Sube una copia de seguridad de los planes para recuperarla.</p>
-
-          <label>
-            <span>Subir copia de seguridad</span>
-            <input type="file" accept=".db,.sqlite,.sqlite3" (change)="importBackup($event)" />
-          </label>
-        </div>
-      </div>
-    </div>
-    <div>
-      <h3>Seguridad</h3>
-
-      <div>
-        <p>
-          El PIN bloquea la app cada vez que la abrís. Para cambiarlo se valida primero el PIN
-          actual.
-        </p>
-
-        <button type="button" (click)="openChangePin()">Cambiar PIN</button>
-      </div>
-    </div>
-    <div>
-      <h3>Eliminar cuenta</h3>
-
-      <div>
-        <p>
-          Se eliminarán todos los planes y el catálogo vuelve a su estado inicial. Esta acción es
-          permanente y no hay forma de recuperar la información. Descargá una copia de seguridad
-          antes de continuar para evitar la pérdida total de los datos.
-        </p>
-
-        <button (click)="confirmDelete()">Eliminar cuenta</button>
-      </div>
-    </div>
+  <div class="flex flex-col gap-12">
+    <app-database-section />
+    <app-security-section />
+    <app-delete-account-section />
   </div>
 </app-container>

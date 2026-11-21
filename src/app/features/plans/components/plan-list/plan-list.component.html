@@ -1,13 +1,11 @@
 <app-container title="Planes" subtitle="Rutinas de entrenamiento">
-  <div header>
-    <div>
+  <div class="flex gap-2">
       <app-input
         id="plan-search"
         placeholder="Buscar por nombre"
         [ngModel]="search()"
         (ngModelChange)="search.set($event)"
       />
-    </div>
 
     <app-toggle
       id="plan-active"
@@ -15,8 +13,6 @@
       [ngModel]="onlyActive()"
       (ngModelChange)="onlyActive.set($event)"
     />
-
-    <a routerLink="/plans/new">Nuevo plan</a>
   </div>
 
   @if (rows().length) {
