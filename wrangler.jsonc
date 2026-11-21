@@ -4,5 +4,6 @@
   "assets": {
     "directory": "./dist/gym/browser",
     "not_found_handling": "single-page-application"
-  }
+  },
+  "previews": {}
 }
