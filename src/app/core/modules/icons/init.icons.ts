@@ -1,10 +1,12 @@
 import {
   hugeDashboardSquare02,
+  hugeDelete01,
   hugeDocumentValidation,
   hugeEquipmentGym03,
+  hugePencil,
   hugeSettings01,
   hugeWorkoutRun,
-  hugePlusSign
+  hugePlusSign,
 } from '@ng-icons/huge-icons';
 
 export function initIcons(): Record<string, string> {
@@ -15,5 +17,7 @@ export function initIcons(): Record<string, string> {
     hugeEquipmentGym03,
     hugeDashboardSquare02,
     hugePlusSign,
+    hugePencil,
+    hugeDelete01,
   };
 }

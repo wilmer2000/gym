@@ -1,0 +1,48 @@
+<div class="flex flex-col gap-2">
+  <app-input
+    id="exercise-selector-search"
+    placeholder="Buscar por nombre"
+    [ngModel]="search()"
+    (ngModelChange)="search.set($event)"
+  />
+
+  <div class="card overflow-hidden">
+    <div class="overflow-y-auto max-h-80">
+      @for (exercise of exercises(); track exercise.id) {
+        <div
+          tabindex="0"
+          [attr.aria-disabled]="disabled()"
+          class="flex w-full items-center gap-3 rounded-none px-3 py-2 text-left {{
+            disabled()
+              ? 'opacity-50'
+              : isSelected(exercise.id)
+                ? 'bg-primary/10 text-primary'
+                : 'bg-transparent text-gray-200 hover:bg-gray-700/40'
+          }}"
+          (click)="toggle(exercise)"
+          (keydown.enter)="toggle(exercise)"
+          (keydown.space)="toggle(exercise); $event.preventDefault()"
+        >
+          <div class="relative size-20 shrink-0 rounded-xl">
+            <img
+              class="object-cover relative"
+              [ngSrc]="image(exercise)"
+              fill
+              [alt]="exercise.name"
+            />
+          </div>
+          <span class="min-w-0 flex-1">
+            <span class="block truncate text-sm">{{ exercise.name }}</span>
+            <span class="block text-xs text-gray-400">
+              {{ muscle(exercise) }} · {{ type(exercise) }}
+            </span>
+          </span>
+        </div>
+      } @empty {
+        <p class="px-3 py-4 text-sm text-gray-400">
+          No hay ejercicios que coincidan con la búsqueda.
+        </p>
+      }
+    </div>
+  </div>
+</div>
