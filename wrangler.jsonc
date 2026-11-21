@@ -1,6 +1,6 @@
 {
   "name": "gym",
-  "compatibility_date": "2026-10-06",
+  "compatibility_date": "2026-11-20",
   "assets": {
     "directory": "./dist/gym/browser",
     "not_found_handling": "single-page-application"
