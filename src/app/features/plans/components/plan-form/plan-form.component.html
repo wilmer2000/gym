@@ -3,39 +3,29 @@
     <button routerLink="/plans">Cancelar</button>
   </div>
 
-  <div class="flex flex-col gap-4">
-    <form id="plan-form" (ngSubmit)="save()">
-      <app-plan-data-form
-        [name]="name()"
-        [description]="description()"
-        [active]="active()"
-        (nameChange)="name.set($event)"
-        (descriptionChange)="description.set($event)"
-        (activeChange)="active.set($event)"
-      />
+  <form id="plan-form" (ngSubmit)="save()" class="flex flex-col gap-4">
+    <app-plan-data-form
+      [name]="name()"
+      [description]="description()"
+      [active]="active()"
+      (nameChange)="name.set($event)"
+      (descriptionChange)="description.set($event)"
+      (activeChange)="active.set($event)"
+    />
 
-      <app-plan-schedule-form
-        [mode]="mode()"
-        [startDate]="startDate()"
-        [endDate]="endDate()"
-        [selectedDays]="selectedDays()"
-        [dates]="dates()"
-        (modeChange)="mode.set($event)"
-        (startDateChange)="startDate.set($event)"
-        (endDateChange)="endDate.set($event)"
-        (selectedDaysChange)="selectedDays.set($event)"
-        (datesChange)="dates.set($event)"
-      />
+    <app-plan-schedule-form
+      [selectedDays]="selectedDays()"
+      (selectedDaysChange)="selectedDays.set($event)"
+    />
 
-      <app-plan-exercises-form
-        [exercises]="exercises"
-        [rows]="rows()"
-        (rowsChange)="rows.set($event)"
-      />
-    </form>
+    <app-plan-exercises-form
+      [exercises]="exercises"
+      [rows]="rows()"
+      (rowsChange)="rows.set($event)"
+    />
     @if (error()) {
       <p>{{ error() }}</p>
     }
     <button type="submit" form="plan-form">Guardar</button>
-  </div>
+  </form>
 </app-container>

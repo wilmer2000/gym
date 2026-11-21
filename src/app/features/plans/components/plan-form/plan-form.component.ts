@@ -1,10 +1,8 @@
 import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Container } from '../../../../core/components/container/container.component';
-import { dateOnly, startOfDay } from '../../../../core/utils/date.util';
 import { ExerciseRepository } from '../../../exercises/repositories/exercise.repository';
-import { PlanExerciseRow, PlanInput, ScheduleMode } from '../../interfaces/plan';
-import { PlanDateRepository } from '../../repositories/plan-date.repository';
+import { PlanExerciseRow, PlanInput } from '../../interfaces/plan';
 import { PlanExerciseRepository } from '../../repositories/plan-exercise.repository';
 import { PlanWeekdayRepository } from '../../repositories/plan-weekday.repository';
 import { PlanRepository } from '../../repositories/plan.repository';
@@ -29,7 +27,6 @@ export class PlanFormPage {
   private readonly plans = inject(PlanRepository);
   private readonly planExercises = inject(PlanExerciseRepository);
   private readonly planWeekdays = inject(PlanWeekdayRepository);
-  private readonly planDates = inject(PlanDateRepository);
   private readonly exerciseRepo = inject(ExerciseRepository);
   private readonly route = inject(ActivatedRoute);
   private readonly router = inject(Router);
@@ -42,24 +39,16 @@ export class PlanFormPage {
   readonly name = signal('');
   readonly description = signal('');
   readonly active = signal(true);
-  readonly mode = signal<ScheduleMode>('weekly');
-  readonly startDate = signal('');
-  readonly endDate = signal('');
   readonly selectedDays = signal<number[]>([]);
-  readonly dates = signal<number[]>([]);
   readonly rows = signal<PlanExerciseRow[]>([]);
   readonly error = signal('');
 
   readonly valid = computed(
     () =>
       this.name().trim().length > 0 &&
+      this.selectedDays().length > 0 &&
       this.rows().length > 0 &&
-      this.rows().every((row) => row.exerciseId !== '' && row.reps > 0 && row.sets > 0) &&
-      (this.mode() === 'weekly'
-        ? this.startDate() !== '' &&
-          (this.endDate() === '' || this.endDate() >= this.startDate()) &&
-          this.selectedDays().length > 0
-        : this.dates().length > 0),
+      this.rows().every((row) => row.exerciseId !== '' && row.reps > 0 && row.sets > 0),
   );
 
   constructor() {
@@ -80,11 +69,7 @@ export class PlanFormPage {
     this.name.set(plan.name);
     this.description.set(plan.description ?? '');
     this.active.set(plan.active);
-    this.mode.set(plan.scheduleMode);
-    this.startDate.set(dateOnly(plan.startDate));
-    this.endDate.set(dateOnly(plan.endDate));
     this.selectedDays.set(this.planWeekdays.listByPlan(plan.id).map((day) => day.dayOfWeek));
-    this.dates.set(this.planDates.listByPlan(plan.id).map((date) => date.specificDate));
     this.rows.set(
       this.planExercises.listByPlan(plan.id).map((exercise) => ({
         exerciseId: exercise.exerciseId,
@@ -97,7 +82,7 @@ export class PlanFormPage {
   save(): void {
     if (!this.valid()) {
       this.error.set(
-        'Revisá los datos: nombre, calendario y al menos un ejercicio con repeticiones.',
+        'Revisá los datos: nombre, al menos un día y al menos un ejercicio con repeticiones.',
       );
 
       return;
@@ -115,16 +100,12 @@ export class PlanFormPage {
       name: this.name().trim(),
       description: this.description().trim() || null,
       active: this.active(),
-      scheduleMode: this.mode(),
-      startDate: this.mode() === 'weekly' ? startOfDay(this.startDate()) : null,
-      endDate: this.mode() === 'weekly' ? startOfDay(this.endDate()) : null,
       exercises: this.rows().map((row) => ({
         exerciseId: row.exerciseId,
         reps: Math.max(1, Math.floor(row.reps)),
         sets: Math.max(1, Math.floor(row.sets)),
       })),
-      weekdays: this.mode() === 'weekly' ? this.selectedDays() : [],
-      dates: this.mode() === 'dates' ? this.dates() : [],
+      weekdays: this.selectedDays(),
     };
 
     const id = this.plans.savePlan(input);

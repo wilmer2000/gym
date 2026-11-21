@@ -4,9 +4,6 @@ CREATE TABLE IF NOT EXISTS plans (
   name          TEXT    NOT NULL,
   description   TEXT,
   active        INTEGER NOT NULL DEFAULT 1,
-  schedule_mode TEXT    NOT NULL DEFAULT 'weekly',
-  start_date    INTEGER,
-  end_date      INTEGER,
   created_at    INTEGER NOT NULL,
   updated_at    INTEGER NOT NULL
 );
@@ -31,14 +28,6 @@ CREATE TABLE IF NOT EXISTS plan_weekdays (
   day_of_week INTEGER NOT NULL CHECK (day_of_week BETWEEN 0 AND 6),
   FOREIGN KEY (plan_id) REFERENCES plans(id) ON DELETE CASCADE,
   UNIQUE (plan_id, day_of_week)
-);
-
-CREATE TABLE IF NOT EXISTS plan_dates (
-  id            INTEGER PRIMARY KEY AUTOINCREMENT,
-  plan_id       INTEGER NOT NULL,
-  specific_date INTEGER NOT NULL,
-  FOREIGN KEY (plan_id) REFERENCES plans(id) ON DELETE CASCADE,
-  UNIQUE (plan_id, specific_date)
 );
 `;
 

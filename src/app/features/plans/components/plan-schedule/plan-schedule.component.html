@@ -1,86 +1,21 @@
-<section>
-  <div>
-    <h2>Calendario</h2>
+<app-section [title]="'Calendario'">
 
-    <app-selector
-      id="plan-mode"
-      name="plan-mode"
-      label="Modo"
-      [options]="modeOptions"
-      [ngModel]="mode()"
-      (ngModelChange)="setMode($event)"
-    />
-
-    @if (mode() === 'weekly') {
-      <div>
-        <app-input
-          id="plan-start"
-          name="plan-start"
-          label="Desde"
-          type="date"
-          [invalid]="startDate() === ''"
-          [ngModel]="startDate()"
-          (ngModelChange)="startDateChange.emit($event)"
-        />
-
-        <app-input
-          id="plan-end"
-          name="plan-end"
-          label="Hasta (opcional)"
-          type="date"
-          [ngModel]="endDate()"
-          (ngModelChange)="endDateChange.emit($event)"
-        />
-      </div>
-
-      @if (endDate() && startDate() && endDate() < startDate()) {
-        <p>La fecha final no puede ser anterior al inicio.</p>
+  <div class="flex flex-col gap-4">
+    <span>Días</span>
+    <div class="grid grid-cols-4 gap-2">
+      @for (day of weekdays; track day.value) {
+        <button
+          type="button"
+          [class.bg-gray-400!]="!selectedDays().includes(day.value)"
+          [attr.aria-pressed]="selectedDays().includes(day.value)"
+          (click)="toggleDay(day.value)"
+        >
+          {{ day.label }}
+        </button>
       }
-
-      <div>
-        <span>Días</span>
-        <div>
-          @for (day of weekdays; track day.value) {
-            <button
-              type="button"
-              [attr.aria-pressed]="selectedDays().includes(day.value)"
-              (click)="toggleDay(day.value)"
-            >
-              {{ day.label }}
-            </button>
-          }
-        </div>
-        @if (selectedDays().length === 0) {
-          <p>Elegí al menos un día.</p>
-        }
-      </div>
-    } @else {
-      <div>
-        <div>
-          <app-input
-            id="plan-date"
-            name="plan-date"
-            label="Fecha"
-            type="date"
-            [ngModel]="newDate()"
-            (ngModelChange)="newDate.set($event)"
-          />
-        </div>
-        <button type="button" (click)="addDate()">Agregar</button>
-      </div>
-
-      @if (dates().length) {
-        <div>
-          @for (date of dates(); track date) {
-            <span>
-              {{ dateLabel(date) }}
-              <button type="button" aria-label="Quitar fecha" (click)="removeDate(date)">×</button>
-            </span>
-          }
-        </div>
-      } @else {
-        <p>Agregá al menos una fecha.</p>
-      }
+    </div>
+    @if (selectedDays().length === 0) {
+      <p class="text-gray-600 text-sm">Elegí al menos un día.</p>
     }
   </div>
-</section>
+</app-section>

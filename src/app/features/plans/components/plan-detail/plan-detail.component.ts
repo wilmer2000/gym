@@ -8,7 +8,6 @@ import { Toggle } from '../../../../core/modules/form/components/toggle/toggle.c
 import { ModalService } from '../../../../core/modules/modal/services/modal.service';
 import { ExerciseRepository } from '../../../exercises/repositories/exercise.repository';
 import { Plan } from '../../interfaces/plan';
-import { PlanDateRepository } from '../../repositories/plan-date.repository';
 import { PlanExerciseRepository } from '../../repositories/plan-exercise.repository';
 import { PlanWeekdayRepository } from '../../repositories/plan-weekday.repository';
 import { PlanRepository } from '../../repositories/plan.repository';
@@ -30,7 +29,6 @@ export class PlanDetailPage {
   private readonly plans = inject(PlanRepository);
   private readonly planExercises = inject(PlanExerciseRepository);
   private readonly planWeekdays = inject(PlanWeekdayRepository);
-  private readonly planDates = inject(PlanDateRepository);
   private readonly exerciseRepo = inject(ExerciseRepository);
   private readonly route = inject(ActivatedRoute);
   private readonly router = inject(Router);
@@ -65,7 +63,7 @@ export class PlanDetailPage {
 
     const modalId = this.modal.open({
       title: 'Eliminar plan',
-      subtitle: `Se eliminará "${plan.name}" y su calendario de forma permanente.`,
+      subtitle: `Se eliminará "${plan.name}" y sus días de la semana de forma permanente.`,
       type: 'error',
       okLabel: 'Eliminar',
     });
@@ -90,13 +88,7 @@ export class PlanDetailPage {
       return;
     }
 
-    this.summary.set(
-      scheduleSummary(
-        plan,
-        this.planWeekdays.listByPlan(plan.id),
-        this.planDates.listByPlan(plan.id),
-      ),
-    );
+    this.summary.set(scheduleSummary(this.planWeekdays.listByPlan(plan.id)));
     this.exercises.set(
       this.planExercises.listByPlan(plan.id).map((exercise) => ({
         name: this.exerciseRepo.findById(exercise.exerciseId)?.name ?? exercise.exerciseId,

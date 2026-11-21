@@ -1,13 +1,8 @@
-export type ScheduleMode = 'weekly' | 'dates';
-
 export interface Plan {
   id: number;
   name: string;
   description: string | null;
   active: boolean;
-  scheduleMode: ScheduleMode;
-  startDate: number | null;
-  endDate: number | null;
   createdAt: number;
   updatedAt: number;
 }
@@ -27,12 +22,6 @@ export interface PlanWeekday {
   dayOfWeek: number;
 }
 
-export interface PlanDate {
-  id: number;
-  planId: number;
-  specificDate: number;
-}
-
 export interface PlanExerciseRow {
   exerciseId: string;
   reps: number;
@@ -45,12 +34,8 @@ export interface PlanInput {
   name: string;
   description: string | null;
   active: boolean;
-  scheduleMode: ScheduleMode;
-  startDate: number | null;
-  endDate: number | null;
   exercises: PlanExerciseRow[];
   weekdays: number[];
-  dates: number[];
 }
 
 // Monday-first, the order the calendar summary shows. 0 = Sunday in SQLite.
