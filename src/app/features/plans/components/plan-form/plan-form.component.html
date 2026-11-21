@@ -1,4 +1,4 @@
-<app-container [title]="planId ? 'Editar plan' : 'Nuevo plan'">
+<app-container [title]="planId ? 'Editar plan' : 'Nuevo plan'" [subtitle]="planId ? `Editando ${name()}` : 'Crea tu nuevo plan'">
   <div header>
     <button routerLink="/plans">Cancelar</button>
   </div>

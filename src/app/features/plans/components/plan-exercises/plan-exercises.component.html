@@ -6,8 +6,8 @@
       (cdkDropListDropped)="drop($event)"
     >
       @for (row of rows(); track $index) {
-        <div class="flex w-full items-center gap-3 rounded-xl bg-gray-700/30 px-3 py-2" cdkDrag>
-          <div class="relative size-20 shrink-0 overflow-hidden rounded-xl">
+        <div class="flex w-full items-center gap-3 rounded-2xl bg-gray-700/30 p-3" cdkDrag>
+          <div class="relative size-20 shrink-0 overflow-hidden rounded-lg bg-neutral-950">
             <img
               class="object-cover"
               [ngSrc]="image(row.exerciseId)"
@@ -24,22 +24,22 @@
             <span class="block text-xs text-gray-400">{{ row.sets }} × {{ row.reps }}</span>
           </span>
 
-          <div class="flex gap-1">
+          <div class="flex flex-col gap-1">
             <button
               type="button"
-              class="size-10 bg-gray-600 p-0 text-gray-100"
+              class="size-8 bg-gray-600 p-0 text-gray-100 flex items-center justify-center"
               aria-label="Editar"
               (click)="openForm($index)"
             >
-              <ng-icon name="hugePencil" />
+              <ng-icon name="hugePencil" class="text-sm" />
             </button>
             <button
               type="button"
-              class="size-10 bg-gray-600 p-0 text-gray-100"
+              class="size-8 bg-gray-600 p-0 text-gray-100 flex items-center justify-center"
               aria-label="Eliminar"
               (click)="removeRow($index)"
             >
-              <ng-icon name="hugeDelete01" />
+              <ng-icon name="hugeDelete01" class="text-sm" />
             </button>
           </div>
         </div>

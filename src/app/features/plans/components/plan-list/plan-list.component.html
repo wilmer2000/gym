@@ -1,64 +1,71 @@
-<app-container title="Planes" subtitle="Rutinas de entrenamiento">
-
+<app-container title="Planes">
   <div header>
-    <button class="aspect-square" [routerLink]="'/plans/new'"><ng-icon [name]="'hugePlusSign'" /></button>
+    <button class="aspect-square" [routerLink]="'/plans/new'">
+      <ng-icon [name]="'hugePlusSign'" />
+    </button>
   </div>
 
-  <div class="flex gap-2">
-      <app-input
-        class="grow"
-        id="plan-search"
-        placeholder="Buscar por nombre"
-        [ngModel]="search()"
-        (ngModelChange)="search.set($event)"
-      />
+  <div class="card">
+    <div class="card-body flex flex-col gap-4">
+      <div class="flex gap-2">
+        <app-input
+          class="grow"
+          id="plan-search"
+          placeholder="Buscar por nombre"
+          [ngModel]="search()"
+          (ngModelChange)="search.set($event)"
+        />
 
-    <app-toggle
-      id="plan-active"
-      label="Activos"
-      [ngModel]="onlyActive()"
-      (ngModelChange)="onlyActive.set($event)"
-    />
-  </div>
+        <app-toggle
+          id="plan-active"
+          label="Activos"
+          [ngModel]="onlyActive()"
+          (ngModelChange)="onlyActive.set($event)"
+        />
+      </div>
 
-  @if (rows().length) {
-    <div>
-      @for (row of rows(); track row.plan.id) {
+      @if (rows().length) {
         <div>
-          <div>
-            <a [routerLink]="['/plans', row.plan.id]">
-              {{ row.plan.name }}
-            </a>
+          @for (row of rows(); track row.plan.id) {
+            <div>
+              <div>
+                <a [routerLink]="['/plans', row.plan.id]">
+                  {{ row.plan.name }}
+                </a>
 
-            <button type="button" (click)="toggleActive(row.plan)">
-              {{ row.plan.active ? 'Activo' : 'Inactivo' }}
-            </button>
-          </div>
+                <button type="button" (click)="toggleActive(row.plan)">
+                  {{ row.plan.active ? 'Activo' : 'Inactivo' }}
+                </button>
+              </div>
 
-          @if (row.plan.description) {
-            <p>{{ row.plan.description }}</p>
+              @if (row.plan.description) {
+                <p>{{ row.plan.description }}</p>
+              }
+
+              <p>
+                {{ row.summary }} · {{ row.exercises }} ejercicio{{
+                  row.exercises === 1 ? '' : 's'
+                }}
+              </p>
+
+              <div>
+                <a [routerLink]="['/plans', row.plan.id, 'edit']"> Editar </a>
+                <button type="button" (click)="remove(row.plan)">Eliminar</button>
+              </div>
+            </div>
           }
-
+        </div>
+      } @else {
+        <div class="flex w-full border items-center justify-center min-h-80">
           <p>
-            {{ row.summary }} · {{ row.exercises }} ejercicio{{ row.exercises === 1 ? '' : 's' }}
+            {{
+              search() || onlyActive()
+                ? 'No hay planes que coincidan con la búsqueda.'
+                : 'Todavía no hay planes.'
+            }}
           </p>
-
-          <div>
-            <a [routerLink]="['/plans', row.plan.id, 'edit']"> Editar </a>
-            <button type="button" (click)="remove(row.plan)">Eliminar</button>
-          </div>
         </div>
       }
     </div>
-  } @else {
-    <div>
-      <p>
-        {{
-          search() || onlyActive()
-            ? 'No hay planes que coincidan con la búsqueda.'
-            : 'Todavía no hay planes.'
-        }}
-      </p>
-    </div>
-  }
+  </div>
 </app-container>

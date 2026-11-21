@@ -38,6 +38,7 @@ import { PlanExerciseRow } from '../../interfaces/plan';
        width comes from CDK (the row's size); overriding it breaks the flex layout. */
     .cdk-drag-preview {
       border-radius: 0.75rem;
+      padding: 1rem 1rem 1rem 0.6rem;
       background-color: var(--color-gray-700);
       overflow: hidden;
     }
