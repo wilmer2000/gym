@@ -1,15 +1,13 @@
-<div>
-  <label [for]="id()">
-    <input
-      [id]="id()"
-      type="checkbox"
-      [checked]="value()"
-      [disabled]="disabled()"
-      (change)="setValue($event)"
-      (blur)="onTouched()"
-    />
-    @if (label()) {
-      <span>{{ label() }}</span>
-    }
-  </label>
-</div>
+<label [for]="id()" class="flex justify-center items-center h-full">
+  <input
+    [id]="id()"
+    type="checkbox"
+    [checked]="value()"
+    [disabled]="disabled()"
+    (change)="setValue($event)"
+    (blur)="onTouched()"
+  />
+  @if (label()) {
+    <span class="text-nowrap">{{ label() }}</span>
+  }
+</label>

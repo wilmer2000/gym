@@ -20,10 +20,11 @@ import { PlanExerciseRepository } from '../../repositories/plan-exercise.reposit
 import { PlanWeekdayRepository } from '../../repositories/plan-weekday.repository';
 import { PlanRepository } from '../../repositories/plan.repository';
 import { scheduleSummary } from '../../utils/schedule-summary';
+import { NgIcon } from '@ng-icons/core';
 
 @Component({
   selector: 'app-plan-list',
-  imports: [Container, Input, Toggle, RouterLink, FormsModule],
+  imports: [Container, Input, Toggle, RouterLink, FormsModule, NgIcon],
   templateUrl: './plan-list.component.html',
   styles: `
     :host {

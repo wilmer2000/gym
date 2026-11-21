@@ -28,10 +28,19 @@
     @apply font-medium;
   }
 
-  h1 { @apply text-2xl; }
-  h2 { @apply text-xl; }
-  h3 { @apply text-lg; }
+  h1 {
+    @apply text-2xl;
+  }
+
+  h2 {
+    @apply text-xl;
+  }
+
+  h3 {
+    @apply text-lg;
+  }
 }
+
 @utility glass {
   @apply bg-gray-700/30 backdrop-blur-md border border-gray-800 shadow-lg;
 }
@@ -41,6 +50,10 @@
   .card-body {
     @apply p-4;
   }
+}
+
+@utility prevent-selection {
+  user-select: none;
 }
 
 input,
@@ -63,5 +76,5 @@ textarea {
 }
 
 button {
-  @apply w-full px-4 py-3 leading-tight bg-primary rounded-2xl text-zinc-900;
+  @apply w-full px-4 py-3 leading-tight bg-primary rounded-2xl text-zinc-900 prevent-selection;
 }

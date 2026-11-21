@@ -5,12 +5,12 @@ import { ChangeDetectionStrategy, Component, input } from '@angular/core';
   selector: 'app-container',
   template: `
     <section class="flex flex-col gap-8 w-full">
-      <div class="flex gap-2">
+      <div class="flex gap-2 justify-between items-center">
         @if (title() || subtitle()) {
           <div class="flex flex-col">
             <h1 class="font-medium text-3xl">{{ title() }}</h1>
             @if (subtitle()) {
-              <p class="text-lg">{{ subtitle() }}</p>
+              <p class="text-sm leading">{{ subtitle() }}</p>
             }
           </div>
         }

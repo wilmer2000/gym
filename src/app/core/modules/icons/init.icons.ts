@@ -4,6 +4,7 @@ import {
   hugeEquipmentGym03,
   hugeSettings01,
   hugeWorkoutRun,
+  hugePlusSign
 } from '@ng-icons/huge-icons';
 
 export function initIcons(): Record<string, string> {
@@ -13,5 +14,6 @@ export function initIcons(): Record<string, string> {
     hugeWorkoutRun,
     hugeEquipmentGym03,
     hugeDashboardSquare02,
+    hugePlusSign,
   };
 }

@@ -1,6 +1,12 @@
 <app-container title="Planes" subtitle="Rutinas de entrenamiento">
+
+  <div header>
+    <button class="aspect-square" [routerLink]="'/plans/new'"><ng-icon [name]="'hugePlusSign'" /></button>
+  </div>
+
   <div class="flex gap-2">
       <app-input
+        class="grow"
         id="plan-search"
         placeholder="Buscar por nombre"
         [ngModel]="search()"
@@ -9,7 +15,7 @@
 
     <app-toggle
       id="plan-active"
-      label="Solo activos"
+      label="Activos"
       [ngModel]="onlyActive()"
       (ngModelChange)="onlyActive.set($event)"
     />
