@@ -1,4 +1,3 @@
-import { CdkDrag, CdkDragDrop, CdkDropList, moveItemInArray } from '@angular/cdk/drag-drop';
 import { NgOptimizedImage } from '@angular/common';
 import {
   ChangeDetectionStrategy,
@@ -12,6 +11,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { NgIcon } from '@ng-icons/core';
 import { filter } from 'rxjs';
 import { ModalService } from '../../../../core/modules/modal/services/modal.service';
+import { DragList } from '../../../../shared/components/drag-list/drag-list.component';
 import { Section } from '../../../../shared/components/section/section.component';
 import {
   ExerciseSelection,
@@ -27,41 +27,11 @@ import { PlanExerciseRow } from '../../interfaces/plan';
 
 @Component({
   selector: 'app-plan-exercises-form',
-  imports: [Section, CdkDrag, CdkDropList, NgOptimizedImage, NgIcon],
+  imports: [Section, DragList, NgOptimizedImage, NgIcon],
   templateUrl: './plan-exercises.component.html',
   styles: `
     :host {
       display: block;
-    }
-
-    /* The preview is moved to body, but keeps the component's scope attribute. Its
-       width comes from CDK (the row's size); overriding it breaks the flex layout. */
-    .cdk-drag-preview {
-      border-radius: 0.75rem;
-      padding: 1rem 1rem 1rem 0.6rem;
-      background-color: var(--color-gray-700);
-      overflow: hidden;
-    }
-
-    /* The action buttons are irrelevant while dragging. */
-    .cdk-drag-preview button {
-      display: none;
-    }
-
-    /* Ghost slot: CDK clones the row, so hide its content and keep the space. */
-    .cdk-drag-placeholder {
-      background-color: var(--color-gray-700);
-      border: 1px dashed var(--color-gray-500);
-      border-radius: 0.75rem;
-    }
-
-    .cdk-drag-placeholder > * {
-      visibility: hidden;
-    }
-
-    .cdk-drag-animating,
-    .cdk-drop-list-dragging > *:not(.cdk-drag-placeholder) {
-      transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
     }
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -103,13 +73,6 @@ export class PlanExercisesForm {
 
         this.rowsChange.emit(rows);
       });
-  }
-
-  drop(event: CdkDragDrop<PlanExerciseRow[]>): void {
-    const rows = [...this.rows()];
-
-    moveItemInArray(rows, event.previousIndex, event.currentIndex);
-    this.rowsChange.emit(rows);
   }
 
   removeRow(index: number): void {

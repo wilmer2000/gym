@@ -4,46 +4,40 @@
   --font-sans: 'Outfit', ui-sans-serif, system-ui, -apple-system, sans-serif;
   --font-display: 'Outfit', ui-sans-serif, sans-serif;
   --font-mono: 'JetBrains Mono', ui-monospace, monospace;
-  --color-primary: var(--color-lime-500);
-  --color-app: var(--color-zinc-900);
+
+  /* CORREGIDO: Añadido fallback por si acaso, y corregido "secondary" */
+  --color-primary: var(--color-lime-500, #7CCF00);
+  --color-secondary: #8330FF;
+  --color-app: var(--color-zinc-900, #18181b);
 }
+
 @layer base {
   html {
     font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
     font-optical-sizing: auto;
-
-    @apply bg-(--color-app) text-gray-200 font-light antialiased;
+    @apply bg-app text-gray-200 font-light antialiased;
   }
 
   body {
-    @apply bg-(--color-app) text-gray-200 font-light antialiased;
+    @apply bg-app text-gray-200 font-light antialiased;
     min-height: 100%;
     margin: 0;
   }
 
-  h1,
-  h2,
-  h3 {
+  h1, h2, h3 {
     font-family: var(--font-display), serif;
     @apply font-medium;
   }
 
-  h1 {
-    @apply text-2xl;
-  }
-
-  h2 {
-    @apply text-xl;
-  }
-
-  h3 {
-    @apply text-lg;
-  }
+  h1 { @apply text-2xl; }
+  h2 { @apply text-xl; }
+  h3 { @apply text-lg; }
 }
 
 @utility glass {
   @apply bg-gray-700/30 backdrop-blur-md border border-gray-800 shadow-lg;
 }
+
 @utility card {
   @apply glass rounded-4xl;
 
@@ -56,15 +50,16 @@
   user-select: none;
 }
 
+/* INPUTS Y TEXTAREAS */
 input,
 textarea,
 select {
   @apply w-full rounded-2xl px-4 py-3 text-sm text-gray-100;
   @apply placeholder:text-neutral-400;
   @apply transition-all duration-150;
-  @apply focus:outline-none;
+  @apply focus:outline-none focus:ring-2 focus:ring-primary/50;
   @apply disabled:cursor-not-allowed disabled:opacity-60;
-  @apply bg-gray-600 border border-gray-600 rounded-2xl;
+  @apply bg-gray-600 border border-gray-600; /* CORREGIDO: Quitado el rounded-2xl duplicado */
 
   &::placeholder {
     @apply text-gray-100/60 text-base;
@@ -75,6 +70,74 @@ textarea {
   @apply resize-y;
 }
 
+/* BOTONES */
 button {
-  @apply w-full px-4 py-3 leading-tight bg-primary rounded-2xl text-zinc-900 prevent-selection;
+  /* Estilos base: Por defecto, todos los botones usan el color primario (Verde) */
+  @apply w-full px-4 py-3 leading-tight bg-primary text-zinc-900 rounded-2xl prevent-selection font-medium;
+  @apply transition-all duration-200 flex items-center justify-center gap-2 cursor-pointer;
+  @apply disabled:opacity-50 disabled:cursor-not-allowed disabled:pointer-events-none;
+
+  /* Estados por defecto (Primary) */
+  &:hover {
+    @apply brightness-110 shadow-lg shadow-primary/20;
+  }
+  &:active {
+    @apply scale-[0.98];
+  }
+  &:focus-visible {
+    @apply outline-none ring-2 ring-primary ring-offset-2 ring-offset-app;
+  }
+
+  /* Variante Icono */
+  &.btn-icon {
+    @apply aspect-square p-2 h-11 w-11; /* Forzado a cuadrado perfecto */
+
+    > ng-icon {
+      @apply text-sm;
+    }
+  }
+
+  /* Variante Secundaria (Violeta) */
+  &.btn-secondary {
+    @apply bg-secondary text-white;
+
+    &:hover {
+      @apply brightness-110 shadow-lg shadow-secondary/30; /* Brillo violeta */
+    }
+    &:focus-visible {
+      @apply ring-secondary;
+    }
+  }
+
+  /* (Opcional) Si quieres forzar el primario por clase y no por defecto */
+  &.btn-primary {
+    @apply bg-primary text-zinc-900;
+  }
+}
+
+/* CDK Drag & Drop (Angular) */
+.cdk-drag-preview {
+  border-radius: 0.75rem;
+  padding: 1rem 1rem 1rem 0.6rem;
+  background-color: var(--color-gray-700);
+  overflow: hidden;
+}
+
+.cdk-drag-preview button {
+  display: none;
+}
+
+.cdk-drag-placeholder {
+  background-color: var(--color-gray-700);
+  border: 1px dashed var(--color-gray-500);
+  border-radius: 0.75rem;
+}
+
+.cdk-drag-placeholder > * {
+  visibility: hidden;
+}
+
+.cdk-drag-animating,
+.cdk-drop-list-dragging > *:not(.cdk-drag-placeholder) {
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
 }
