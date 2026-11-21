@@ -3,10 +3,11 @@ import { FormsModule } from '@angular/forms';
 import { Input } from '../../../../core/modules/form/components/input/input.component';
 import { TextArea } from '../../../../core/modules/form/components/text-area/text-area.component';
 import { Toggle } from '../../../../core/modules/form/components/toggle/toggle.component';
+import { Section } from '../../../../shared/components/section/section.component';
 
 @Component({
   selector: 'app-plan-data-form',
-  imports: [Input, TextArea, Toggle, FormsModule],
+  imports: [Input, TextArea, Toggle, FormsModule, Section],
   templateUrl: './plan-data.component.html',
   styles: `
     :host {

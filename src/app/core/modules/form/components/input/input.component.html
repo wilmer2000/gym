@@ -1,18 +1,12 @@
-<div>
-  @if (label()) {
-    <label [for]="id()">{{ label() }}</label>
-  }
-
-  <input
-    [id]="id()"
-    [type]="type()"
-    [attr.inputmode]="inputmode() || null"
-    [min]="min()"
-    [max]="max()"
-    [placeholder]="placeholder()"
-    [value]="value()"
-    [disabled]="disabled()"
-    (input)="setValue($event)"
-    (blur)="onTouched()"
-  />
-</div>
+<input
+  [id]="id()"
+  [type]="type()"
+  [attr.inputmode]="inputmode() || null"
+  [min]="min()"
+  [max]="max()"
+  [placeholder]="placeholder() || label()"
+  [value]="value()"
+  [disabled]="disabled()"
+  (input)="setValue($event)"
+  (blur)="onTouched()"
+/>

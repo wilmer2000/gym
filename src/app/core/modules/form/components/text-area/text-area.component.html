@@ -1,15 +1,9 @@
-<div>
-  @if (label()) {
-    <label [for]="id()">{{ label() }}</label>
-  }
-
-  <textarea
-    [id]="id()"
-    [placeholder]="placeholder()"
-    [rows]="rows()"
-    [value]="value()"
-    [disabled]="disabled()"
-    (input)="setValue($event)"
-    (blur)="onTouched()"
-  ></textarea>
-</div>
+<textarea
+  [id]="id()"
+  [placeholder]="placeholder() || label()"
+  [rows]="rows()"
+  [value]="value()"
+  [disabled]="disabled()"
+  (input)="setValue($event)"
+  (blur)="onTouched()"
+></textarea>
