@@ -1,5 +1,5 @@
 <app-container title="Ejercicios" subtitle="Catálogo fijo de ejercicios">
-  <div header class="w-full lg:w-64">
+  <div header>
     <app-input
       id="exercise-search"
       placeholder="Buscar por nombre"
@@ -12,29 +12,21 @@
 
   @if (groups().length) {
     @for (group of groups(); track group.muscle) {
-      <section class="flex flex-col gap-3">
-        <h2 class="text-xs font-semibold uppercase tracking-wide text-text-muted">
+      <section>
+        <h2>
           {{ group.label }}
         </h2>
 
-        <div class="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
+        <div>
           @for (exercise of group.exercises; track exercise.id) {
-            <a
-              [routerLink]="['/exercises', exercise.id]"
-              class="card card-hover flex items-center gap-3 p-4 text-left"
-            >
-              <span class="h-30 w-30 shrink-0 bg-gray-500">
-                <img
-                  [src]="image(exercise)"
-                  [alt]="exercise.name"
-                  loading="lazy"
-                  class="block"
-                />
+            <a [routerLink]="['/exercises', exercise.id]">
+              <span>
+                <img [src]="image(exercise)" [alt]="exercise.name" loading="lazy" />
               </span>
-              <div class="flex flex-col gap-1">
-                <h3 class="text-base font-semibold text-primary">{{ exercise.name }}</h3>
-                <p class="text-sm text-text-secondary">{{ type(exercise) }}</p>
-                <p class="mt-auto text-xs text-text-muted">{{ equipment(exercise) }}</p>
+              <div>
+                <h3>{{ exercise.name }}</h3>
+                <p>{{ type(exercise) }}</p>
+                <p>{{ equipment(exercise) }}</p>
               </div>
             </a>
           }
@@ -42,8 +34,8 @@
       </section>
     }
   } @else {
-    <div class="card px-6 py-12 text-center">
-      <p class="text-sm text-text-secondary">
+    <div>
+      <p>
         {{
           hasFilters()
             ? 'No hay ejercicios que coincidan con la búsqueda.'
@@ -53,7 +45,7 @@
     </div>
   }
 
-  <p class="text-center text-xs text-text-muted">
+  <p>
     Ilustraciones: Bryl Lim —
     <a href="https://bryllim.com" target="_blank" rel="noopener">bryllim.com</a>
     (CC BY-SA 4.0)

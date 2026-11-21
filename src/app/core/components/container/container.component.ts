@@ -4,17 +4,18 @@ import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 @Component({
   selector: 'app-container',
   template: `
-    <section class="flex flex-col h-full gap-4 w-full">
-      <header class="flex flex-col justify-between gap-3 lg:flex-row">
-        <div class="flex flex-col gap-1">
-          <h1 class="text-xl font-semibold text-primary">{{ title() }}</h1>
-          @if (subtitle()) {
-            <p class="text-sm text-text-muted">{{ subtitle() }}</p>
-          }
-        </div>
+    <section class="flex flex-col gap-8 w-full">
+      <div class="flex gap-2 justify-between items-center">
+        @if (title() || subtitle()) {
+          <div class="flex flex-col">
+            <h1 class="font-medium text-3xl">{{ title() }}</h1>
+            @if (subtitle()) {
+              <p class="text-sm leading">{{ subtitle() }}</p>
+            }
+          </div>
+        }
         <ng-content select="[header]" />
-      </header>
-
+      </div>
       <ng-content />
     </section>
   `,
@@ -27,6 +28,6 @@ import { ChangeDetectionStrategy, Component, input } from '@angular/core';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Container {
-  title = input.required<string>();
+  title = input<string>();
   subtitle = input<string>();
 }

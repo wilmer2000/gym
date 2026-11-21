@@ -9,7 +9,7 @@ import { PwaUpdate } from './core/components/pwa-update/pwa-update.component';
   template: `
     <app-pwa-update />
     <router-outlet />
-    <app-modal />
+    <app-modal class="z-20" />
   `,
   styles: [':host { display: block; width: 100%; }'],
   changeDetection: ChangeDetectionStrategy.OnPush,

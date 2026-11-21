@@ -1,89 +1,48 @@
-<section class="card">
-  <div class="card-body flex flex-col gap-3">
-    <div class="flex items-center justify-between gap-2">
-      <h2 class="text-sm font-semibold text-primary">Ejercicios</h2>
-      <button type="button" class="btn btn-secondary btn-sm" (click)="addRow()">
-        Agregar ejercicio
-      </button>
-    </div>
-
-    @if (rows().length) {
-      <div class="flex flex-col gap-3">
-        @for (row of rows(); track $index) {
-          <div class="flex flex-col gap-2 sm:flex-row sm:items-end">
-            <div class="flex-1">
-              <select
-                class="select"
-                [value]="row.exerciseId"
-                [attr.aria-label]="'Ejercicio ' + ($index + 1)"
-                (change)="setExercise($index, $event)"
-              >
-                <option value="">Elegí un ejercicio</option>
-                @for (exercise of exercises(); track exercise.id) {
-                  <option [value]="exercise.id">
-                    {{ exercise.name }} · {{ muscle(exercise) }}
-                  </option>
-                }
-              </select>
-            </div>
-
-            <div class="w-full sm:w-20">
-              <app-input
-                [id]="'plan-sets-' + $index"
-                [name]="'plan-sets-' + $index"
-                label="Sets"
-                type="number"
-                min="1"
-                [ngModel]="row.sets"
-                (ngModelChange)="setSets($index, $event)"
-              />
-            </div>
-
-            <div class="w-full sm:w-24">
-              <app-input
-                [id]="'plan-reps-' + $index"
-                [name]="'plan-reps-' + $index"
-                label="Reps"
-                type="number"
-                min="1"
-                [ngModel]="row.reps"
-                (ngModelChange)="setReps($index, $event)"
-              />
-            </div>
-
-            <div class="flex gap-1">
-              <button
-                type="button"
-                class="btn btn-ghost btn-sm"
-                [disabled]="$first"
-                aria-label="Subir"
-                (click)="move($index, -1)"
-              >
-                ↑
-              </button>
-              <button
-                type="button"
-                class="btn btn-ghost btn-sm"
-                [disabled]="$last"
-                aria-label="Bajar"
-                (click)="move($index, 1)"
-              >
-                ↓
-              </button>
-              <button
-                type="button"
-                class="btn btn-ghost btn-sm text-danger"
-                aria-label="Quitar"
-                (click)="removeRow($index)"
-              >
-                ×
-              </button>
-            </div>
+<app-section title="Ejercicios">
+  @if (rows().length) {
+    <app-drag-list [items]="rows()" (itemsChange)="rowsChange.emit($event)">
+      <ng-template let-row let-index="index">
+        <div class="flex w-full items-center gap-3 rounded-xl bg-gray-700/30 px-3 py-2">
+          <div class="relative size-20 shrink-0 overflow-hidden rounded-xl">
+            <img
+              class="object-cover"
+              [ngSrc]="image(row.exerciseId)"
+              fill
+              [alt]="name(row.exerciseId)"
+            />
           </div>
-        }
-      </div>
-    } @else {
-      <p class="text-xs text-text-muted">Agregá al menos un ejercicio.</p>
-    }
-  </div>
-</section>
+
+          <span class="min-w-0 flex-1">
+            <span class="block truncate text-sm">{{ name(row.exerciseId) }}</span>
+            <span class="block text-xs text-gray-400">
+              {{ muscle(row.exerciseId) }} · {{ type(row.exerciseId) }}
+            </span>
+            <span class="block text-xs text-gray-400">{{ row.sets }} × {{ row.reps }}</span>
+          </span>
+
+          <div class="flex gap-1">
+            <button
+              type="button"
+              class="size-10 bg-gray-600 p-0 text-gray-100"
+              aria-label="Editar"
+              (click)="openForm(index)"
+            >
+              <ng-icon name="hugePencil" />
+            </button>
+            <button
+              type="button"
+              class="size-10 bg-gray-600 p-0 text-gray-100"
+              aria-label="Eliminar"
+              (click)="removeRow(index)"
+            >
+              <ng-icon name="hugeDelete01" />
+            </button>
+          </div>
+        </div>
+      </ng-template>
+    </app-drag-list>
+  } @else {
+    <p>Agregá al menos un ejercicio.</p>
+  }
+  <button type="button" (click)="openForm()">Agregar ejercicio</button>
+</app-section>

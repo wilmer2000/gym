@@ -1,8 +1,8 @@
 import {
   ChangeDetectionStrategy,
   Component,
-  DestroyRef,
   computed,
+  DestroyRef,
   inject,
   signal,
 } from '@angular/core';
@@ -15,15 +15,15 @@ import { Input } from '../../../../core/modules/form/components/input/input.comp
 import { Toggle } from '../../../../core/modules/form/components/toggle/toggle.component';
 import { ModalService } from '../../../../core/modules/modal/services/modal.service';
 import { Plan } from '../../interfaces/plan';
-import { PlanDateRepository } from '../../repositories/plan-date.repository';
 import { PlanExerciseRepository } from '../../repositories/plan-exercise.repository';
 import { PlanWeekdayRepository } from '../../repositories/plan-weekday.repository';
 import { PlanRepository } from '../../repositories/plan.repository';
 import { scheduleSummary } from '../../utils/schedule-summary';
+import { NgIcon } from '@ng-icons/core';
 
 @Component({
   selector: 'app-plan-list',
-  imports: [Container, Input, Toggle, RouterLink, FormsModule],
+  imports: [Container, Input, Toggle, RouterLink, FormsModule, NgIcon],
   templateUrl: './plan-list.component.html',
   styles: `
     :host {
@@ -37,7 +37,6 @@ export class PlanListPage {
   private readonly plans = inject(PlanRepository);
   private readonly planExercises = inject(PlanExerciseRepository);
   private readonly weekdays = inject(PlanWeekdayRepository);
-  private readonly dates = inject(PlanDateRepository);
   private readonly modal = inject(ModalService);
   private readonly destroyRef = inject(DestroyRef);
 
@@ -54,11 +53,7 @@ export class PlanListPage {
       .search({ name: this.search(), active: this.onlyActive() ? true : undefined })
       .map((plan) => ({
         plan,
-        summary: scheduleSummary(
-          plan,
-          this.weekdays.listByPlan(plan.id),
-          this.dates.listByPlan(plan.id),
-        ),
+        summary: scheduleSummary(this.weekdays.listByPlan(plan.id)),
         exercises: this.planExercises.listByPlan(plan.id).length,
       }));
   });
@@ -71,7 +66,7 @@ export class PlanListPage {
   remove(plan: Plan): void {
     const modalId = this.modal.open({
       title: 'Eliminar plan',
-      subtitle: `Se eliminará "${plan.name}" y su calendario de forma permanente.`,
+      subtitle: `Se eliminará "${plan.name}" y sus días de la semana de forma permanente.`,
       type: 'error',
       okLabel: 'Eliminar',
     });

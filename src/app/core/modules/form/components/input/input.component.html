@@ -1,20 +1,12 @@
-<div class="flex flex-col gap-1">
-  @if (label()) {
-    <label [for]="id()" class="label mb-0">{{ label() }}</label>
-  }
-
-  <input
-    [id]="id()"
-    class="input"
-    [type]="type()"
-    [attr.inputmode]="inputmode() || null"
-    [min]="min()"
-    [max]="max()"
-    [class.input-error]="invalid()"
-    [placeholder]="placeholder()"
-    [value]="value()"
-    [disabled]="disabled()"
-    (input)="setValue($event)"
-    (blur)="onTouched()"
-  />
-</div>
+<input
+  [id]="id()"
+  [type]="type()"
+  [attr.inputmode]="inputmode() || null"
+  [min]="min()"
+  [max]="max()"
+  [placeholder]="placeholder() || label()"
+  [value]="value()"
+  [disabled]="disabled()"
+  (input)="setValue($event)"
+  (blur)="onTouched()"
+/>

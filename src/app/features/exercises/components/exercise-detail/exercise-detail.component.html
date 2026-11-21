@@ -1,28 +1,28 @@
 <app-container [title]="exercise?.name ?? 'Ejercicio'">
   <div header>
-    <a routerLink="/exercises" class="btn btn-secondary">Volver</a>
+    <a routerLink="/exercises">Volver</a>
   </div>
 
   @if (exercise; as item) {
-    <section class="card">
-      <div class="card-body flex flex-col gap-4">
-        <div class="flex flex-col items-center gap-1 bg-gray-500">
-          <img [src]="image(item)" [alt]="item.name" class="h-48 w-48" />
-          <p class="text-center text-xs text-text-muted">
+    <section>
+      <div>
+        <div>
+          <img [src]="image(item)" [alt]="item.name" />
+          <p>
             Ilustración: Bryl Lim —
             <a href="https://bryllim.com" target="_blank" rel="noopener">bryllim.com</a>
             (CC BY-SA 4.0)
           </p>
         </div>
 
-        <dl class="grid gap-4 sm:grid-cols-2">
+        <dl>
           <div>
-            <dt class="text-xs uppercase text-text-muted">Músculo principal</dt>
-            <dd class="text-sm text-primary">{{ muscle(item.primaryMuscle) }}</dd>
+            <dt>Músculo principal</dt>
+            <dd>{{ muscle(item.primaryMuscle) }}</dd>
           </div>
           <div>
-            <dt class="text-xs uppercase text-text-muted">Músculos secundarios</dt>
-            <dd class="text-sm text-primary">
+            <dt>Músculos secundarios</dt>
+            <dd>
               {{
                 item.secondaryMuscles.length
                   ? item.secondaryMuscles.map(muscle).join(', ')
@@ -31,24 +31,24 @@
             </dd>
           </div>
           <div>
-            <dt class="text-xs uppercase text-text-muted">Tipo</dt>
-            <dd class="text-sm text-primary">{{ type(item) }}</dd>
+            <dt>Tipo</dt>
+            <dd>{{ type(item) }}</dd>
           </div>
           <div>
-            <dt class="text-xs uppercase text-text-muted">Equipo</dt>
-            <dd class="text-sm text-primary">{{ equipment(item) }}</dd>
+            <dt>Equipo</dt>
+            <dd>{{ equipment(item) }}</dd>
           </div>
         </dl>
 
         @if (item.description) {
-          <p class="text-sm text-text-secondary">{{ item.description }}</p>
+          <p>{{ item.description }}</p>
         }
       </div>
     </section>
   } @else {
-    <div class="card card-body flex flex-col items-start gap-3">
-      <p class="text-sm text-text-secondary">No se encontró el ejercicio.</p>
-      <a routerLink="/exercises" class="btn btn-secondary">Volver al catálogo</a>
+    <div>
+      <p>No se encontró el ejercicio.</p>
+      <a routerLink="/exercises">Volver al catálogo</a>
     </div>
   }
 </app-container>

@@ -1,0 +1,39 @@
+<div class="flex flex-col gap-4">
+  <app-section [title]="'Base de datos'">
+    <div class="flex gap-4">
+      <app-disc [percent]="dbUsage().percent" label="Uso de la base de datos" />
+      <p>
+        <span class="block">
+          Uso de almacenamiento:
+        </span>
+        {{ usedBytesMessage() }}
+      </p>
+    </div>
+  </app-section>
+  <app-section [title]="'Copia de seguridad y recuperación'">
+    <div class="flex flex-col gap-4">
+      <p>
+        Crea una copia de seguridad de los planes ({{ filename }}) y guardala en un lugar seguro.
+      </p>
+      <button (click)="downloadBackup()">Descargar copia</button>
+    </div>
+  </app-section>
+  <app-section [title]="'Copia de seguridad y recuperación'">
+    <div class="flex flex-col gap-6">
+      <div class="flex flex-col gap-4">
+        <p>Sube una copia de seguridad de los planes para recuperarla.</p>
+        <label>
+          <span class="mb-2 block">Subir copia de seguridad</span>
+          <input type="file" accept=".db,.sqlite,.sqlite3" (change)="importBackup($event)" />
+        </label>
+      </div>
+
+      <div class="flex flex-col gap-4">
+        <p>
+          Crea una copia de seguridad de los planes ({{ filename }}) y guardala en un lugar seguro.
+        </p>
+        <button (click)="downloadBackup()">Descargar copia</button>
+      </div>
+    </div>
+  </app-section>
+</div>

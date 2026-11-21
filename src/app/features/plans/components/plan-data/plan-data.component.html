@@ -1,30 +1,26 @@
-<section class="card">
-  <div class="card-body flex flex-col gap-3">
-    <h2 class="text-sm font-semibold text-primary">Datos</h2>
+<app-section [title]="'Datos'">
+  <app-input
+    id="plan-name"
+    name="plan-name"
+    label="Nombre"
+    [invalid]="name().trim() === ''"
+    [ngModel]="name()"
+    (ngModelChange)="nameChange.emit($event)"
+  />
 
-    <app-input
-      id="plan-name"
-      name="plan-name"
-      label="Nombre"
-      [invalid]="name().trim() === ''"
-      [ngModel]="name()"
-      (ngModelChange)="nameChange.emit($event)"
-    />
+  <app-text-area
+    id="plan-description"
+    name="plan-description"
+    label="Descripción"
+    [ngModel]="description()"
+    (ngModelChange)="descriptionChange.emit($event)"
+  />
 
-    <app-text-area
-      id="plan-description"
-      name="plan-description"
-      label="Descripción"
-      [ngModel]="description()"
-      (ngModelChange)="descriptionChange.emit($event)"
-    />
-
-    <app-toggle
-      id="plan-active"
-      name="plan-active"
-      label="Activo"
-      [ngModel]="active()"
-      (ngModelChange)="activeChange.emit($event)"
-    />
-  </div>
-</section>
+  <app-toggle
+    id="plan-active"
+    name="plan-active"
+    label="Activo"
+    [ngModel]="active()"
+    (ngModelChange)="activeChange.emit($event)"
+  />
+</app-section>

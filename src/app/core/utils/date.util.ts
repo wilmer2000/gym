@@ -73,20 +73,6 @@ export function startOfDay(value: unknown): number | null {
   return date ? new Date(date.getFullYear(), date.getMonth(), date.getDate()).getTime() : null;
 }
 
-// Local calendar day as dd/MM/yyyy, the text the transaction form expects.
-export function dateInput(value: unknown): string {
-  const date = parseDate(value);
-
-  if (!date) {
-    return '';
-  }
-
-  const day = String(date.getDate()).padStart(2, '0');
-  const month = String(date.getMonth() + 1).padStart(2, '0');
-
-  return `${day}/${month}/${date.getFullYear()}`;
-}
-
 // Local clock time as dd/MM/yyyy hh:mm, following the app's date convention.
 export function formatUpdate(date: Date): string {
   const day = String(date.getDate()).padStart(2, '0');

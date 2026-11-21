@@ -15,7 +15,7 @@ const TONES: Record<ModalType, { icon: string; title: string; iconClass: string 
   error: { icon: '✕', title: 'text-red-600', iconClass: 'bg-red-100 text-red-600' },
   warning: { icon: '!', title: 'text-amber-600', iconClass: 'bg-amber-100 text-amber-600' },
   success: { icon: '✓', title: 'text-green-600', iconClass: 'bg-green-100 text-green-600' },
-  info: { icon: 'i', title: 'text-primary-600', iconClass: 'bg-primary-100 text-primary-600' },
+  info: { icon: 'i', title: 'text-primary', iconClass: 'bg-primary/20 text-primary' },
 };
 
 @Component({

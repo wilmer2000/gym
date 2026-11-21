@@ -1,13 +1,33 @@
-import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { Input } from '../../../../core/modules/form/components/input/input.component';
-import { MuscleTranslations } from '../../../exercises/constants/exercises.constant';
+import { NgOptimizedImage } from '@angular/common';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  DestroyRef,
+  inject,
+  input,
+  output,
+} from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { NgIcon } from '@ng-icons/core';
+import { filter } from 'rxjs';
+import { ModalService } from '../../../../core/modules/modal/services/modal.service';
+import { DragList } from '../../../../shared/components/drag-list/drag-list.component';
+import { Section } from '../../../../shared/components/section/section.component';
+import {
+  ExerciseSelection,
+  ExerciseSelectionForm,
+} from '../../../exercises/components/exercise-selection-form/exercise-selection-form.component';
+import {
+  exerciseImage,
+  ExerciseTypeTranslations,
+  MuscleTranslations,
+} from '../../../exercises/constants/exercises.constant';
 import { Exercise } from '../../../exercises/interfaces/exercise';
 import { PlanExerciseRow } from '../../interfaces/plan';
 
 @Component({
   selector: 'app-plan-exercises-form',
-  imports: [Input, FormsModule],
+  imports: [Section, DragList, NgOptimizedImage, NgIcon],
   templateUrl: './plan-exercises.component.html',
   styles: `
     :host {
@@ -17,63 +37,69 @@ import { PlanExerciseRow } from '../../interfaces/plan';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PlanExercisesForm {
+  private readonly modal = inject(ModalService);
+  private readonly destroyRef = inject(DestroyRef);
+
   readonly exercises = input.required<Exercise[]>();
   readonly rows = input.required<PlanExerciseRow[]>();
 
   readonly rowsChange = output<PlanExerciseRow[]>();
 
-  muscle(exercise: Exercise): string {
-    return MuscleTranslations[exercise.primaryMuscle] ?? exercise.primaryMuscle;
-  }
+  openForm(index?: number): void {
+    const row = index === undefined ? null : this.rows()[index];
+    const picked: { row: ExerciseSelection } = {
+      row: row ?? { exerciseId: '', sets: 3, reps: 12 },
+    };
+    const modalId = this.modal.open({
+      title: row ? 'Editar ejercicio' : 'Agregar ejercicio',
+      component: ExerciseSelectionForm,
+      data: picked,
+      okLabel: row ? 'Guardar' : 'Agregar',
+    });
 
-  addRow(): void {
-    this.rowsChange.emit([
-      ...this.rows(),
-      { exerciseId: this.exercises()[0]?.id ?? '', reps: 12, sets: 3 },
-    ]);
+    this.modal.action$
+      .pipe(
+        filter((event) => event.id === modalId && event.action === 'ok'),
+        takeUntilDestroyed(this.destroyRef),
+      )
+      .subscribe(() => {
+        const rows = [...this.rows()];
+
+        if (index === undefined) {
+          rows.push(picked.row);
+        } else {
+          rows[index] = picked.row;
+        }
+
+        this.rowsChange.emit(rows);
+      });
   }
 
   removeRow(index: number): void {
     this.rowsChange.emit(this.rows().filter((_, position) => position !== index));
   }
 
-  move(index: number, offset: number): void {
-    const rows = [...this.rows()];
-    const target = index + offset;
-
-    if (target < 0 || target >= rows.length) {
-      return;
-    }
-
-    [rows[index], rows[target]] = [rows[target], rows[index]];
-    this.rowsChange.emit(rows);
+  name(id: string): string {
+    return this.exercise(id)?.name ?? id;
   }
 
-  setExercise(index: number, event: Event): void {
-    const id = (event.target as HTMLSelectElement).value;
+  muscle(id: string): string {
+    const exercise = this.exercise(id);
 
-    this.rowsChange.emit(
-      this.rows().map((row, position) => (position === index ? { ...row, exerciseId: id } : row)),
-    );
+    return exercise ? MuscleTranslations[exercise.primaryMuscle] : '';
   }
 
-  setReps(index: number, value: string): void {
-    const reps = Number(value);
+  type(id: string): string {
+    const exercise = this.exercise(id);
 
-    this.rowsChange.emit(
-      this.rows().map((row, position) =>
-        position === index ? { ...row, reps: Number.isFinite(reps) ? reps : 0 } : row,
-      ),
-    );
+    return exercise ? ExerciseTypeTranslations[exercise.exerciseType] : '';
   }
 
-  setSets(index: number, value: string): void {
-    const sets = Number(value);
+  image(id: string): string {
+    return exerciseImage(id);
+  }
 
-    this.rowsChange.emit(
-      this.rows().map((row, position) =>
-        position === index ? { ...row, sets: Number.isFinite(sets) ? sets : 0 } : row,
-      ),
-    );
+  private exercise(id: string): Exercise | undefined {
+    return this.exercises().find((exercise) => exercise.id === id);
   }
 }
