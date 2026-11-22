@@ -1,0 +1,5 @@
+@if (iconButton()) {
+  <button type="button" [disabled]="disabled()" (click)="remove()">
+    <ng-icon [name]="icon()" />
+  </button>
+}

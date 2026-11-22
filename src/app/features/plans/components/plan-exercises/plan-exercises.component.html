@@ -21,22 +21,20 @@
           </span>
 
           <div class="flex gap-1">
-            <button
-              type="button"
+            <app-button
+              [iconButton]="true"
+              [icon]="'hugePencil'"
               class="size-10 bg-gray-600 p-0 text-gray-100"
               aria-label="Editar"
-              (click)="openForm(index)"
-            >
-              <ng-icon name="hugePencil" />
-            </button>
-            <button
-              type="button"
+              (removed)="openForm(index)"
+            />
+            <app-button
+              [iconButton]="true"
+              [icon]="'hugeDelete01'"
               class="size-10 bg-gray-600 p-0 text-gray-100"
               aria-label="Eliminar"
-              (click)="removeRow(index)"
-            >
-              <ng-icon name="hugeDelete01" />
-            </button>
+              (removed)="removeRow(index)"
+            />
           </div>
         </div>
       </ng-template>

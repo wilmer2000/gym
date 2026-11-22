@@ -10,8 +10,8 @@ import {
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
-import { NgIcon } from '@ng-icons/core';
 import { filter } from 'rxjs';
+import { Button } from '../../../../core/modules/form/components/button/button.component';
 import { Toggle } from '../../../../core/modules/form/components/toggle/toggle.component';
 import { ModalService } from '../../../../core/modules/modal/services/modal.service';
 import { PlanRow } from '../../interfaces/plan';
@@ -21,7 +21,7 @@ import { Week } from '../../../../shared/components/week/week.component';
 
 @Component({
   selector: 'app-plan-item',
-  imports: [Toggle, Week, RouterLink, FormsModule, NgIcon],
+  imports: [Toggle, Week, RouterLink, FormsModule, Button],
   template: `
     @let item = row();
 
@@ -46,13 +46,13 @@ import { Week } from '../../../../shared/components/week/week.component';
             <app-week [days]="days()" />
             <p>{{ item.exercises }} ejercicio{{ item.exercises === 1 ? '' : 's' }}</p>
             @if (item.plan.description) {
-              <p>{{ item.plan.description }}</p>
+              <div class="line-clamp-3">
+                <p class="text-gray-500">{{ item.plan.description }}</p>
+              </div>
             }
           </div>
 
-          <button type="button" (click)="remove()">
-            <ng-icon name="hugeDelete01" />
-          </button>
+          <app-button [iconButton]="true" [icon]="'hugeDelete01'" (removed)="remove()" />
         </div>
       </div>
     </div>

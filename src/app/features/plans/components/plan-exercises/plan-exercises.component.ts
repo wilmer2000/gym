@@ -8,10 +8,10 @@ import {
   output,
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { NgIcon } from '@ng-icons/core';
 import { filter } from 'rxjs';
 import { ModalService } from '../../../../core/modules/modal/services/modal.service';
 import { DragList } from '../../../../shared/components/drag-list/drag-list.component';
+import { Button } from '../../../../core/modules/form/components/button/button.component';
 import { Section } from '../../../../shared/components/section/section.component';
 import {
   ExerciseSelection,
@@ -27,7 +27,7 @@ import { PlanExerciseRow } from '../../interfaces/plan';
 
 @Component({
   selector: 'app-plan-exercises-form',
-  imports: [Section, DragList, NgOptimizedImage, NgIcon],
+  imports: [Section, DragList, NgOptimizedImage, Button],
   templateUrl: './plan-exercises.component.html',
   styles: `
     :host {

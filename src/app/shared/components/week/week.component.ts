@@ -10,7 +10,7 @@ const WEEKDAY_INITIAL = ['D', 'L', 'M', 'M', 'J', 'V', 'S'];
     <div role="img" title="Days of the week" class="flex gap-1">
       @for (mark of marks(); track mark.value) {
         <div
-          class="grid self-center rounded-full aspect-square items-center bg-gray-600 text-gray-300 w-4 text-xs text-center leading-none"
+          class="grid self-center rounded-full aspect-square items-center bg-gray-600 text-gray-300 w-4 text-xs text-center leading-none justify-center"
           [class.bg-primary!]="mark.active"
           [class.text-gray-950!]="mark.active"
         >
