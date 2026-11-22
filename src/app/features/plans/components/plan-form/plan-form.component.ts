@@ -6,7 +6,7 @@ import { PlanExerciseRow, PlanInput } from '../../interfaces/plan';
 import { PlanExerciseRepository } from '../../repositories/plan-exercise.repository';
 import { PlanWeekdayRepository } from '../../repositories/plan-weekday.repository';
 import { PlanRepository } from '../../repositories/plan.repository';
-import { PlanDataForm } from '../plan-data/plan-data.component';
+import { PlanDataForm } from '../plan-data-form/plan-data-form.component';
 import { PlanExercisesForm } from '../plan-exercises/plan-exercises.component';
 import { PlanScheduleForm } from '../plan-schedule/plan-schedule.component';
 import { FormsModule } from '@angular/forms';

@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, Component, DestroyRef, inject, signal } from '
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { NgIcon } from '@ng-icons/core';
 import { filter } from 'rxjs';
 import { Container } from '../../../../core/components/container/container.component';
 import { Toggle } from '../../../../core/modules/form/components/toggle/toggle.component';
@@ -12,10 +13,11 @@ import { PlanExerciseRepository } from '../../repositories/plan-exercise.reposit
 import { PlanWeekdayRepository } from '../../repositories/plan-weekday.repository';
 import { PlanRepository } from '../../repositories/plan.repository';
 import { scheduleSummary } from '../../utils/schedule-summary';
+import { Section } from '../../../../shared/components/section/section.component';
 
 @Component({
   selector: 'app-plan-detail',
-  imports: [Container, Toggle, RouterLink, FormsModule],
+  imports: [Container, Toggle, RouterLink, FormsModule, Section, NgIcon],
   templateUrl: './plan-detail.component.html',
   styles: `
     :host {

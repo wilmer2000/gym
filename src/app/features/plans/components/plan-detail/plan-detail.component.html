@@ -1,16 +1,15 @@
-<app-container [title]="plan()?.name ?? 'Plan'">
+<app-container [title]="'Plan'">
   <div header>
-    <a routerLink="/plans">Volver</a>
-    @if (plan()) {
-      <a [routerLink]="['/plans', plan()!.id, 'edit']">Editar</a>
-      <button type="button" (click)="remove()">Eliminar</button>
-    }
+    <button class="btn-icon" [routerLink]="'/plans'">
+      <ng-icon name="hugeArrowRight01" />
+    </button>
   </div>
 
   @if (plan(); as item) {
-    <section>
+    <app-section [title]="'Información del plan'">
       <div>
         <div>
+          <p>{{ plan()?.name }}</p>
           <p>{{ summary() }}</p>
 
           <app-toggle
@@ -25,12 +24,10 @@
           <p>{{ item.description }}</p>
         }
       </div>
-    </section>
+    </app-section>
 
-    <section>
+    <app-section [title]="'Ejercicios'">
       <div>
-        <h2>Ejercicios</h2>
-
         <ol>
           @for (exercise of exercises(); track $index) {
             <li>
@@ -40,7 +37,14 @@
           }
         </ol>
       </div>
-    </section>
+    </app-section>
+
+    @if (plan()) {
+      <div class="flex gap-2">
+        <button type="button" [routerLink]="['/plans', plan()!.id, 'edit']">Editar</button>
+        <button type="button" (click)="remove()">Eliminar</button>
+      </div>
+    }
   } @else {
     <div>
       <p>No se encontró el plan.</p>

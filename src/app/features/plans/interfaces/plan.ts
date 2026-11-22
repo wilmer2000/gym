@@ -7,6 +7,12 @@ export interface Plan {
   updatedAt: number;
 }
 
+export interface PlanRow {
+  plan: Plan;
+  summary: string;
+  exercises: number;
+}
+
 export interface PlanExercise {
   id: number;
   planId: number;

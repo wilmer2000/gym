@@ -8,7 +8,7 @@ import { Section } from '../../../../shared/components/section/section.component
 @Component({
   selector: 'app-plan-data-form',
   imports: [Input, TextArea, Toggle, FormsModule, Section],
-  templateUrl: './plan-data.component.html',
+  templateUrl: './plan-data-form.component.html',
   styles: `
     :host {
       display: block;

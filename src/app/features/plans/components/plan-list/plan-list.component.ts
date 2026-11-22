@@ -1,29 +1,20 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  computed,
-  DestroyRef,
-  inject,
-  signal,
-} from '@angular/core';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { ChangeDetectionStrategy, Component, effect, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
-import { filter } from 'rxjs';
 import { Container } from '../../../../core/components/container/container.component';
 import { Input } from '../../../../core/modules/form/components/input/input.component';
 import { Toggle } from '../../../../core/modules/form/components/toggle/toggle.component';
-import { ModalService } from '../../../../core/modules/modal/services/modal.service';
-import { Plan } from '../../interfaces/plan';
+import { PlanRow } from '../../interfaces/plan';
 import { PlanExerciseRepository } from '../../repositories/plan-exercise.repository';
 import { PlanWeekdayRepository } from '../../repositories/plan-weekday.repository';
 import { PlanRepository } from '../../repositories/plan.repository';
 import { scheduleSummary } from '../../utils/schedule-summary';
 import { NgIcon } from '@ng-icons/core';
+import { PlanItem } from '../plan-item/plan-item.component';
 
 @Component({
   selector: 'app-plan-list',
-  imports: [Container, Input, Toggle, RouterLink, FormsModule, NgIcon],
+  imports: [Container, Input, Toggle, RouterLink, FormsModule, NgIcon, PlanItem],
   templateUrl: './plan-list.component.html',
   styles: `
     :host {
@@ -37,48 +28,24 @@ export class PlanListPage {
   private readonly plans = inject(PlanRepository);
   private readonly planExercises = inject(PlanExerciseRepository);
   private readonly weekdays = inject(PlanWeekdayRepository);
-  private readonly modal = inject(ModalService);
-  private readonly destroyRef = inject(DestroyRef);
 
   readonly search = signal('');
   readonly onlyActive = signal(false);
+  readonly rows = signal<PlanRow[]>([]);
 
-  // Repositories are synchronous; bumping this signal re-runs the computed reads.
-  private readonly version = signal(0);
-
-  readonly rows = computed(() => {
-    this.version();
-
-    return this.plans
-      .search({ name: this.search(), active: this.onlyActive() ? true : undefined })
-      .map((plan) => ({
-        plan,
-        summary: scheduleSummary(this.weekdays.listByPlan(plan.id)),
-        exercises: this.planExercises.listByPlan(plan.id).length,
-      }));
-  });
-
-  toggleActive(plan: Plan): void {
-    this.plans.setActive(plan.id, !plan.active);
-    this.version.update((value) => value + 1);
+  constructor() {
+    effect(() => this.load());
   }
 
-  remove(plan: Plan): void {
-    const modalId = this.modal.open({
-      title: 'Eliminar plan',
-      subtitle: `Se eliminará "${plan.name}" y sus días de la semana de forma permanente.`,
-      type: 'error',
-      okLabel: 'Eliminar',
-    });
-
-    this.modal.action$
-      .pipe(
-        filter((event) => event.id === modalId && event.action === 'ok'),
-        takeUntilDestroyed(this.destroyRef),
-      )
-      .subscribe(() => {
-        this.plans.remove(String(plan.id));
-        this.version.update((value) => value + 1);
-      });
+  protected load(): void {
+    this.rows.set(
+      this.plans
+        .search({ name: this.search(), active: this.onlyActive() ? true : undefined })
+        .map((plan) => ({
+          plan,
+          summary: scheduleSummary(this.weekdays.listByPlan(plan.id)),
+          exercises: this.planExercises.listByPlan(plan.id).length,
+        })),
+    );
   }
 }

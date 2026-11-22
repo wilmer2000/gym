@@ -1,6 +1,7 @@
 import {
   hugeDashboardSquare02,
   hugeDelete01,
+  hugeArrowRight01,
   hugeDocumentValidation,
   hugeEquipmentGym03,
   hugePencil,
@@ -17,6 +18,7 @@ export function initIcons(): Record<string, string> {
     hugeEquipmentGym03,
     hugeDashboardSquare02,
     hugePlusSign,
+    hugeArrowRight01,
     hugePencil,
     hugeDelete01,
   };

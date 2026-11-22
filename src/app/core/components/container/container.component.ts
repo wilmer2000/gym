@@ -8,7 +8,7 @@ import { ChangeDetectionStrategy, Component, input } from '@angular/core';
       <div class="flex gap-2 justify-between items-center">
         @if (title() || subtitle()) {
           <div class="flex flex-col">
-            <h1 class="font-medium text-3xl">{{ title() }}</h1>
+            <h1 class="font-medium text-3xl truncate">{{ title() }}</h1>
             @if (subtitle()) {
               <p class="text-sm leading">{{ subtitle() }}</p>
             }

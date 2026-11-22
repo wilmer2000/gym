@@ -28,25 +28,30 @@ export interface ExerciseSelection {
       <app-exercise-selector [ngModel]="ids()" (ngModelChange)="exerciseId.set($event[0] ?? '')" />
 
       <div class="flex gap-2">
-        <app-input
-          class="w-24"
-          id="exercise-selection-sets"
-          label="Sets"
-          type="number"
-          min="1"
-          [ngModel]="sets()"
-          (ngModelChange)="sets.set(+$event)"
-        />
-
-        <app-input
-          class="w-24"
-          id="exercise-selection-reps"
-          label="Reps"
-          type="number"
-          min="1"
-          [ngModel]="reps()"
-          (ngModelChange)="reps.set(+$event)"
-        />
+        <div class="flex items-center gap-2">
+          <span>Sets</span>
+          <app-input
+            class="w-24"
+            id="exercise-selection-sets"
+            label="Sets"
+            type="number"
+            min="1"
+            [ngModel]="sets()"
+            (ngModelChange)="sets.set(+$event)"
+          />
+        </div>
+        <div class="flex items-center gap-2">
+          <span>Repeticiones</span>
+          <app-input
+            class="w-24"
+            id="exercise-selection-reps"
+            label="Reps"
+            type="number"
+            min="1"
+            [ngModel]="reps()"
+            (ngModelChange)="reps.set(+$event)"
+          />
+        </div>
       </div>
     </div>
   `,
