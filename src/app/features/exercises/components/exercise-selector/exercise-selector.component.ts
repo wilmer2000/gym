@@ -42,18 +42,20 @@ export class ExerciseSelector implements ControlValueAccessor {
   private readonly repository = inject(ExerciseRepository);
 
   search = signal('');
+  multiple = input(false);
+  readonly = input(false);
+  selectionChange = output<string[]>();
+
   exercises = computed(() =>
     this.repository
       .search({ name: this.search() })
+      .filter((exercise) => !this.readonly() || this.selection().includes(exercise.id))
       .sort(
         (a, b) =>
           MuscleTranslations[a.primaryMuscle].localeCompare(MuscleTranslations[b.primaryMuscle]) ||
           a.name.localeCompare(b.name),
       ),
   );
-
-  multiple = input(false);
-  selectionChange = output<string[]>();
 
   // The form drives the value through the CVA; selectionChange stays for direct bindings.
   protected readonly selection = signal<string[]>([]);
@@ -82,7 +84,7 @@ export class ExerciseSelector implements ControlValueAccessor {
   }
 
   toggle(exercise: Exercise): void {
-    if (this.disabled()) {
+    if (this.disabled() || this.readonly()) {
       return;
     }
 

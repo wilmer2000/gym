@@ -1,23 +1,28 @@
-import { ChangeDetectionStrategy, Component, DestroyRef, inject, signal } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  DestroyRef,
+  inject,
+  signal,
+} from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { NgIcon } from '@ng-icons/core';
 import { filter } from 'rxjs';
 import { Container } from '../../../../core/components/container/container.component';
-import { Toggle } from '../../../../core/modules/form/components/toggle/toggle.component';
+import { Button } from '../../../../core/modules/form/components/button/button.component';
 import { ModalService } from '../../../../core/modules/modal/services/modal.service';
-import { ExerciseRepository } from '../../../exercises/repositories/exercise.repository';
-import { Plan } from '../../interfaces/plan';
+import { ExerciseSelector } from '../../../exercises/components/exercise-selector/exercise-selector.component';
+import { Plan, PlanRow } from '../../interfaces/plan';
 import { PlanExerciseRepository } from '../../repositories/plan-exercise.repository';
-import { PlanWeekdayRepository } from '../../repositories/plan-weekday.repository';
 import { PlanRepository } from '../../repositories/plan.repository';
-import { scheduleSummary } from '../../utils/schedule-summary';
 import { Section } from '../../../../shared/components/section/section.component';
+import { PlanItem } from '../plan-item/plan-item.component';
 
 @Component({
   selector: 'app-plan-detail',
-  imports: [Container, Toggle, RouterLink, FormsModule, Section, NgIcon],
+  imports: [Container, RouterLink, FormsModule, Section, Button, ExerciseSelector, PlanItem],
   templateUrl: './plan-detail.component.html',
   styles: `
     :host {
@@ -30,29 +35,20 @@ import { Section } from '../../../../shared/components/section/section.component
 export class PlanDetailPage {
   private readonly plans = inject(PlanRepository);
   private readonly planExercises = inject(PlanExerciseRepository);
-  private readonly planWeekdays = inject(PlanWeekdayRepository);
-  private readonly exerciseRepo = inject(ExerciseRepository);
   private readonly route = inject(ActivatedRoute);
   private readonly router = inject(Router);
   private readonly modal = inject(ModalService);
   private readonly destroyRef = inject(DestroyRef);
 
   readonly plan = signal<Plan | null>(null);
-  readonly summary = signal('');
-  readonly exercises = signal<{ name: string; reps: number; sets: number }[]>([]);
-
-  constructor() {
-    this.load();
-  }
-
-  toggleActive(active: boolean): void {
+  readonly exerciseIds = signal<string[]>([]);
+  readonly row = computed<PlanRow | null>(() => {
     const plan = this.plan();
 
-    if (!plan) {
-      return;
-    }
+    return plan ? { plan, summary: '', exercises: this.exerciseIds().length } : null;
+  });
 
-    this.plans.setActive(plan.id, active);
+  constructor() {
     this.load();
   }
 
@@ -90,13 +86,8 @@ export class PlanDetailPage {
       return;
     }
 
-    this.summary.set(scheduleSummary(this.planWeekdays.listByPlan(plan.id)));
-    this.exercises.set(
-      this.planExercises.listByPlan(plan.id).map((exercise) => ({
-        name: this.exerciseRepo.findById(exercise.exerciseId)?.name ?? exercise.exerciseId,
-        reps: exercise.reps,
-        sets: exercise.sets,
-      })),
+    this.exerciseIds.set(
+      this.planExercises.listByPlan(plan.id).map((exercise) => exercise.exerciseId),
     );
   }
 }

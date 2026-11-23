@@ -11,13 +11,15 @@
       @for (exercise of exercises(); track exercise.id) {
         <div
           tabindex="0"
-          [attr.aria-disabled]="disabled()"
+          [attr.aria-disabled]="disabled() || readonly()"
           class="flex w-full items-center gap-3 rounded-none px-3 py-2 text-left {{
-            disabled()
-              ? 'opacity-50'
-              : isSelected(exercise.id)
-                ? 'bg-primary/10 text-primary'
-                : 'bg-transparent text-gray-200 hover:bg-gray-700/40'
+            readonly()
+              ? 'bg-transparent text-gray-200'
+              : disabled()
+                ? 'opacity-50'
+                : isSelected(exercise.id)
+                  ? 'bg-primary/10 text-primary'
+                  : 'bg-transparent text-gray-200 hover:bg-gray-700/40'
           }}"
           (click)="toggle(exercise)"
           (keydown.enter)="toggle(exercise)"

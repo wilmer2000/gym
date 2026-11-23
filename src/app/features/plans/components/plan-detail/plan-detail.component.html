@@ -1,50 +1,26 @@
 <app-container [title]="'Plan'">
   <div header>
-    <button class="btn-icon" [routerLink]="'/plans'">
-      <ng-icon name="hugeArrowRight01" />
-    </button>
+    <app-button
+      [iconButton]="true"
+      [icon]="'hugeArrowRight01'"
+      routerLink="/plans"
+      aria-label="Volver"
+    />
   </div>
 
-  @if (plan(); as item) {
+  @if (row(); as item) {
     <app-section [title]="'Información del plan'">
-      <div>
-        <div>
-          <p>{{ plan()?.name }}</p>
-          <p>{{ summary() }}</p>
-
-          <app-toggle
-            id="plan-active"
-            label="Activo"
-            [ngModel]="item.active"
-            (ngModelChange)="toggleActive($event)"
-          />
-        </div>
-
-        @if (item.description) {
-          <p>{{ item.description }}</p>
-        }
-      </div>
+      <app-plan-item [row]="item" [readonly]="true" />
     </app-section>
 
     <app-section [title]="'Ejercicios'">
-      <div>
-        <ol>
-          @for (exercise of exercises(); track $index) {
-            <li>
-              <span>{{ $index + 1 }}. {{ exercise.name }}</span>
-              <span>{{ exercise.sets }} × {{ exercise.reps }}</span>
-            </li>
-          }
-        </ol>
-      </div>
+      <app-exercise-selector [ngModel]="exerciseIds()" [readonly]="true" />
     </app-section>
 
-    @if (plan()) {
-      <div class="flex gap-2">
-        <button type="button" [routerLink]="['/plans', plan()!.id, 'edit']">Editar</button>
-        <button type="button" (click)="remove()">Eliminar</button>
-      </div>
-    }
+    <div class="flex gap-2">
+      <button type="button" [routerLink]="['/plans', item.plan.id, 'edit']">Editar</button>
+      <button type="button" (click)="remove()">Eliminar</button>
+    </div>
   } @else {
     <div>
       <p>No se encontró el plan.</p>

@@ -26,8 +26,9 @@ import { Week } from '../../../../shared/components/week/week.component';
     @let item = row();
 
     <div
-      class="flex rounded-2xl bg-gray-700/30 p-3 cursor-pointer"
-      [routerLink]="['/plans', item.plan.id]"
+      class="flex rounded-2xl bg-gray-700/30 p-3"
+      [class.cursor-pointer]="!readonly()"
+      [routerLink]="readonly() ? null : ['/plans', item.plan.id]"
     >
       <div class="flex flex-col gap-1 w-full">
         <div class="flex justify-between w-full gap-2">
@@ -52,7 +53,9 @@ import { Week } from '../../../../shared/components/week/week.component';
             }
           </div>
 
-          <app-button [iconButton]="true" [icon]="'hugeDelete01'" (removed)="remove()" />
+          @if (!readonly()) {
+            <app-button [iconButton]="true" [icon]="'hugeDelete01'" (removed)="remove()" />
+          }
         </div>
       </div>
     </div>
@@ -71,6 +74,7 @@ export class PlanItem {
   private readonly destroyRef = inject(DestroyRef);
 
   readonly row = input.required<PlanRow>();
+  readonly = input(false);
   readonly changed = output<void>();
 
   readonly days = computed(() =>
