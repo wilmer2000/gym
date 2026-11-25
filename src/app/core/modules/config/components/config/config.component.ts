@@ -2,11 +2,10 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { Container } from '../../../../components/container/container.component';
 import { DatabaseSection } from '../sections/database-section/database-section.component';
 import { DeleteAccountSection } from '../sections/delete-account-section/delete-account-section.component';
-import { SecuritySection } from '../sections/security-section/security-section.component';
 
 @Component({
   selector: 'app-config',
-  imports: [Container, DatabaseSection, SecuritySection, DeleteAccountSection],
+  imports: [Container, DatabaseSection, DeleteAccountSection],
   templateUrl: './config.component.html',
   styles: `
     :host {

@@ -23,15 +23,14 @@ signals-based architecture). UI text is in Spanish.
 
 The app currently has four features in `src/app/features/`: **dashboard**,
 **exercises**, **plans** and **profile** (each with its own
-`<name>.route.ts`; the root path redirects to the dashboard). The login
-page is part of the core (`core/modules/login/`). The menu is extensible
-and each feature declares the items it adds.
+`<name>.route.ts`; the root path redirects to the dashboard). The menu is
+extensible and each feature declares the items it adds.
 
 ## Structure
 
 ```
 src/app/
-├── app.routes.ts         # Router: login + main routes (menu, features, config)
+├── app.routes.ts         # Router: main routes (menu, features, config)
 ├── app.shell.html        # PWA manifest
 ├── app.config.ts         # App configuration and initialization
 ├── core/
@@ -53,7 +52,6 @@ src/app/
 │   │   ├── form/         # Wrappers for forms and inputs
 │   │   ├── http/         # Http calls with progress indicator
 │   │   ├── icons/        # Icon registration (@ng-icons)
-│   │   ├── login/        # Login and guard (canAccess)
 │   │   ├── markdown/     # Markdown to Angular Material
 │   │   ├── material/     # Material: colors, direct, icons
 │   │   ├── menu/         # Menu and items
@@ -70,7 +68,7 @@ src/app/
 │   ├── prompts/          # Prompts (UI and CLI)
 │   ├── repository/       # Shared repository contracts
 │   ├── routes/           # Shared routes
-│   ├── services/         # auth, storage
+│   ├── services/         # storage
 │   └── shared/           # Shared interfaces
 ├── features/             # Features: dashboard, exercises, plans, profile
 │   └── <name>/           # components/, plus constants/ schemas/ interfaces/

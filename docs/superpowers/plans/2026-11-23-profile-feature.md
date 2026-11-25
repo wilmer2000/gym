@@ -33,6 +33,7 @@
 ### Task 1: Modelo, schema, repositorios y servicio
 
 **Files:**
+
 - Create: `src/app/features/profile/interfaces/profile.ts`
 - Create: `src/app/features/profile/schema.ts`
 - Create: `src/app/features/profile/repositories/profile.repository.ts`
@@ -41,6 +42,7 @@
 - Modify: `src/app/core/modules/database/services/main-sql.service.ts`
 
 **Interfaces:**
+
 - Produces: `Profile`, `Measurement`, `MeasurementInput`, `ProfileSex`, `ProfileGoal`, `ProfileExperienceLevel`; `ProfileRepository`, `MeasurementRepository`; `ProfileService` con `profileId`, `getProfile()`, `saveProfile(profile)`, `listMeasurements(range?)`, `saveMeasurement(input)`, `removeMeasurement(id)`.
 - Consumes: `RepositoryBase<T>`, `MainSqlService`, `DateRange`.
 
@@ -78,12 +80,14 @@ Expected: build exitoso, sin errores de tipos.
 ### Task 2: Etiquetas y rutas
 
 **Files:**
+
 - Create: `src/app/features/profile/constants/profile.constant.ts`
 - Modify: `src/app/features/profile/profile.route.ts`
 
 **Interfaces:**
+
 - Produces: `SEX_LABELS`, `GOAL_LABELS`, `LEVEL_LABELS`, `DAYS_LABELS`, `WEEKDAY_OPTIONS` (opcional si se usa selector de días).
-- Consumes: componentes creados en tareas 3–5 y `canAccess`.
+- Consumes: componentes creados en tareas 3–5.
 
 - [ ] **Step 1: Crear los mapas de etiquetas**
 
@@ -91,7 +95,7 @@ Expected: build exitoso, sin errores de tipos.
 
 - [ ] **Step 2: Reescribir `profile.route.ts`**
 
-Ruta `profile`, `canActivate: [canAccess]`, hijos: `''` → `ProfileViewPage`, `'edit'` → `ProfileFormPage`, `'measurements'` → `MeasurementsListPage`. Cada uno con `loadComponent`.
+Ruta `profile`, hijos: `''` → `ProfileViewPage`, `'edit'` → `ProfileFormPage`, `'measurements'` → `MeasurementsListPage`. Cada uno con `loadComponent`.
 
 - [ ] **Step 3: Verificar**
 
@@ -103,10 +107,12 @@ Expected: build exitoso (los componentes existirán al terminar la tarea 5; si s
 ### Task 3: Vista de perfil
 
 **Files:**
+
 - Create: `src/app/features/profile/components/profile-view/profile-view.component.ts`
 - Create: `src/app/features/profile/components/profile-view/profile-view.component.html`
 
 **Interfaces:**
+
 - Consumes: `ProfileService`, `Container`, `RouterLink`, `NgIcon`, etiquetas.
 - Produces: `ProfileViewPage`.
 
@@ -128,10 +134,12 @@ Expected: build exitoso.
 ### Task 4: Formulario de perfil
 
 **Files:**
+
 - Create: `src/app/features/profile/components/profile-form/profile-form.component.ts`
 - Create: `src/app/features/profile/components/profile-form/profile-form.component.html`
 
 **Interfaces:**
+
 - Consumes: `ProfileService`, `Container`, `Section`, `Input`, `Selector`, `Router`.
 - Produces: `ProfileFormPage`.
 
@@ -153,11 +161,13 @@ Expected: build exitoso.
 ### Task 5: Lista de mediciones y dialog
 
 **Files:**
+
 - Create: `src/app/features/profile/components/measurement-form/measurement-form.component.ts`
 - Create: `src/app/features/profile/components/measurements-list/measurements-list.component.ts`
 - Create: `src/app/features/profile/components/measurements-list/measurements-list.component.html`
 
 **Interfaces:**
+
 - Consumes: `ProfileService`, `Container`, `Input`, `TextArea`, `RangeDate`, `DateRange`, `ModalService`, `NgIcon`, `Button`.
 - Produces: `MeasurementForm`, `MeasurementsListPage`.
 

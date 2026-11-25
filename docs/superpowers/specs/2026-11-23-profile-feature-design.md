@@ -44,7 +44,7 @@ Agregar a gym el perfil del usuario (`profile`, una fila) y el historial de medi
 
 ## UI y rutas
 
-- `profile.route.ts`: reemplazar el stub. Ruta `profile` con `canActivate: [canAccess]` y hijos: `''` → view, `'edit'` → form, `'measurements'` → lista. El ítem "Perfil" del menú ya existe; no se toca.
+- `profile.route.ts`: reemplazar el stub. Ruta `profile` con hijos: `''` → view, `'edit'` → form, `'measurements'` → lista. El ítem "Perfil" del menú ya existe; no se toca.
 - `components/profile-view/`: `app-container` con título "nombre apellido" (o "Tu perfil" si está vacío); tarjetas con sexo, nacimiento, altura, objetivo, nivel, días/semana, peso objetivo, calorías y proteína traducidos al español, o "Sin completar". Botones "Editar" y "Mediciones".
 - `components/profile-form/`: formulario de edición con señales; valida requeridos y rangos (altura 1–300, días 1–7, peso/calorías/proteína > 0, fecha válida); guarda con `ProfileService.saveProfile()` y vuelve a `/profile`. Botón Cancelar.
 - `components/measurements-list/`: `app-container` "Mediciones"; header con botón "Nueva medición"; `app-range-date` con rango vacío inicial (sin filtro = todas); lista `@for` de tarjetas con fecha, peso, % grasa y notas, más editar/borrar por fila (iconos `@ng-icons`, `app-button`). Borrar pide confirmación con `ModalService` y recarga.

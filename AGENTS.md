@@ -21,25 +21,25 @@ Hard rule: a component must never import SqlDatabase or a repository directly. I
 
 4. Structure
    src/app/
-   ├── app.routes.ts # login + main routes (menu, features, config)
+   ├── app.routes.ts # main routes (menu, features, config)
    ├── app.shell.html # PWA manifest
    ├── app.config.ts # app configuration and initialization
    ├── core/ # everything reusable
    │ ├── components/ # container, form, layout, material, table, window
    │ ├── modules/ # analytics, color, config, database, filters, form,
-   │ │ # http, icons, login, markdown, material, menu, metrics,
+   │ │ # http, icons, markdown, material, menu, metrics,
    │ │ # navigation, records, records-table, search, table,
    │ │ # table-pager, template, time, websocket
    │ ├── prompts/ # prompts (UI and CLI)
    │ ├── repository/ # shared repository contracts
    │ ├── routes/ # shared routes
-   │ ├── services/ # auth, storage
+   │ ├── services/ # storage
    │ └── shared/ # shared interfaces
    └── features/ # dashboard, exercises, plans, profile
    └── <name>/ # components/ + constants/ schemas/ interfaces/
 
 repositories/ utils/ and <name>.route.ts
-Each feature declares its own menu items; the menu is extensible. Root path redirects to the dashboard. Login lives in core/modules/login/.
+Each feature declares its own menu items; the menu is extensible. Root path redirects to the dashboard.
 
 5. Golden rules
 Reuse core/ before creating or installing an equivalent. If it exists in src/app/core/, use it.
@@ -103,7 +103,6 @@ Repositories: extend RepositoryBase<T>; never reimplement generic SQL.
 ❌ Add third-party UI libs when core/components/ already covers it.
 ❌ Use the u- prefix on Tailwind classes.
 ❌ Rename intiDatabase to initDatabase without asking.
-❌ Duplicate login/guard logic: use core/modules/login/ (canAccess).
 ❌ Call SqlDatabase or repositories from a component.
 ❌ Edit the SQLite binary by hand or change the sqlite_store key.
 ❌ Introduce new dependencies without checking core/.
