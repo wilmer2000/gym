@@ -1,0 +1,61 @@
+<app-container [title]="fullName()">
+  <div header class="flex gap-2">
+    <button
+      type="button"
+      class="btn-icon"
+      routerLink="/profile/measurements"
+      aria-label="Mediciones"
+    >
+      <ng-icon [name]="'hugeWorkoutRun'" />
+    </button>
+    <button type="button" class="btn-icon" routerLink="/profile/edit" aria-label="Editar perfil">
+      <ng-icon [name]="'hugePencil'" />
+    </button>
+  </div>
+
+  <app-section title="Datos personales">
+    <div class="grid grid-cols-1 gap-3 sm:grid-cols-2">
+      <div class="flex justify-between gap-4">
+        <span class="text-gray-400">Sexo</span>
+        <span>{{ sex() }}</span>
+      </div>
+      <div class="flex justify-between gap-4">
+        <span class="text-gray-400">Fecha de nacimiento</span>
+        <span>{{ birthDate() }}</span>
+      </div>
+      <div class="flex justify-between gap-4">
+        <span class="text-gray-400">Altura</span>
+        <span>{{ height() }}</span>
+      </div>
+    </div>
+  </app-section>
+
+  <app-section title="Entrenamiento y objetivos">
+    <div class="grid grid-cols-1 gap-3 sm:grid-cols-2">
+      <div class="flex justify-between gap-4">
+        <span class="text-gray-400">Objetivo</span>
+        <span>{{ goal() }}</span>
+      </div>
+      <div class="flex justify-between gap-4">
+        <span class="text-gray-400">Nivel</span>
+        <span>{{ level() }}</span>
+      </div>
+      <div class="flex justify-between gap-4">
+        <span class="text-gray-400">Días de entrenamiento</span>
+        <span>{{ days() }}</span>
+      </div>
+      <div class="flex justify-between gap-4">
+        <span class="text-gray-400">Peso objetivo</span>
+        <span>{{ targetWeight() }}</span>
+      </div>
+      <div class="flex justify-between gap-4">
+        <span class="text-gray-400">Calorías objetivo</span>
+        <span>{{ targetCalories() }}</span>
+      </div>
+      <div class="flex justify-between gap-4">
+        <span class="text-gray-400">Proteína objetivo</span>
+        <span>{{ targetProtein() }}</span>
+      </div>
+    </div>
+  </app-section>
+</app-container>

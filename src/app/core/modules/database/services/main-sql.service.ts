@@ -2,13 +2,14 @@ import { Injectable } from '@angular/core';
 import { Database } from 'sql.js';
 import { MAIN_SCHEMA, PLAN_EXERCISES_SETS_MIGRATION } from '../../../../features/plans/schema';
 import { EXERCISE_ID_RENAMES } from '../../../../features/exercises/schema';
+import { PROFILE_SCHEMA, PROFILE_SEED } from '../../../../features/profile/schema';
 import { SqlDatabase } from './sql-database';
 
 @Injectable({ providedIn: 'root' })
 export class MainSqlService extends SqlDatabase {
   protected override readonly dbKey = 'gym_main';
-  protected override readonly schema = MAIN_SCHEMA;
-  protected override readonly seed = null;
+  protected override readonly schema = `${MAIN_SCHEMA}\n${PROFILE_SCHEMA}`;
+  protected override readonly seed = PROFILE_SEED;
 
   protected override migrate(db: Database): void {
     const columns = db.exec('PRAGMA table_info(plan_exercises)')[0]?.values ?? [];

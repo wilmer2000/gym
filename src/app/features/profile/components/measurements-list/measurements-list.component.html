@@ -1,0 +1,57 @@
+<app-container title="Mediciones">
+  <div header>
+    <button type="button" class="btn-icon" aria-label="Nueva medición" (click)="openForm()">
+      <ng-icon [name]="'hugePlusSign'" />
+    </button>
+  </div>
+
+  <app-range-date [initial]="range()" (rangeChange)="changeRange($event)" />
+
+  @if (rows().length) {
+    <div class="flex flex-col gap-3">
+      @for (measurement of rows(); track measurement.id) {
+        <article class="card">
+          <div class="card-body flex items-center justify-between gap-4">
+            <div class="flex min-w-0 flex-col gap-1">
+              <h3>{{ day(measurement.date) }}</h3>
+              <p>
+                {{ measurement.weight }} kg
+                @if (measurement.bodyFat !== null) {
+                  · {{ measurement.bodyFat }}% grasa
+                }
+              </p>
+              @if (measurement.notes) {
+                <p class="text-sm text-gray-400">{{ measurement.notes }}</p>
+              }
+            </div>
+
+            <div class="flex shrink-0 gap-2">
+              <button
+                type="button"
+                class="btn-icon"
+                [attr.aria-label]="'Editar medición del ' + day(measurement.date)"
+                (click)="openForm(measurement)"
+              >
+                <ng-icon [name]="'hugePencil'" />
+              </button>
+              <button
+                type="button"
+                class="btn-icon"
+                [attr.aria-label]="'Eliminar medición del ' + day(measurement.date)"
+                (click)="remove(measurement)"
+              >
+                <ng-icon [name]="'hugeDelete01'" />
+              </button>
+            </div>
+          </div>
+        </article>
+      }
+    </div>
+  } @else {
+    <div class="card">
+      <div class="card-body flex min-h-40 items-center justify-center">
+        <p>Todavía no hay mediciones.</p>
+      </div>
+    </div>
+  }
+</app-container>

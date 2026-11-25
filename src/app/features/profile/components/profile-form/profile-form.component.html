@@ -1,0 +1,129 @@
+<app-container title="Editar perfil">
+  <div header>
+    <button type="button" routerLink="/profile">Cancelar</button>
+  </div>
+
+  <form id="profile-form" (ngSubmit)="save()" class="flex flex-col gap-4">
+    <app-section title="Datos personales">
+      <app-input
+        id="profile-name"
+        name="profile-name"
+        label="Nombre"
+        [invalid]="name().trim() === ''"
+        [ngModel]="name()"
+        (ngModelChange)="name.set($event)"
+      />
+
+      <app-input
+        id="profile-surname"
+        name="profile-surname"
+        label="Apellido"
+        [invalid]="surname().trim() === ''"
+        [ngModel]="surname()"
+        (ngModelChange)="surname.set($event)"
+      />
+
+      <app-input
+        id="profile-birth-date"
+        name="profile-birth-date"
+        label="Fecha de nacimiento"
+        type="date"
+        [invalid]="birthDate() === ''"
+        [ngModel]="birthDate()"
+        (ngModelChange)="birthDate.set($event)"
+      />
+
+      <app-selector
+        id="profile-sex"
+        name="profile-sex"
+        label="Sexo"
+        [options]="sexOptions"
+        [ngModel]="sex()"
+        (ngModelChange)="sex.set($event)"
+      />
+
+      <app-input
+        id="profile-height"
+        name="profile-height"
+        label="Altura (cm)"
+        type="number"
+        min="1"
+        max="300"
+        [invalid]="heightInvalid()"
+        [ngModel]="height()"
+        (ngModelChange)="height.set($event)"
+      />
+    </app-section>
+
+    <app-section title="Entrenamiento y objetivos">
+      <app-selector
+        id="profile-goal"
+        name="profile-goal"
+        label="Objetivo"
+        [options]="goalOptions"
+        [ngModel]="goal()"
+        (ngModelChange)="goal.set($event)"
+      />
+
+      <app-selector
+        id="profile-level"
+        name="profile-level"
+        label="Nivel"
+        [options]="levelOptions"
+        [ngModel]="experienceLevel()"
+        (ngModelChange)="experienceLevel.set($event)"
+      />
+
+      <app-input
+        id="profile-days"
+        name="profile-days"
+        label="Días de entrenamiento por semana"
+        type="number"
+        min="1"
+        max="7"
+        [invalid]="daysInvalid()"
+        [ngModel]="trainingDaysPerWeek()"
+        (ngModelChange)="trainingDaysPerWeek.set($event)"
+      />
+
+      <app-input
+        id="profile-target-weight"
+        name="profile-target-weight"
+        label="Peso objetivo (kg)"
+        type="number"
+        min="0"
+        [invalid]="targetWeightInvalid()"
+        [ngModel]="targetWeight()"
+        (ngModelChange)="targetWeight.set($event)"
+      />
+
+      <app-input
+        id="profile-target-calories"
+        name="profile-target-calories"
+        label="Calorías objetivo (kcal/día)"
+        type="number"
+        min="0"
+        [invalid]="targetCaloriesInvalid()"
+        [ngModel]="targetCalories()"
+        (ngModelChange)="targetCalories.set($event)"
+      />
+
+      <app-input
+        id="profile-target-protein"
+        name="profile-target-protein"
+        label="Proteína objetivo (g/día)"
+        type="number"
+        min="0"
+        [invalid]="targetProteinInvalid()"
+        [ngModel]="targetProtein()"
+        (ngModelChange)="targetProtein.set($event)"
+      />
+    </app-section>
+
+    @if (error()) {
+      <p class="text-sm text-red-400">{{ error() }}</p>
+    }
+
+    <button type="submit">Guardar</button>
+  </form>
+</app-container>
