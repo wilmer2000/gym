@@ -44,8 +44,13 @@ export interface PlanInput {
   weekdays: number[];
 }
 
+export interface WeekDay {
+  value: number;
+  label: string;
+}
+
 // Monday-first, the order the calendar summary shows. 0 = Sunday in SQLite.
-export const WEEKDAYS: { value: number; label: string }[] = [
+export const WEEKDAYS: WeekDay[] = [
   { value: 1, label: 'Lun' },
   { value: 2, label: 'Mar' },
   { value: 3, label: 'Mié' },

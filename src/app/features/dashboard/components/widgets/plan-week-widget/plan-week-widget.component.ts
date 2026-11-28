@@ -9,9 +9,9 @@ import { DashboardService } from '../../../services/dashboard.service';
   template: `
     <app-section [title]="'Esta semana'">
       @if (dayOfWeeks().length) {
-        <app-week [days]="dayOfWeeks()" />
+        <app-week [days]="dayOfWeeks()" [small]="false" />
       } @else {
-        <p class="text-sm italic text-gray-600">No plans this week</p>
+        <p class="text-sm text-gray-600">No hay planes para esta semana</p>
       }
     </app-section>
   `,

@@ -1,5 +1,9 @@
-@if (iconButton()) {
-  <button type="button" [disabled]="disabled()" (click)="remove()">
-    <ng-icon [name]="icon()" />
+ <button type="button" [disabled]="disabled()" (click)="remove()">
+   @if (label()) {
+     <span>{{ label() }}</span>
+   }
+    @if (iconButton()) {
+      <ng-icon [name]="icon()" />
+    }
   </button>
-}
+

@@ -28,13 +28,14 @@ import { NgIcon } from '@ng-icons/core';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Button implements ControlValueAccessor {
-  iconButton = input(false);
-  icon = input('');
-
-  value = signal(false);
   protected readonly disabled = signal(false);
   protected onTouched: () => void = () => {};
   private onChange: (value: boolean) => void = () => {};
+
+  label = input('');
+  iconButton = input(false);
+  icon = input('');
+  value = signal(false);
 
   readonly removed = output<boolean>();
 

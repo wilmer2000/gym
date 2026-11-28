@@ -1,17 +1,16 @@
 import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { NgIcon } from '@ng-icons/core';
 import { Section } from '../../../../../shared/components/section/section.component';
+import { Button } from '../../../../../core/modules/form/components/button/button.component';
 
 @Component({
   selector: 'app-actions-widget',
-  imports: [Section, RouterLink, NgIcon],
+  imports: [Section, RouterLink, Button],
   template: `
     <app-section [title]="'Acciones rapidas'">
-      <button class="btn-icon" routerLink="/plans/new">
-        <span class="text-sm flex py-2">Crear nuevo plan</span>
-        <ng-icon name="hugeArrowRight01" />
-      </button>
+      <div class="grid grid-cols-2 gap-2">
+        <app-button [label]="'Nuevo plan'" routerLink="/plans/new" />
+      </div>
     </app-section>
   `,
 })
