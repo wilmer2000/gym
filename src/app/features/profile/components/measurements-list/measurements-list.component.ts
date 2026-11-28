@@ -13,10 +13,11 @@ import { ProfileService } from '../../services/profile.service';
 import { displayDay, today } from '../../utils/date';
 import { MeasurementForm } from '../measurement-form/measurement-form.component';
 import { Button } from '../../../../core/modules/form/components/button/button.component';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-measurements-list',
-  imports: [Container, RangeDate, NgIcon, Button],
+  imports: [Container, RangeDate, NgIcon, Button, RouterLink],
   templateUrl: './measurements-list.component.html',
   styles: `
     :host {

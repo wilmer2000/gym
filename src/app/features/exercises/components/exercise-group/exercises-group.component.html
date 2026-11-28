@@ -18,16 +18,16 @@
               <h3>{{ exercise.name }}</h3>
               <div class="flex flex-col gap-2">
                 <div>
-                  <p class="flex items-center gap-2 bg-gray-600/30 leading-0 px-2 py-1 rounded-full w-auto">
-                    <span><ng-icon [name]="typeIcon(exercise)" /></span>
-                    <span class="text-sm">{{ type(exercise) }}</span>
-                  </p>
+                  <app-badge
+                    [icon]="exercise.exerciseType | exerciseTypeIcon"
+                    [label]="exercise.exerciseType | exerciseType"
+                  />
                 </div>
                 <div>
-                  <p class="flex items-center gap-2 bg-gray-600/30 leading-0 px-2 py-1 rounded-full w-auto">
-                    <span><ng-icon [name]="equipmentIcon(exercise)" /></span>
-                    <span class="text-sm">{{ equipment(exercise) }}</span>
-                  </p>
+                  <app-badge
+                    [icon]="exercise.equipment | exerciseEquipmentIcon"
+                    [label]="exercise.equipment | exerciseEquipment"
+                  />
                 </div>
               </div>
             </div>

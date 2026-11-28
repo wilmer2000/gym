@@ -10,10 +10,21 @@ import {
 import { Exercise } from '../../interfaces/exercise';
 import { ExerciseRepository } from '../../repositories/exercise.repository';
 import { Button } from '../../../../core/modules/form/components/button/button.component';
+import { Badge } from '../../../../shared/components/badge/badge.component';
+import { ExerciseEquipmentIconPipe, ExerciseEquipmentPipe, ExerciseTypeIconPipe, ExerciseTypePipe } from '../../pipes/exercise.pipe';
 
 @Component({
   selector: 'app-exercise-detail',
-  imports: [Container, RouterLink, Button],
+  imports: [
+    Container,
+    RouterLink,
+    Button,
+    Badge,
+    ExerciseTypeIconPipe,
+    ExerciseTypePipe,
+    ExerciseEquipmentIconPipe,
+    ExerciseEquipmentPipe,
+  ],
   templateUrl: './exercise-detail.component.html',
   styles: `
     :host {

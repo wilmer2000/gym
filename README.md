@@ -72,7 +72,9 @@ src/app/
 │   └── shared/           # Shared interfaces
 ├── features/             # Features: dashboard, exercises, plans, profile
 │   └── <name>/           # components/, plus constants/ schemas/ interfaces/
-│                          repositories/ utils/ as needed, and <name>.route.ts
+│                          repositories/ pipes/ utils/ as needed, and <name>.route.ts
+└── shared/
+    └── components/       # Reusable presentational components: badge, disc, drag-list, section, week
 ```
 
 ## Data model
@@ -110,6 +112,12 @@ src/app/
 - Add tables in the feature's `schema.ts` and bind them in a SQL service
   (extension of `SqlDatabase`); register the database initialization in
   `app.config.ts`.
+- Reusable presentational components go in `src/app/shared/components/`
+  (e.g. `app-badge` for icon + label chips: `<app-badge [icon]="…" [label]="…" [color]="…" />`,
+  color defaults to `bg-gray-600/30`).
+- Feature pipes live in `features/<name>/pipes/` (standalone, one file per
+  concern; e.g. `exercise.pipe.ts` exports `exerciseType`, `exerciseTypeIcon`,
+  `exerciseEquipment` and `exerciseEquipmentIcon`).
 
 ## Development
 

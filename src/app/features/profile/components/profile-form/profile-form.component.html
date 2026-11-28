@@ -1,12 +1,11 @@
 <app-container title="Editar perfil">
   <div header>
-    <button type="button" routerLink="/profile">Cancelar</button>
-    <app-button
-      [iconButton]="true"
-      [icon]="'hugePencil'"
-      routerLink="/profile/edit"
-      aria-label="Editar perfil"
-    />
+        <app-button
+          [iconButton]="true"
+          [icon]="'hugeArrowLeft01'"
+          routerLink="/profile"
+          aria-label="Volver"
+        />
   </div>
 
   <form id="profile-form" (ngSubmit)="save()" class="flex flex-col gap-4">

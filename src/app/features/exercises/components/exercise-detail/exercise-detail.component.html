@@ -23,33 +23,47 @@
           </p>
         </div>
 
-        <dl>
-          <div>
-            <dt>Músculo principal</dt>
-            <dd>{{ muscle(item.primaryMuscle) }}</dd>
+        <div class="flex flex-col gap-4">
+          <div class="grid grid-cols-2 gap-4">
+            <div class="rounded-2xl bg-gray-700/30 p-3">
+              <div>Músculo principal</div>
+              <div>{{ muscle(item.primaryMuscle) }}</div>
+            </div>
+            <div class="rounded-2xl bg-gray-700/30 p-3">
+              <div>Músculos secundarios</div>
+              <div>
+                {{
+                  item.secondaryMuscles.length
+                    ? item.secondaryMuscles.map(muscle).join(', ')
+                    : 'Sin músculos'
+                }}
+              </div>
+            </div>
           </div>
-          <div>
-            <dt>Músculos secundarios</dt>
-            <dd>
-              {{
-                item.secondaryMuscles.length
-                  ? item.secondaryMuscles.map(muscle).join(', ')
-                  : 'Sin músculos secundarios'
-              }}
-            </dd>
+          <div class="grid grid-cols-2 gap-4">
+            <div class="rounded-2xl bg-gray-700/30 p-3">
+              <div>Tipo</div>
+              <app-badge
+                [icon]="exercise.exerciseType | exerciseTypeIcon"
+                [label]="exercise.exerciseType | exerciseType"
+                [clean]="true"
+              />
+            </div>
+            <div class="rounded-2xl bg-gray-700/30 p-3">
+              <div>Equipo</div>
+              <app-badge
+                [icon]="exercise.equipment | exerciseEquipmentIcon"
+                [label]="exercise.equipment | exerciseEquipment"
+                [clean]="true"
+              />
+            </div>
           </div>
-          <div>
-            <dt>Tipo</dt>
-            <dd>{{ type(item) }}</dd>
-          </div>
-          <div>
-            <dt>Equipo</dt>
-            <dd>{{ equipment(item) }}</dd>
-          </div>
-        </dl>
+        </div>
 
         @if (item.description) {
-          <p>{{ item.description }}</p>
+          <div class="rounded-2xl bg-gray-700/30 p-3">
+            <p>{{ item.description }}</p>
+          </div>
         }
       </div>
     </section>
