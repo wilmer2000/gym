@@ -1,4 +1,4 @@
-<app-container [title]="exercise?.name ?? 'Ejercicio'">
+<app-container>
   <div header>
     <app-button
       [iconButton]="true"
@@ -9,11 +9,14 @@
   </div>
 
   @if (exercise; as item) {
-    <section>
-      <div>
+    <section class="flex flex-col gap-4">
+      <h1>{{ exercise.name }}</h1>
+      <div class="flex flex-col gap-4">
         <div>
-          <img [src]="image(item)" [alt]="item.name" />
-          <p>
+          <div class="aspect-square rounded-2xl bg-gray-700/30 p-3">
+            <img [src]="image(item)" [alt]="item.name" />
+          </div>
+          <p class="text-xs text-gray-500 text-center mt-1">
             Ilustración: Bryl Lim —
             <a href="https://bryllim.com" target="_blank" rel="noopener">bryllim.com</a>
             (CC BY-SA 4.0)

@@ -6,14 +6,14 @@ import { ChangeDetectionStrategy, Component, input } from '@angular/core';
   template: `
     <section class="flex flex-col gap-8 w-full">
       <div class="flex gap-2 justify-between items-center min-h-10">
-        @if (title() || subtitle()) {
-          <div class="flex flex-col">
+        <div class="flex flex-col">
+          @if (title() || subtitle()) {
             <h1 class="font-medium text-3xl truncate">{{ title() }}</h1>
             @if (subtitle()) {
               <p class="text-sm leading">{{ subtitle() }}</p>
             }
-          </div>
-        }
+          }
+        </div>
         <ng-content select="[header]" />
       </div>
       <ng-content />
