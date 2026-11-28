@@ -28,3 +28,9 @@ export interface Exercise {
   description: string | null;
   createdAt: number;
 }
+
+export interface ExerciseGroup {
+  muscle: string;
+  label: string;
+  exercises: Exercise[];
+}

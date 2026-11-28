@@ -1,8 +1,11 @@
 <app-container title="Mediciones">
   <div header>
-    <button type="button" class="btn-icon" aria-label="Nueva medición" (click)="openForm()">
-      <ng-icon [name]="'hugePlusSign'" />
-    </button>
+    <app-button
+      [iconButton]="true"
+      [icon]="'hugePlusSign'"
+      (click)="openForm()"
+      aria-label="Nueva medición"
+    />
   </div>
 
   <app-range-date [initial]="range()" (rangeChange)="changeRange($event)" />

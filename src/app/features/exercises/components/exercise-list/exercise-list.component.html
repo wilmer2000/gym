@@ -1,53 +1,24 @@
-<app-container [title]="'Ejercicios'" >
-  <div header>
+<app-container [title]="'Ejercicios'">
+  <app-filters [filters]="filters" (selectionChange)="selections.set($event)" />
+  <div class="flex flex-col gap-4">
     <app-input
       id="exercise-search"
       placeholder="Buscar por nombre"
       [ngModel]="search()"
       (ngModelChange)="search.set($event)"
     />
-  </div>
-
-  <app-filters [filters]="filters" (selectionChange)="selections.set($event)" />
-
-  @if (groups().length) {
-    @for (group of groups(); track group.muscle) {
-      <section>
-        <h2>
-          {{ group.label }}
-        </h2>
-
-        <div>
-          @for (exercise of group.exercises; track exercise.id) {
-            <a [routerLink]="['/exercises', exercise.id]">
-              <span>
-                <img [src]="image(exercise)" [alt]="exercise.name" loading="lazy" />
-              </span>
-              <div>
-                <h3>{{ exercise.name }}</h3>
-                <p>{{ type(exercise) }}</p>
-                <p>{{ equipment(exercise) }}</p>
-              </div>
-            </a>
-          }
-        </div>
-      </section>
+    @if (groups().length) {
+      <app-exercises-group [groups]="groups()" />
+    } @else {
+      <div>
+        <p>
+          {{
+            hasFilters()
+              ? 'No hay ejercicios que coincidan con la búsqueda.'
+              : 'El catálogo está vacío.'
+          }}
+        </p>
+      </div>
     }
-  } @else {
-    <div>
-      <p>
-        {{
-          hasFilters()
-            ? 'No hay ejercicios que coincidan con la búsqueda.'
-            : 'El catálogo está vacío.'
-        }}
-      </p>
-    </div>
-  }
-
-  <p>
-    Ilustraciones: Bryl Lim —
-    <a href="https://bryllim.com" target="_blank" rel="noopener">bryllim.com</a>
-    (CC BY-SA 4.0)
-  </p>
+  </div>
 </app-container>

@@ -1,16 +1,17 @@
 <app-container [title]="fullName()">
   <div header class="flex gap-2">
-    <button
-      type="button"
-      class="btn-icon"
+    <app-button
+      [iconButton]="true"
+      [icon]="'hugeWorkoutRun'"
       routerLink="/profile/measurements"
       aria-label="Mediciones"
-    >
-      <ng-icon [name]="'hugeWorkoutRun'" />
-    </button>
-    <button type="button" class="btn-icon" routerLink="/profile/edit" aria-label="Editar perfil">
-      <ng-icon [name]="'hugePencil'" />
-    </button>
+    />
+    <app-button
+      [iconButton]="true"
+      [icon]="'hugePencil'"
+      routerLink="/profile/edit"
+      aria-label="Editar perfil"
+    />
   </div>
 
   <app-section title="Datos personales">

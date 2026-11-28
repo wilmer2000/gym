@@ -12,10 +12,11 @@ import {
   ProfileSex,
 } from '../../interfaces/profile';
 import { ProfileService } from '../../services/profile.service';
+import { Button } from '../../../../core/modules/form/components/button/button.component';
 
 @Component({
   selector: 'app-profile-form',
-  imports: [Container, Section, Input, Selector, FormsModule, RouterLink],
+  imports: [Container, Section, Input, Selector, FormsModule, RouterLink, Button],
   templateUrl: './profile-form.component.html',
   styles: `
     :host {
@@ -111,9 +112,7 @@ export class ProfileFormPage {
     this.experienceLevel.set(profile.experienceLevel);
     this.trainingDaysPerWeek.set(String(profile.trainingDaysPerWeek));
     this.targetWeight.set(profile.targetWeight === null ? '' : String(profile.targetWeight));
-    this.targetCalories.set(
-      profile.targetCalories === null ? '' : String(profile.targetCalories),
-    );
+    this.targetCalories.set(profile.targetCalories === null ? '' : String(profile.targetCalories));
     this.targetProtein.set(profile.targetProtein === null ? '' : String(profile.targetProtein));
   }
 

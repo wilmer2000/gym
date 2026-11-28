@@ -14,7 +14,7 @@ import { DashboardService } from '../../../services/dashboard.service';
           <app-plan-item [row]="row" />
         }
       } @else {
-        <p class="text-sm italic text-gray-600">No active plans for today</p>
+        <p class="text-sm text-gray-600 text-center">No hay planes activo para hoy</p>
       }
     </app-section>
   `,

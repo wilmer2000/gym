@@ -1,6 +1,11 @@
 <app-container [title]="exercise?.name ?? 'Ejercicio'">
   <div header>
-    <a routerLink="/exercises">Volver</a>
+    <app-button
+      [iconButton]="true"
+      [icon]="'hugeArrowLeft01'"
+      routerLink="/exercises"
+      aria-label="Volver"
+    />
   </div>
 
   @if (exercise; as item) {

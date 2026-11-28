@@ -1,0 +1,39 @@
+<div class="flex flex-col gap-8">
+  @for (group of groups(); track group.muscle) {
+    <div class="flex flex-col gap-4">
+      <h2 class="font-medium">
+        {{ group.label }}
+      </h2>
+
+      <div class="grid grid-cols-1 gap-4">
+        @for (exercise of group.exercises; track exercise.id) {
+          <a
+            [routerLink]="['/exercises', exercise.id]"
+            class="flex gap-4 rounded-2xl bg-gray-700/30 p-3"
+          >
+            <span class="w-2/4 bg-gray-600/30 rounded-lg">
+              <img [src]="image(exercise)" [alt]="exercise.name" loading="lazy" />
+            </span>
+            <div class="flex flex-col gap-4 w-2/4">
+              <h3>{{ exercise.name }}</h3>
+              <div class="flex flex-col gap-2">
+                <div>
+                  <p class="flex items-center gap-2 bg-gray-600/30 leading-0 px-2 py-1 rounded-full w-auto">
+                    <span><ng-icon [name]="typeIcon(exercise)" /></span>
+                    <span class="text-sm">{{ type(exercise) }}</span>
+                  </p>
+                </div>
+                <div>
+                  <p class="flex items-center gap-2 bg-gray-600/30 leading-0 px-2 py-1 rounded-full w-auto">
+                    <span><ng-icon [name]="equipmentIcon(exercise)" /></span>
+                    <span class="text-sm">{{ equipment(exercise) }}</span>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </a>
+        }
+      </div>
+    </div>
+  }
+</div>

@@ -9,10 +9,11 @@ import {
 } from '../../constants/exercises.constant';
 import { Exercise } from '../../interfaces/exercise';
 import { ExerciseRepository } from '../../repositories/exercise.repository';
+import { Button } from '../../../../core/modules/form/components/button/button.component';
 
 @Component({
   selector: 'app-exercise-detail',
-  imports: [Container, RouterLink],
+  imports: [Container, RouterLink, Button],
   templateUrl: './exercise-detail.component.html',
   styles: `
     :host {

@@ -10,10 +10,19 @@ import { PlanDataForm } from '../plan-data-form/plan-data-form.component';
 import { PlanExercisesForm } from '../plan-exercises/plan-exercises.component';
 import { PlanScheduleForm } from '../plan-schedule/plan-schedule.component';
 import { FormsModule } from '@angular/forms';
+import { Button } from '../../../../core/modules/form/components/button/button.component';
 
 @Component({
   selector: 'app-plan-form',
-  imports: [Container, PlanDataForm, PlanScheduleForm, PlanExercisesForm, RouterLink, FormsModule],
+  imports: [
+    Container,
+    PlanDataForm,
+    PlanScheduleForm,
+    PlanExercisesForm,
+    RouterLink,
+    FormsModule,
+    Button,
+  ],
   templateUrl: './plan-form.component.html',
   styles: `
     :host {

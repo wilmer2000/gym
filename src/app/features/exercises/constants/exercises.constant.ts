@@ -24,6 +24,14 @@ export const ExerciseTypeTranslations: Record<ExerciseType, string> = {
   assisted_bodyweight: 'Asistido',
 };
 
+export const ExerciseTypeIcons: Record<ExerciseType, string> = {
+  weight_reps: 'hugeDumbbell03',
+  bodyweight_reps: 'hugeBodyPartMuscle',
+  duration: 'hugeStopWatch',
+  distance_duration: 'hugeTimer02',
+  assisted_bodyweight: 'hugeEquipmentChestPress',
+};
+
 export const EquipmentTranslations: Record<Equipment, string> = {
   Barbell: 'Barra',
   Dumbbell: 'Mancuerna',
@@ -33,6 +41,17 @@ export const EquipmentTranslations: Record<Equipment, string> = {
   Kettlebell: 'Pesa Rusa',
   Band: 'Banda Elástica',
   Other: 'Otro',
+};
+
+export const EquipmentIcons: Record<Equipment, string> = {
+  Barbell: 'hugeEquipmentGym03',
+  Dumbbell: 'hugeDumbbell02',
+  Machine: 'hugeEquipmentChestPress',
+  Cable: 'hugeEquipmentWeightlifting',
+  Bodyweight: 'hugeBodyPartMuscle',
+  Kettlebell: 'hugeKettlebell',
+  Band: 'hugeSkippingRope',
+  Other: 'hugeWorkoutStretching',
 };
 
 export const MUSCLE_OPTIONS: Option[] = (Object.keys(MuscleTranslations) as Muscle[]).map((k) => ({

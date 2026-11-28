@@ -9,12 +9,12 @@ import { PlanExerciseRepository } from '../../repositories/plan-exercise.reposit
 import { PlanWeekdayRepository } from '../../repositories/plan-weekday.repository';
 import { PlanRepository } from '../../repositories/plan.repository';
 import { scheduleSummary } from '../../utils/schedule-summary';
-import { NgIcon } from '@ng-icons/core';
 import { PlanItem } from '../plan-item/plan-item.component';
+import { Button } from '../../../../core/modules/form/components/button/button.component';
 
 @Component({
   selector: 'app-plan-list',
-  imports: [Container, Input, Toggle, RouterLink, FormsModule, NgIcon, PlanItem],
+  imports: [Container, Input, Toggle, RouterLink, FormsModule, PlanItem, Button],
   templateUrl: './plan-list.component.html',
   styles: `
     :host {

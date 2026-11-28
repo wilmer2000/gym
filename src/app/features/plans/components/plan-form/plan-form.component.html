@@ -1,6 +1,11 @@
 <app-container [title]="planId ? 'Editar plan' : 'Nuevo plan'">
   <div header>
-    <button routerLink="/plans">Cancelar</button>
+    <app-button
+      [iconButton]="true"
+      [icon]="'hugeArrowLeft01'"
+      routerLink="/plans"
+      aria-label="Volver"
+    />
   </div>
 
   <form id="plan-form" (ngSubmit)="save()" class="flex flex-col gap-4">

@@ -1,8 +1,11 @@
 <app-container title="Planes">
   <div header>
-    <button class="btn-icon" [routerLink]="'/plans/new'">
-      <ng-icon [name]="'hugePlusSign'" />
-    </button>
+    <app-button
+      [iconButton]="true"
+      [icon]="'hugePlusSign'"
+      routerLink="/plans/new"
+      aria-label="Volver"
+    />
   </div>
 
   <div class="card">

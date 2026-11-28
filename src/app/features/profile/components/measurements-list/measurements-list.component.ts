@@ -3,16 +3,20 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { NgIcon } from '@ng-icons/core';
 import { filter } from 'rxjs';
 import { Container } from '../../../../core/components/container/container.component';
-import { DateRange, RangeDate } from '../../../../core/modules/form/components/range-date/range-date.component';
+import {
+  DateRange,
+  RangeDate,
+} from '../../../../core/modules/form/components/range-date/range-date.component';
 import { ModalService } from '../../../../core/modules/modal/services/modal.service';
 import { Measurement, MeasurementInput } from '../../interfaces/profile';
 import { ProfileService } from '../../services/profile.service';
 import { displayDay, today } from '../../utils/date';
 import { MeasurementForm } from '../measurement-form/measurement-form.component';
+import { Button } from '../../../../core/modules/form/components/button/button.component';
 
 @Component({
   selector: 'app-measurements-list',
-  imports: [Container, RangeDate, NgIcon],
+  imports: [Container, RangeDate, NgIcon, Button],
   templateUrl: './measurements-list.component.html',
   styles: `
     :host {

@@ -1,20 +1,18 @@
 <app-container [title]="title()">
-  <div>
-    <app-filters [filters]="filters()" (selectionChange)="setSelection($event)" />
-    <app-table-pager
-      [columns]="columns()"
-      [rows]="filtered()"
-      [size]="10"
-      [selectable]="true"
-      [scrollable]="true"
-      [editable]="editable()"
-      [removable]="removable()"
-      rowKey="id"
-      [sortKey]="sortKey()"
-      [sortDirection]="sortDirection()"
-      (sortChange)="setSort($event)"
-      (editFields)="edit.emit($event)"
-      (remove)="remove.emit($event)"
-    />
-  </div>
+  <app-filters [filters]="filters()" (selectionChange)="setSelection($event)" />
+  <app-table-pager
+    [columns]="columns()"
+    [rows]="filtered()"
+    [size]="10"
+    [selectable]="true"
+    [scrollable]="true"
+    [editable]="editable()"
+    [removable]="removable()"
+    rowKey="id"
+    [sortKey]="sortKey()"
+    [sortDirection]="sortDirection()"
+    (sortChange)="setSort($event)"
+    (editFields)="edit.emit($event)"
+    (remove)="remove.emit($event)"
+  />
 </app-container>

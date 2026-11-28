@@ -11,7 +11,7 @@ import { DashboardService } from '../../../services/dashboard.service';
       @if (dayOfWeeks().length) {
         <app-week [days]="dayOfWeeks()" [small]="false" />
       } @else {
-        <p class="text-sm text-gray-600">No hay planes para esta semana</p>
+        <p class="text-sm text-gray-600 text-center">No hay planes para esta semana</p>
       }
     </app-section>
   `,

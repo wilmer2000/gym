@@ -33,28 +33,32 @@ import { Week } from '../../../../shared/components/week/week.component';
       <div class="flex flex-col gap-1 w-full">
         <div class="flex justify-between w-full gap-2">
           <p class="font-medium">{{ item.plan.name }}</p>
-          <div>
-            <app-toggle
-              [id]="'plan-' + item.plan.id"
-              [ngModel]="item.plan.active"
-              (ngModelChange)="toggleActive($event)"
-            />
-          </div>
+          @if (!readonly()) {
+              <app-toggle
+                [id]="'plan-' + item.plan.id"
+                [ngModel]="item.plan.active"
+                (ngModelChange)="toggleActive($event)"
+              />
+          }
         </div>
 
         <div class="flex justify-between items-center w-full gap-2">
-          <div class="flex flex-col gap-2">
+          <div class="flex flex-col gap-4">
             <app-week [days]="days()" />
-            <p>{{ item.exercises }} ejercicio{{ item.exercises === 1 ? '' : 's' }}</p>
-            @if (item.plan.description) {
-              <div class="line-clamp-3">
-                <p class="text-gray-500">{{ item.plan.description }}</p>
-              </div>
-            }
+            <div class="flex flex-col gap-1">
+              <p>{{ item.exercises }} ejercicio{{ item.exercises === 1 ? '' : 's' }}</p>
+              @if (item.plan.description) {
+                <div class="line-clamp-3">
+                  <p class="text-gray-500">{{ item.plan.description }}</p>
+                </div>
+              }
+            </div>
           </div>
 
           @if (!readonly()) {
-            <app-button [iconButton]="true" [icon]="'hugeDelete01'" (removed)="remove()" />
+            <div class="self-baseline-last">
+              <app-button [iconButton]="true" [icon]="'hugeDelete01'" (removed)="remove()" />
+            </div>
           }
         </div>
       </div>

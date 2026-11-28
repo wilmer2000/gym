@@ -1,16 +1,16 @@
 import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { NgIcon } from '@ng-icons/core';
 import { Container } from '../../../../core/components/container/container.component';
 import { Section } from '../../../../shared/components/section/section.component';
 import { GOAL_LABELS, LEVEL_LABELS, SEX_LABELS } from '../../constants/profile.constant';
 import { Profile } from '../../interfaces/profile';
 import { ProfileService } from '../../services/profile.service';
 import { displayDay } from '../../utils/date';
+import { Button } from '../../../../core/modules/form/components/button/button.component';
 
 @Component({
   selector: 'app-profile-view',
-  imports: [Container, Section, RouterLink, NgIcon],
+  imports: [Container, Section, RouterLink, Button],
   templateUrl: './profile-view.component.html',
   styles: `
     :host {
@@ -33,7 +33,9 @@ export class ProfileViewPage {
   readonly sex = computed(() => this.label(this.profile()?.sex, SEX_LABELS));
   readonly goal = computed(() => this.label(this.profile()?.goal, GOAL_LABELS));
   readonly level = computed(() => this.label(this.profile()?.experienceLevel, LEVEL_LABELS));
-  readonly birthDate = computed(() => displayDay(this.profile()?.birthDate ?? null) || 'Sin completar');
+  readonly birthDate = computed(
+    () => displayDay(this.profile()?.birthDate ?? null) || 'Sin completar',
+  );
   readonly height = computed(() => this.unit(this.profile()?.height ?? null, 'cm'));
   readonly targetWeight = computed(() => this.unit(this.profile()?.targetWeight ?? null, 'kg'));
   readonly targetCalories = computed(() =>
